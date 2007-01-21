@@ -1,0 +1,6 @@
+Revision history for Perl extension EPFarms::Panel.
+
+0.01  Sun Jan 21 14:49:45 2007
+	- original version; created by h2xs 1.23 with options
+		-X -n EPFarms::Panel
+

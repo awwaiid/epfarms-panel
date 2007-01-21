@@ -1,0 +1,6 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/EPFarms-Panel.t
+lib/EPFarms/Panel.pm
