@@ -1,7 +1,10 @@
 package EPFarms::Panel;
 
 use strict;
-use warnings; # XXX while in development
+use base 'EPFarms::Panel::Base';
+
+use lib '/home/awwaiid/projects/perl/domt';
+use DOMTemplate;
 
 our $VERSION = '2.01';
 
@@ -17,12 +20,11 @@ EPFarms::Panel - Panel application object for Eggplant Farms
 
 =head1 DESCRIPTION
 
-The Eggplant Farms panel is a primary access point for your Eggplant Farms
-account settings and information. It has both a web interface and an
-interactive shell.
+The Eggplant Farms panel is a primary access point for Eggplant Farms
+account settings and information.
 
-The panel itself is actually a pluggable collection of specialized
-applications, All under the EPFarms::Panel::App namespace.
+The panel itself is actually a manager for a pluggable collection of
+specialized applications, All under the EPFarms::Panel::App namespace.
 
 =head1 METHODS
 
@@ -31,33 +33,37 @@ applications, All under the EPFarms::Panel::App namespace.
 Create a new instance of the panel. Each user gets their own instance, though
 they might be viewing the instance with several views simultaneously.
 
+=head2 C<< $panel->output($html) >>
+
+Send a whole page of output to the browser.
+
+TODO: Send and receive a RequestID, so that we can detect the 'back' button.
+
 =cut
 
-sub new {
-  my ($class, %ops) = @_;
-  my $self = { %ops };
-  bless $self, $class;
-  return $self;
+sub output {
+  my ($self, $page) = @_;
+  $self->{request}->print($page);
+  $self->{request}->next;
 }
 
-=head2 C<< $panel->shell() >>
+=head2 C<< $panel->main >>
 
-Start an interactive shell on the command line.
+Main entrypoint of panel application. This does authentication and initializes
+the list of modules. There is one instance of this loop running per-user
+per-window.
 
 =cut
 
-sub shell {
+our $auth;
+sub main {
   my ($self) = @_;
+  $auth = EPFarms::Panel::Auth->new unless $auth;
+  my $user = $auth->get_authenticated_user;
+  my $page = DOMTemplate->new('tpl/main.html');
+  $page->set('username' => $user->username);
+  $self->output($page->as_HTML);
 }
-
-=head2 C<< $panel->web($request) >>
-
-Start an interactive web instance of the panel. Needs to be passed the
-L<Continuity> request object.
-
-=cut
-
-sub web { }
 
 =head1 SEE ALSO
 
