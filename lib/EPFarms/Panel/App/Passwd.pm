@@ -2,7 +2,8 @@
 package EPFarms::Panel::App::Passwd;
 
 use strict;
-use warnings; # XXX while in development
+use EPFarms::Panel::AppBase;
+use base 'EPFarms::Panel::AppBase';
 
 =head1 NAME
 
@@ -14,24 +15,71 @@ Allows users to change their password.
 
 =head1 METHODS
 
-=head2 C<< $panel->shell() >>
-
-Start an interactive shell on the command line.
-
 =cut
 
-sub shell {
-  my ($self) = @_;
+sub new {
+  my $class = shift;
+  my $self = $class->SUPER::new(@_);
+
+  $self->{request} = $self->{panel}->{request};
+
+  $self->{panel}->add_sidebar_action(
+    name => 'change_password',
+    title => 'Change Passwords',
+    icon => 'img/famfam/icons/key.png',
+    code => sub { $self->show_change_password() }
+  );
+
+  return $self;
 }
 
-=head2 C<< $panel->web($request) >>
+sub debug {
+  my ($self, $msg) = @_;
+  print STDERR "DEBUG: $msg\n";
+}
 
-Start an interactive web instance of the panel. Needs to be passed the
-L<Continuity> request object.
-
-=cut
-
-sub web { }
+sub show_change_password {
+  my ($self) = @_;
+  $self->display(qq{
+      <h2>Password Changer</h2>
+      <h3>Change ALL user passwords (shell/ftp, email, and mysql)</h3>
+      <table border=0 cellspacing=0 cellpadding=4>
+        <tr>
+          <th>New Password:</th>
+          <td><input type=password name=password1></td>
+        </tr>
+        <tr>
+          <th>New Password Again:</th>
+          <td><input type=password name=password2></td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <input type=submit name=change value="Change Password">
+            <input type=submit name=cancel value="Cancel">
+          </td>
+        </tr>
+      </table>
+      <script>document.getElementById('password1').focus()</script>
+      
+      <h3>Shell Password</h3>
+      <table border=0 cellspacing=0 cellpadding=4>
+        <tr>
+          <th>New Password:</th>
+          <td><input type=password name=password1></td>
+        </tr>
+        <tr>
+          <th>New Password Again:</th>
+          <td><input type=password name=password2></td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <input type=submit name=change value="Change Password">
+            <input type=submit name=cancel value="Cancel">
+          </td>
+        </tr>
+      </table>
+  });
+}
 
 =head1 SEE ALSO
 

@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <title>EPFarms User Panel</title>
+    <link type="text/css" rel="stylesheet" href="css/EPFarms_Conference_2007_in_DC.css">
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/jquery.iepnghack.1.5.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      $(function(){
+        $('img[@src$=.png]').pngfix();
+        $('a').click(function(){
+          $('#action').val($(this).attr('href'));
+          $('#f').attr('action',$(this).attr('href'));
+          $('#f').submit();
+          return false;
+        });
+      });
+    </script> 
+  </head>
+  <body>
+    <div id="wholepage">
+      <div id="notfooter">
+    <form method=post id="f">
+      <input type=hidden id="sid" name=sid>
+      <input type=hidden id=action name=action>
+        <div id="header">
+          <div style="float: right; text-align: right;">
+            <font color="white" size="+2">USER PANEL</font>
+            <br>
+            <a href="logout">Logout <span class="username">USERNAME</span></a>
+          </div>
+          <img src="img/epfarms-logo1.gif"
+              alt="Eggplant Farms Logo" align="left" height="80" width="71">
+          <img src="img/epfarms1.gif"
+              alt="A Nonprofit Hosting Community" height="80" width="310">
+        </div>
+        <div id="sidebar">
+          <h2>User Panel</h2>
+          <ul>
+            <li> <a href="home">
+              <img border=0 align=top src="img/famfam/icons/house.png">
+              Panel Home</a> </li>
+          </ul>
+          <ul id="sidebar_apps"></ul>
+          <ul>
+            <li><a href="logout">
+              <img border=0 align=top src="img/famfam/icons/door_in.png">
+              Logout awwaiid</a></li>
+          </ul>
+
+          <h2>External Tools</h2>
+          <ul>
+            <li> <a href="https://ssl.epfarms.org/squirrelmail/">
+              <img border=0 align=top src="img/famfam/icons/email.png">
+              Squirrel Mail (webmail)</a> </li>
+            <li> <a href="https://ssl.epfarms.org/phpmyadmin/">
+              <img border=0 align=top src="img/famfam/icons/database.png">
+              phpMyAdmin</a> </li>
+            <li> <a href="https://ssl.epfarms.org/mindterm/">
+              <img border=0 align=top src="img/famfam/icons/application_xp_terminal.png">
+              Java SSH Client</a> </li>
+            <li> <a href="https://ssl.epfarms.org/stats/">
+              <img border=0 align=top src="img/famfam/icons/chart_line.png">
+              Website Access Stats</a> </li>
+          </ul>
+
+          <h2>Eggplant Farms</h2>
+          <a href="http://epfarms.org/index.shtml">Home</a><br>
+          <a href="http://epfarms.org/news.shtml" class="menu">News</a><br>
+          <a href="http://epfarms.org/pricing.shtml" class="menu">Pricing</a><br>
+          <a href="http://epfarms.org/join.shtml" class="menu">Join Us</a><br>
+          <a href="http://epfarms.org/contribute.shtml" class="menu">Contribute</a><br>
+          <a href="http://epfarms.org/support.shtml" class="menu">Tech Support</a><br>
+          <a href="http://community.epfarms.org/" class="menu">Community</a><br>
+          <a href="http://epfarms.org/about.shtml" class="menu">About Us</a><br>
+          
+        </div>
+        
+        <div id="content" class="browse">
+          <div id="nav-history">
+            <a href="#main">User Panel</a>
+            &gt;
+            <a href="#blah">Manage Domains</a>
+            &gt;
+            <a href="#blah">thelackthereof.org</a>
+          </div>
+          <h1 id="app-name">
+            User Panel Home for awwaiid
+          </h1>
+          <div id="app-content">
+            <p>We will be having an Eggplant Farms conference August 18-19,
+            2007. All members are welcome to attend. If you are interested in
+            participating over the internet, that's OK too! In any case, email
+            awwaiid@epfarms.org and let me know how you'd like to engage and if
+            you</p>
+          </div>
+        </div>
+  </form>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="mailto:support@epfarms.org">Email Support</a>
+      <a href="feedback">Online Feedback</a>
+      <br>
+      Eggplant Farms is a non-profit community.
+      <br>
+      &copy; 2007 Eggplant Farms NPO
+    </div>
+
+  </body>
+</html>

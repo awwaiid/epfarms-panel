@@ -1,0 +1,125 @@
+body {
+	background-color:  #7C6CCC;
+}
+a:link {
+	/* color: #2FFD58; */
+	color: #00FF62;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	text-decoration: underline;
+	}
+a:visited {
+	/* color: #00FF62; */
+	color: #28d94b;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	text-decoration: underline;
+	}
+a:active {
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: none;
+	color: #000000;
+	}
+td {
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	color: #ffffff;
+	}
+.title {
+	background-color: #3C005A;
+    padding: 4px;
+	}
+.text {
+	font-family: verdana, arial, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	}
+.contenthead {
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	color: #333333;
+	font-weight: bold;
+	background-color: #cccccc;
+	width: 100%;
+	padding: 1px;
+	border: 1px outset #000000;
+	}
+.navtitle {
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	font-weight: bold;
+	background-color: #54007F;
+	}
+.maintext {
+	font-family: Helvetica, Arial, Verdana;
+    font-size: 12px;  
+	color: #ffffff;
+	background-color: #58426B;
+	}
+.small {
+	font-family: verdana, arial, sans-serif;
+	font-size: 10px;
+	padding-left: 5px;
+	line-height: 14px;
+	color: #e9f2fc;
+	background-color: #54007F;
+	}
+td.dark {
+	background-color: #660099;
+	font-size: 1px;
+	}
+td.medium {
+	background-color: #775A91;
+	font-size: 1px;
+	}
+td.light { 
+	background-color: #8D1DF2;
+	font-size: 1px;
+	}
+#button {
+	font-family: verdana, arial, sans-serif;
+	font-size: 10px;
+	font-color: #ffffff;
+	line-height: 14px;
+	}
+#button ul {
+	margin: 0px; 
+    padding: 0px;
+    list-style-type: none;
+	font-family: verdana, arial, sans-serif;
+	font-size: 10px;
+	font-color: #ffffff;
+	line-height: 14px;
+	}	
+#button li {
+    line-height: 0px;
+}
+#button a {
+    display: block;
+    padding: 0px 0px 0px 5px;
+    border: 0px;
+	font-color: #ffffff;
+	background-color: #6F3BA4;
+	font-family: verdana, arial, sans-serif;
+	font-size: 10px;
+	line-height: 14px;
+	}	
+#button a:link, #button a:visited {
+	color: #000000;
+	font-family: verdana, arial, sans-serif;
+	font-size: 10px;
+	font-color: #ffffff;
+	line-height: 14px;
+    }
+#button a:hover {
+	border: 0px;
+    background-color: #83DF9C;
+	font-family: verdana, arial, sans-serif;
+	font-size: 10px;
+	font-color: #ffffff;
+	line-height: 14px;
+	}
+  

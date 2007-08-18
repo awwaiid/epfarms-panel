@@ -15,6 +15,8 @@ if($ARGV[0] eq '-d') {
   $run_mode = 'webdev';
   $server = Continuity->new(
     port => 8080,
+    cookie_session => 0,
+    query_session => 'sid',
   );
 } elsif($ARGV[0] eq '-s') {
   # Interactive shell

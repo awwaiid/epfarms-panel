@@ -3,8 +3,7 @@ package EPFarms::Panel;
 use strict;
 use base 'EPFarms::Panel::Base';
 
-use lib '/home/awwaiid/projects/perl/domt';
-use DOMTemplate;
+use EPFarms::Panel::Auth;
 
 our $VERSION = '2.01';
 
@@ -16,7 +15,6 @@ EPFarms::Panel - Panel application object for Eggplant Farms
 
   use EPFarms::Panel;
   my $panel = EPFarms::Panel->new;
-  $panel->shell;
 
 =head1 DESCRIPTION
 
@@ -33,19 +31,6 @@ specialized applications, All under the EPFarms::Panel::App namespace.
 Create a new instance of the panel. Each user gets their own instance, though
 they might be viewing the instance with several views simultaneously.
 
-=head2 C<< $panel->output($html) >>
-
-Send a whole page of output to the browser.
-
-TODO: Send and receive a RequestID, so that we can detect the 'back' button.
-
-=cut
-
-sub output {
-  my ($self, $page) = @_;
-  $self->{request}->print($page);
-  $self->{request}->next;
-}
 
 =head2 C<< $panel->main >>
 
@@ -55,14 +40,83 @@ per-window.
 
 =cut
 
-our $auth;
+# our $auth;
 sub main {
   my ($self) = @_;
-  $auth = EPFarms::Panel::Auth->new unless $auth;
+  my $auth = EPFarms::Panel::Auth->new(%$self);
   my $user = $auth->get_authenticated_user;
-  my $page = DOMTemplate->new('tpl/main.html');
-  $page->set('username' => $user->username);
-  $self->output($page->as_HTML);
+
+  $self->load_apps;
+
+  my $page = DOMTemplate->new('tpl/with-sidebar.html');
+  $page->set_value_by_selector('#sid' => $self->{request}->session_id);
+  $page->set_by_selector('.username' => $user->{username});
+
+  my $sidebar_item_html = '';
+  foreach my $sidebar_item (@{$self->{sidebar}}) {
+    $sidebar_item_html .= qq{
+      <li> <a href="$sidebar_item->{name}">
+        <img border=0 align=top src="$sidebar_item->{icon}">
+        $sidebar_item->{title}</a> </li>
+    };
+  }
+
+  $page->set('sidebar_apps' => $sidebar_item_html);
+
+  while(1) {
+    $self->output($page->as_HTML);
+    my $action = $self->get_action;
+    if($action) {
+      print STDERR "***** ACTION: $action\n\n";
+      if($self->{action}->{$action}) {
+        $self->{action}->{$action}->();
+      }
+      if($action eq 'logout') {
+        undef $auth;
+        last;
+      }
+    }
+  }
+  my $page = DOMTemplate->new('tpl/modal-dialog.tpl');
+  $page->set('dialog' => qq{
+      <h1>You are now logged out!</h1>
+  });
+  my $sid = $self->{request}->session_id;
+  $page->set_value('sid' => $sid);
+  $self->{request}->print($page->as_HTML);
+}
+
+sub load_apps {
+  my ($self) = @_;
+  # Look up all the available apps
+  my @applist = ((glob 'lib/EPFarms/Panel/App/*.pm'), (glob 'App/*.pm'));
+  @applist = map {s/^lib\///g;$_} @applist;
+  @applist = map {s/\.pm$//g;$_} @applist;
+  @applist = map {s/\//::/g;$_} @applist;
+
+  # Load them all (they register themselves)
+  foreach my $appname (@applist) {
+    eval "use $appname";
+    if($@) {
+      print STDERR "Error: $@\n";
+    }
+    my $app = $appname->new(panel => $self);
+  }
+}
+
+sub add_sidebar_action {
+  my ($self, %action) = @_;
+  push @{$self->{sidebar}}, { %action };
+  $self->{action}->{ $action{name} } = $action{code};
+}
+
+sub get_action {
+  my ($self) = @_;
+  my $url = $self->{request}->{request}->url->path;
+  if($url =~ /\/(\w+)$/ && $1 ne 'epfarms-panel') {
+    return $1;
+  }
+  return undef;
 }
 
 =head1 SEE ALSO

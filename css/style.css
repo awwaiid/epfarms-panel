@@ -1,0 +1,83 @@
+
+body {
+	background-color:  #7C6CCC;
+	font-family: verdana, arial, sans-serif;
+}
+
+a:link {
+	/* color: #2FFD58; */
+	color: #00FF62;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	text-decoration: underline;
+	}
+a:visited {
+	/* color: #00FF62; */
+	color: #28d94b;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	text-decoration: underline;
+	}
+a:active {
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: none;
+	color: #000000;
+	}
+
+table.form {
+  background-color: #ccc;
+  border: 1px solid black;
+  padding: 0.5em;
+}
+
+table.form th,
+table.form td {
+  text-align: left;
+  font-size: small;
+  color: black;
+}
+
+
+div.content {
+  /*text-color: #000000;
+  background-color: #ffffff; */
+	background-color: #58426B;
+    color: #ffffff;
+  border: 1px solid black;
+  margin: 1em;
+  padding: 0.5em;
+}
+
+#headerbar {
+	background-color: #3C005A;
+    padding: 0.5em;
+    border-bottom: 1px solid black;
+    margin 0px;
+    margin-bottom: 1em;
+    color: #fff;
+}
+
+body {
+  margn: 0px;
+  padding 0.0px;
+}
+
+a.button {
+  border: 1px solid black;
+  background-color: #ccc;
+  color: #000;
+  text-decoration: none;
+  padding: 2px;
+}
+
+div.module-frontpage {
+  float: left;
+  margin: 2em;
+  text-align: center;
+  width: 100px;
+  height: 75px;
+}
+
+

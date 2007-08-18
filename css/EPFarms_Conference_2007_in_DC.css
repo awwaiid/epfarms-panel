@@ -1,0 +1,202 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #630080;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+  background-color: #49006e;
+  padding: 0.5em;
+  border-bottom: 1px solid #29004e;
+  background: url(/img/blend.gif);
+  margin-bottom: 1em;
+}
+
+#header img {
+  margin-right: 0.5em;
+}
+
+a, a:visited {
+  text-decoration: none;
+  font-weight: bold;
+  color: green;
+}
+
+#dialog a,
+#content a {
+  border-bottom: 1px solid green;
+}
+
+a:hover {
+  color: #990000;
+}
+
+
+.footer {
+  clear: left;
+  border-top: 1px solid black;
+  padding: 5px;
+  margin-top: 10px;
+  background-color: #49006e;
+  color: white;
+  background: url(/img/blend-down.gif);
+}
+
+.footer a {
+  margin-right: 2em;
+}
+
+.footer p,
+.footer form {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Put the sidebar on the left */
+
+div#sidebar {
+  float: left;
+  clear: left;
+  width: 170px;
+  border-right: 1px solid black;
+  font-size: 75%;
+  position: relative;
+  color: white;
+  overflow: hidden;
+  background-color: #730090;
+  background-color: #390054;
+  margin-left: 10px;
+  margin-right: 0.2em;
+  border: 1px solid #290044;
+  padding-left: 5px;
+  padding-bottom: 0.5em;
+}
+div#sidebar img {
+  border: 0;
+  /* border: 1px solid #390054; */
+}
+
+
+#sidebar ul {
+  padding: 0;
+  margin: 0;
+}
+
+#sidebar li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+
+div.footer a,
+div.footer a:visited,
+div#sidebar a,
+div#sidebar a:visited {
+  color: lightgreen;
+
+}
+
+div.footer a:hover,
+div#sidebar a:hover {
+  color: lightblue;
+}
+
+/* These are all the things that make up the body of the current page */
+#dialog,
+#content {
+
+  /* No margins in general, but offset from the left of the screen
+     to make room for the sidebar */
+  margin: 0 10px 0 200px;
+
+  /* Top and bottom borders are to fix a firefox browser bug */
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid black;
+  border right: 1px solid #fff;
+
+  padding: 1em;
+  background-color: #fff;
+
+  line-height: 1.3em; /* Be friendly lookin! */
+}
+
+#dialog {
+  width: 20em;
+  margin: 5em auto;
+}
+
+div#sidebar h2 {
+  border-bottom: 1px solid #eee;
+  margin-right: 1em;
+  margin-bottom: 4px;
+  padding-bottom: 2px;
+  font-size: 1.2em;
+}
+
+div#sidebar p {
+  margin: 0;
+  padding: 0;
+}
+
+
+a.logo {
+  float: left;
+  clear: both;
+  border: 0;
+  background-color: #8292b1;
+  border-right: 1px solid black;
+  text-align: center;
+  display: none;
+}
+
+img.logo {
+  border: 0;
+}
+
+pre {
+  padding: 0.5em;
+  border: 1px solid #999;
+  background-color: #ddd;
+  line-height: 1em; /* None of that friendly lookin stuff here! */
+}
+
+html, body
+	{
+		height: 100%;
+	}
+ #wholepage { min-height: 100%; }
+ * html #wholepage { height: 100%; }
+
+	#notfooter
+	{
+		position: relative;
+		min-height: 100%;
+                padding-bottom: 75px;
+	}
+
+	* html #notfooter
+	{
+		height: 100%;
+	}
+
+	.footer
+	{
+		position: relative;
+		margin: -76px auto 0 auto;
+         height: 65px;
+
+	}
+
+	/* A CSS hack that only applies to IE -- specifies a different height for the footer */
+
+	* html .footer
+	{
+		margin-top: 76px;
+	}
+
+

@@ -1,0 +1,10 @@
+
+Places for apps to hook:
+* SideBar
+** Just make these separate apps
+* Main Page
+* Authentication
+* Breadcrumb
+* Normal call
+* AJAX thread
+
