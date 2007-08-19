@@ -19,8 +19,14 @@ sub do_auth {
   my $page = DOMTemplate->new('tpl/modal-dialog.tpl');
   my $sid = $self->{request}->session_id;
   $page->set('dialog' => qq{
+  </form>
+  <form id="authform" name="authform" method="post"
+    onSubmit="
+        authform.action = '/~' + authform.username.value + '/epfarms-panel/';
+    ">
       <h2>Please login</h2>
       <i>(and Don't Panic!)</i>
+      <span id=msg></span>
       <form method=POST>
         <input type=hidden id=sid name=sid value="$sid">
         <input type=hidden id="has_javascript" name="has_javascript" value="0">
@@ -44,11 +50,17 @@ sub do_auth {
   });
   $page->set_value('sid', $self->{request}->session_id);
   while(1) {
+    $page->set(msg => $msg);
     $self->{request}->print($page->as_HTML);
     $self->{request}->next;
     my $username = $self->param('username');
     my $password = $self->param('password');
     my $c = Authen::Simple::FTP->new(host => 'localhost');
+    my $process_user = getlogin();
+    if($process_user ne $username) {
+      $msg = "Wrong user!";
+      next;
+    }
     if($c->authenticate($username, $password)) {
       my $user = EPFarms::Panel::User->new(
         auth_ok => 1,
