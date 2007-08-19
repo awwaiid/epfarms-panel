@@ -3,6 +3,7 @@
 # This is just a wrapper script to get things started
 
 use strict;
+BEGIN { chdir 'EPFarms-Panel' if -d 'EPFarms-Panel' }
 use lib 'lib';
 use Continuity;
 use Continuity::Adapt::FCGI;
