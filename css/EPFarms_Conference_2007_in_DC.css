@@ -9,7 +9,7 @@ body {
   background-color: #49006e;
   padding: 0.5em;
   border-bottom: 1px solid #29004e;
-  background: url(/img/blend.gif);
+  background: url(../img/blend.gif);
   margin-bottom: 1em;
 }
 
@@ -40,7 +40,7 @@ a:hover {
   margin-top: 10px;
   background-color: #49006e;
   color: white;
-  background: url(/img/blend-down.gif);
+  background: url(../img/blend-down.gif);
 }
 
 .footer a {
