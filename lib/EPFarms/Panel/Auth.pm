@@ -20,7 +20,7 @@ sub do_auth {
   my $sid = $self->{request}->session_id;
   $page->set('dialog' => qq|
     <script>
-      \$(function {
+      \$(function() {
         if(location.href.indexOf("localhost") == -1) {
           \$('#login').click(function() {
             f.action = '/~' + f.username.value + '/epfarms-panel/';
