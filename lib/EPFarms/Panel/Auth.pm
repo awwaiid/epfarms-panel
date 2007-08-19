@@ -2,7 +2,7 @@ package EPFarms::Panel::Auth;
 
 use strict;
 use base 'EPFarms::Panel::Base';
-use Net::Telnet;
+use Authen::Simple::FTP;
 use EPFarms::Panel::User;
 
 sub get_authenticated_user {
@@ -48,9 +48,8 @@ sub do_auth {
     $self->{request}->next;
     my $username = $self->param('username');
     my $password = $self->param('password');
-    my $c = Net::Telnet->new('localhost');
-    $c->errmode("return");
-    if($c->login($username, $password)) {
+    my $c = Authen::Simple::FTP->new(host => 'localhost');
+    if($c->authenticate($username, $password)) {
       my $user = EPFarms::Panel::User->new(
         auth_ok => 1,
         has_javascript => $self->param('has_javascript'),
