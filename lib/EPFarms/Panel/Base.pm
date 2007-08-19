@@ -2,7 +2,6 @@ package EPFarms::Panel::Base;
 
 use strict;
 
-use lib '/home/awwaiid/projects/perl/domt';
 use base 'EPFarms::Base';
 
 sub param {
