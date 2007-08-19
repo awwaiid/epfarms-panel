@@ -25,7 +25,7 @@ sub new {
     name => 'account_finance',
     title => 'Account Finances',
     icon => 'img/famfam/icons/money.png',
-    code => sub { $self->message("Hello Money!") }
+    code => sub { $self->show_finances }
   );
 
   return $self;
@@ -34,6 +34,52 @@ sub new {
 sub message {
   my ($self, $msg) = @_;
   print STDERR "MESSAGE: $msg\n";
+}
+
+sub show_finances {
+  my ($self) = @_;
+  $self->display(qq{
+      <h2>Finances</h2>
+      <h3>Balance: <span id="balance">\$0</span></h3>
+      <h3>Transaction History:</h3>
+      <table border=0 cellspacing=0 cellpadding=4>
+        <tr>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Amount</th>
+          <th>Balance</th>
+        </tr>
+        <tr>
+          <td>2007/08/01</td>
+          <td>Deposit</td>
+          <td>\$20.00</td>
+          <td>\$20.00</td>
+        </tr>
+      </table>
+      
+      <h2>Add Money To Account</h2>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+         <input type="hidden" name="cmd" value="_xclick">
+         <!-- <input type="hidden" name="business" value="epfarms\@epfarms.org"> -->
+         <input type="hidden" name="business" value="awwaii_1187467527_biz\@eggplantfarms.org">
+         <input type="hidden" name="item_name" 
+         value="EPFarms Account Deposit">
+         <input type="hidden" name="item_number" 
+         value="Item Number Goes Here">
+         <input type="hidden" name="on0" value="USERNAME">
+         <input type="hidden" name="amount" value="100.00">
+         <input type="hidden" name="no_shipping" value="2">
+         <input type="hidden" name="no_note" value="1">
+         <input type="hidden" name="currency_code" value="USD">
+         <input type="hidden" name="bn" value="IC_Sample">
+         <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but23.gif" 
+         name="submit" alt="Make payments with payPal - it's fast, 
+         free and secure!>
+         <img alt="" 
+         src="https://www.paypal.com/en_US/i/scr/pixel.gif" 
+         width="1" height="1">
+      </form>
+  });
 }
 
 =head1 SEE ALSO
