@@ -18,12 +18,14 @@ sub do_auth {
   my $msg;
   my $page = DOMTemplate->new('tpl/modal-dialog.tpl');
   my $sid = $self->{request}->session_id;
-  $page->set('dialog' => qq{
-  </form>
-  <form id="authform" name="authform" method="post"
-    onSubmit="
-        authform.action = '/~' + authform.username.value + '/epfarms-panel/';
-    ">
+  $page->set('dialog' => qq|
+    <script>
+      $(function {
+        $('#login').click(function() {
+          f.action = '/~' + f.username.value + '/epfarms-panel/';
+        });
+      });
+    </script>
       <h2>Please login</h2>
       <i>(and Don't Panic!)</i>
       <span id=msg></span>
@@ -42,12 +44,12 @@ sub do_auth {
             <td><input type=password name=password></td>
           </tr>
           <tr>
-            <td colspan=2><input type=submit name=login value="Login"></td>
+            <td colspan=2><input id=login type=submit name=login value="Login"></td>
           </tr>
         </table>
         <script>document.getElementById('username').focus()</script>
       </form>
-  });
+  |);
   $page->set_value('sid', $self->{request}->session_id);
   while(1) {
     $page->set(msg => $msg);
