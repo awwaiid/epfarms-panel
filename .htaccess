@@ -1,0 +1,21 @@
+
+Options +ExecCGI +FollowSymLinks
+DirectoryIndex panel.fcgi index.pl
+AddHandler fastcgi-script .fcgi
+
+RewriteEngine on
+
+# RewriteRule ^(.*) share/$1
+
+# Don't rewrite the main script (prevents infinite loops).
+RewriteRule panel\.fcgi - [L]
+
+# Don't rewrite these directories or files.
+# These are static content
+RewriteRule ^(.*\.(js|css))      - [L]
+RewriteRule ^(.*\.(gif|jpg|png)) - [L]
+RewriteRule ^(.*\.(pdf|doc|odt)) - [L]
+
+# Rewrite everything else.
+RewriteRule ^(.*) /~awwaiid/epfarms-panel/panel.fcgi/$1 [L]
+
