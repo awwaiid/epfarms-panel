@@ -96,14 +96,14 @@ sub set_by_selector {
 
 sub set_value_by_selector {
   my ($self, %attrs) = @_;
-  use Data::Dumper;
-  print STDERR "GAR2: " . Dumper(\%attrs) . "\n";
+#  use Data::Dumper;
+#  print STDERR "GAR2: " . Dumper(\%attrs) . "\n";
   foreach my $key (keys %attrs) {
     my @nodes = $self->find_by_selector($key);
-  print STDERR "nodes: " . Dumper(\@nodes) . "\n";
+#  print STDERR "nodes: " . Dumper(\@nodes) . "\n";
     foreach my $node (@nodes) {
       $node->attr(value => $attrs{$key});
-      print STDERR "SETTING value = $attrs{$key}\n";
+#      print STDERR "SETTING value = $attrs{$key}\n";
     }
   }
 }
@@ -111,7 +111,7 @@ sub set_value_by_selector {
 sub set_value {
   my ($self, %attrs) = @_;
   use Data::Dumper;
-  print STDERR "GAR: " . Dumper(\%attrs) . "\n";
+#  print STDERR "GAR: " . Dumper(\%attrs) . "\n";
   foreach my $key (keys %attrs) {
     $self->set_value_by_selector("#$key" => $attrs{$key});
   }
@@ -166,7 +166,7 @@ sub prepend_content {
 # Only supports a few things for now
 sub find_by_selector {
   my ($self, $selector) = @_;
-  print STDERR "find_by_selector : $selector\n";
+  #print STDERR "find_by_selector : $selector\n";
 
   my $root = $self;
 
@@ -181,7 +181,7 @@ sub find_by_selector {
       my $type = $1;
       my $name = $2;
       $token =~ s/^(#|\.)?(\w+)//; # Kill this part
-      print STDERR "find_by_selector type: $type $name ($token)\n";
+      #print STDERR "find_by_selector type: $type $name ($token)\n";
       if($type eq '') {
         # Tag
         if($root) {
@@ -193,9 +193,9 @@ sub find_by_selector {
       } elsif($type eq '#') {
         # ID
         if($root) {
-          print STDERR "ROOT: " . $root->as_HTML . "\n\n";
+          #print STDERR "ROOT: " . $root->as_HTML . "\n\n";
           @ok_nodes = $root->look_down('id', $name);
-          print STDERR "find_by_selector ok_nodes: @ok_nodes\n";
+          #print STDERR "find_by_selector ok_nodes: @ok_nodes\n";
           undef $root;
         } else {
           @ok_nodes = map { $_->look_down('id', $name) } @ok_nodes;
