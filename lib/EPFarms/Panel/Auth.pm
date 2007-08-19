@@ -20,8 +20,8 @@ sub do_auth {
   my $sid = $self->{request}->session_id;
   $page->set('dialog' => qq|
     <script>
-      $(function {
-        $('#login').click(function() {
+      \$(function {
+        \$('#login').click(function() {
           f.action = '/~' + f.username.value + '/epfarms-panel/';
         });
       });
