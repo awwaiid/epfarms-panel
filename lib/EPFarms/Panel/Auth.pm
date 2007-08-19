@@ -21,9 +21,11 @@ sub do_auth {
   $page->set('dialog' => qq|
     <script>
       \$(function {
-        \$('#login').click(function() {
-          f.action = '/~' + f.username.value + '/epfarms-panel/';
-        });
+        if(location.href.indexOf("localhost") == -1) {
+          \$('#login').click(function() {
+            f.action = '/~' + f.username.value + '/epfarms-panel/';
+          });
+        }
       });
     </script>
       <h2>Please login</h2>
