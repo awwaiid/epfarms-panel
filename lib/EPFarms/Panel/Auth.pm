@@ -16,7 +16,7 @@ sub get_authenticated_user {
 sub do_auth {
   my ($self) = @_;
   my $msg;
-  my $page = DOMTemplate->new('tpl/modal-dialog.tpl');
+  my $page = DOMTemplate->new('tpl/modal-dialog.html');
   my $sid = $self->{request}->session_id;
   $page->set('dialog' => qq|
     <script>
