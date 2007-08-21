@@ -23,7 +23,7 @@ sub do_auth {
       \$(function() {
         if(location.href.indexOf("localhost") == -1) {
           \$('#f').submit(function() {
-            f.action = '/~' + f.username.value + '/epfarms-panel/';
+            \$('#f').attr('action',('/~' + f.username.value + '/epfarms-panel/'));
           });
         }
       });
