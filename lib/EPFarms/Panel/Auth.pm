@@ -31,7 +31,7 @@ sub do_auth {
       <h2>Please login</h2>
       <i>(and Don't Panic!)</i>
       <span id=msg></span>
-      <form method=POST>
+      <form name=f id=f method=POST>
         <input type=hidden id=sid name=sid value="$sid">
         <input type=hidden id="has_javascript" name="has_javascript" value="0">
         <script>document.getElementById('has_javascript').value = 1;</script>
