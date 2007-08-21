@@ -24,6 +24,7 @@ sub do_auth {
         if(location.href.indexOf("localhost") == -1) {
           \$('#f').submit(function() {
             \$('#f').attr('action',('/~' + f.username.value + '/epfarms-panel/'));
+            alert('Submitting to: ' + \$('#f').attr('action'));
           });
         }
       });
@@ -34,7 +35,7 @@ sub do_auth {
       <form name=f id=f method=POST>
         <input type=hidden id=sid name=sid value="$sid">
         <input type=hidden id="has_javascript" name="has_javascript" value="0">
-        <script>document.getElementById('has_javascript').value = 1;</script>
+        <script>\$('#has_javascript').val(1)</script>
         <b>$msg</b>
         <table border=0 cellspacing=0 cellpadding=4>
           <tr>
@@ -49,7 +50,7 @@ sub do_auth {
             <td colspan=2><input id=login type=submit name=login value="Login"></td>
           </tr>
         </table>
-        <script>document.getElementById('username').focus()</script>
+        <script>\$('#username').focus()</script>
       </form>
   |);
   $page->set_value('sid', $self->{request}->session_id);
