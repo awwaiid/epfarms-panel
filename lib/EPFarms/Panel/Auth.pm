@@ -62,7 +62,7 @@ sub do_auth {
     my $username = $self->param('username');
     my $password = $self->param('password');
     my $c = Authen::Simple::FTP->new(host => 'localhost');
-    my $process_user = getlogin();
+    my $process_user = getpwuid($<);
     print STDERR "process_user: <$process_user>\tusername: <$username>\n";
     if($process_user ne $username) {
       $msg = "Wrong user!";
