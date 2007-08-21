@@ -55,6 +55,7 @@ sub do_auth {
   |);
   $page->set_value('sid', $self->{request}->session_id);
   while(1) {
+    print STDERR "Message: $msg\n";
     $page->set(msg => $msg);
     $self->{request}->print($page->as_HTML);
     $self->{request}->next;
@@ -62,6 +63,7 @@ sub do_auth {
     my $password = $self->param('password');
     my $c = Authen::Simple::FTP->new(host => 'localhost');
     my $process_user = getlogin();
+    print STDERR "process_user: <$process_user>\tusername: <$username>\n";
     if($process_user ne $username) {
       $msg = "Wrong user!";
       next;
