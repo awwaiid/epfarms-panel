@@ -200,3 +200,27 @@ html, body
 	}
 
 
+#content h2 {
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+table {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+
+
+td, th {
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+table .header th {
+  background-color: #ccc;
+}
+table .odd td {
+  background-color: #eea;
+}
+
+
