@@ -100,7 +100,7 @@ sub load_apps {
     if($@) {
       print STDERR "Error: $@\n";
     }
-    my $app = $appname->new(panel => $self);
+    my $app = $appname->new(panel => $self, request => $self->{request});
   }
 }
 

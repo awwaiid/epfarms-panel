@@ -24,7 +24,6 @@ sub do_auth {
         if(location.href.indexOf("localhost") == -1) {
           \$('#f').submit(function() {
             \$('#f').attr('action',('/~' + f.username.value + '/epfarms-panel/'));
-            alert('Submitting to: ' + \$('#f').attr('action'));
           });
         }
       });
