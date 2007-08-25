@@ -49,8 +49,8 @@ sub main {
   $self->load_apps;
 
   my $page = DOMTemplate->new('tpl/with-sidebar.html');
-  $page->set_value_by_selector('#sid' => $self->{request}->session_id);
-  $page->set_by_selector('.username' => $user->{username});
+  $page->set('#sid' => $self->{request}->session_id);
+  $page->set('.username' => $user->{username});
 
   my $sidebar_item_html = '';
   foreach my $sidebar_item (@{$self->{sidebar}}) {
@@ -61,7 +61,9 @@ sub main {
     };
   }
 
-  $page->set('sidebar_apps' => $sidebar_item_html);
+  $page->set('#sidebar_apps' => $sidebar_item_html);
+
+  $self->{mainpage} = $page;
 
   while(1) {
     $self->output($page->as_HTML);
@@ -78,7 +80,7 @@ sub main {
     }
   }
   my $page = DOMTemplate->new('tpl/modal-dialog.tpl');
-  $page->set('dialog' => qq{
+  $page->set('#dialog' => qq{
       <h1>You are now logged out!</h1>
   });
   my $sid = $self->{request}->session_id;

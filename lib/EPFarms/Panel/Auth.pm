@@ -18,7 +18,7 @@ sub do_auth {
   my $msg;
   my $page = DOMTemplate->new('tpl/modal-dialog.html');
   my $sid = $self->{request}->session_id;
-  $page->set('dialog' => qq|
+  $page->set('#dialog' => qq|
     <script>
       \$(function() {
         if(location.href.indexOf("localhost") == -1) {
@@ -52,7 +52,7 @@ sub do_auth {
         <script>\$('#username').focus()</script>
       </form>
   |);
-  $page->set_value('sid', $self->{request}->session_id);
+  $page->set('#sid', $self->{request}->session_id);
   while(1) {
     print STDERR "Message: $msg\n";
     $page->set(msg => $msg);
