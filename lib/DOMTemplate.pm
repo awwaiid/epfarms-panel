@@ -24,15 +24,19 @@ sub new_from_content {
   $class = ref($class) || $class;
   my $self = $class->SUPER::new();
   bless $self, $class;
-
+ 
+  my @nodes;
   if($content) {
     $self->parse($content);
-    $self = $self->disembowel;
+    @nodes = $self->disembowel;
   }
-  if(%attrs) {
-    $self->set(%attrs);
-  }
-  return $self;
+#  if(%attrs) {
+#    $self->set(%attrs);
+#  }
+  print STDERR "New_from_content($content)\n" . (ref $self) . "\n";
+  #return $self->elementify;
+  return @nodes;
+  #return $self;
 }
 
 
@@ -70,9 +74,18 @@ sub get_classes {
 sub set {
   my ($self, %attrs) = @_;
   foreach my $key (keys %attrs) {
-    my @nodes = $self->find_by_selector("#$key");
+    print STDERR "DOM SET: $key\n";
+    my @nodes = $self->find_by_selector($key);
+    print STDERR "Found " . (scalar @nodes) . " nodes!\n";
     foreach my $node (@nodes) {
-      $node->replace_content(to_node($attrs{$key}));
+      my $tag = $node->tag;
+      if($tag eq 'input' || $tag eq 'option') {
+        print STDERR "Found $tag, so setting value.\n";
+        $node->attr(value => $attrs{$key});
+      } else {
+        print STDERR "Setting content.\n";
+        $node->replace_content(to_node($attrs{$key}));
+      }
     }
   }
 }
@@ -113,7 +126,7 @@ sub set_value {
   use Data::Dumper;
 #  print STDERR "GAR: " . Dumper(\%attrs) . "\n";
   foreach my $key (keys %attrs) {
-    $self->set_value_by_selector("#$key" => $attrs{$key});
+    $self->set_value_by_selector($key => $attrs{$key});
   }
 }
 
@@ -122,7 +135,8 @@ sub to_node {
   if(ref $html) {
     return $html;
   } else {
-    return HTML::Element->new('~literal','text' => $html);
+    return DOMTemplate->new_from_content($html);
+    #return HTML::Element->new('~literal','text' => $html);
   }
 }
 
@@ -144,10 +158,10 @@ sub replace {
 }
 
 sub replace_content {
-  my ($self, $new_content) = @_;
-  $new_content = to_node($new_content);
+  my ($self, @new_content) = @_;
+  #$new_content = to_node($new_content);
   $self->delete_content();
-  $self->push_content($new_content);
+  $self->push_content(@new_content);
 }
 
 sub append_content {
