@@ -68,11 +68,29 @@ sub show_finances {
          <input type="hidden" name="currency_code" value="USD">
          <input type="hidden" name="bn" value="IC_Sample">
 
-         <input type="text" name="amount" value="24.00">
-         <input type="submit" name="submit" value="Add to account!">
+         <table border=0 cellspacing=0 cellpadding=4>
+           <tr>
+             <th align=right>Charge Amount:</th>
+             <td><input type="text" id="charge-amount" name="charge-amount" value="24.00" size=6></td>
+           </tr>
+           <tr>
+             <th align=right>Fee Amount:</th>
+             <td><input type="text" id="fee-amount" name="fee-amount" value="1.50" size=6></td>
+           </tr>
+           <tr>
+             <th align=right>Deposit Amount:</th>
+             <td><input type="text" id="amount" name="amount" value="22.50" size=6></td>
+           </tr>
+           <tr>
+             <td colspan=2>
+               <input type="submit" name="submit" value="Add to account!">
+             </td>
+           </tr>
+         </table>
+
       </form>
       <h2>Transaction History</h2>
-      <table border=0 cellspacing=0 cellpadding=4 width="100%">
+      <table border=0 cellspacing=0 cellpadding=4 width="100%" class="data">
         <tr class="header">
           <th>Date</th>
           <th>Title</th>
