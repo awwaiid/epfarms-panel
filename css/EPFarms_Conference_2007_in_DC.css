@@ -117,7 +117,7 @@ div#sidebar a:hover {
   border-top: 1px solid #000;
   border-bottom: 1px solid #fff;
   border-left: 1px solid black;
-  border right: 1px solid #fff;
+  border-right: 1px solid #fff;
 
   padding: 1em;
   background-color: #fff;
@@ -205,22 +205,22 @@ html, body
   border-bottom: 1px solid black;
 }
 
-table {
+table.data {
   border-top: 1px solid black;
   border-left: 1px solid black;
 }
 
 
-td, th {
+.data td, .data th {
   border-right: 1px solid black;
   border-bottom: 1px solid black;
 }
 
-table .header th {
+table.data .header th {
   background-color: #ccc;
 }
-table .odd td {
-  background-color: #eea;
+table.data .odd td {
+  background-color: #ddddff;
 }
 
 
