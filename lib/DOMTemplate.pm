@@ -19,26 +19,6 @@ sub new {
   return $self->elementify;
 }
 
-sub new_from_content {
-  my ($class, $content, %attrs) = @_;
-  $class = ref($class) || $class;
-  my $self = $class->SUPER::new();
-  bless $self, $class;
- 
-  my @nodes;
-  if($content) {
-    $self->parse($content);
-    @nodes = $self->disembowel;
-  }
-#  if(%attrs) {
-#    $self->set(%attrs);
-#  }
-  print STDERR "New_from_content($content)\n" . (ref $self) . "\n";
-  #return $self->elementify;
-  return @nodes;
-  #return $self;
-}
-
 
 package HTML::Element;
 
@@ -127,7 +107,10 @@ sub to_node {
   if(ref $html) {
     return $html;
   } else {
-    return DOMTemplate->new_from_content($html);
+    #my $tree = DOMTemplate->new_from_content($html);
+    my $tree = HTML::TreeBuilder->new_from_content($html);
+    my @n = $tree->disembowel;
+    return @n;
     #return HTML::Element->new('~literal','text' => $html);
   }
 }
