@@ -84,7 +84,7 @@ sub main {
       <h1>You are now logged out!</h1>
   });
   my $sid = $self->{request}->session_id;
-  $page->set_value('sid' => $sid);
+  $page->set_value('#sid' => $sid);
   $self->{request}->print($page->as_HTML);
 }
 

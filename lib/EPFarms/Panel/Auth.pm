@@ -55,7 +55,7 @@ sub do_auth {
   $page->set('#sid', $self->{request}->session_id);
   while(1) {
     print STDERR "Message: $msg\n";
-    $page->set(msg => $msg);
+    $page->set('#msg' => $msg);
     $self->{request}->print($page->as_HTML);
     $self->{request}->next;
     my $username = $self->param('username');
