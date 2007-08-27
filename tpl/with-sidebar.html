@@ -2,8 +2,10 @@
   <head>
     <title>EPFarms User Panel</title>
     <link type="text/css" rel="stylesheet" href="css/EPFarms_Conference_2007_in_DC.css">
+    <link type="text/css" rel="stylesheet" href="css/tablesorter.css">
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/jquery.iepnghack.1.5.js" type="text/javascript"></script>
+    <script src="js/jquery.tablesorter.pack.js" type="text/javascript"></script>
     <script type="text/javascript">
       $(function(){
         $('img[@src$=.png]').pngfix();
@@ -15,6 +17,7 @@
           $('#f').submit();
           return false;
         });
+        $('table.data').tablesorter({widgets: ['zebra']});
       });
     </script> 
   </head>

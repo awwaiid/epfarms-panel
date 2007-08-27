@@ -91,6 +91,7 @@ sub show_finances {
       </form>
       <h2>Transaction History</h2>
       <table border=0 cellspacing=0 cellpadding=4 width="100%" class="data">
+        <thead>
         <tr class="header">
           <th>Date</th>
           <th>Title</th>
@@ -98,6 +99,8 @@ sub show_finances {
           <th>Amount</th>
           <th>Balance</th>
         </tr>
+        </thead>
+        <tbody>
         <tr class="even"> <td>2007/01/01</td><td>Deposit by user</td> <td>Paypal</td><td>\$20.00</td> <td>\$20.00</td> </tr>
         <tr class="odd"> <td>2007/01/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-\$2.00</td> <td>\$18.00</td> </tr>
         <tr class="even"> <td>2007/02/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-\$2.00</td> <td>\$16.00</td> </tr>
@@ -107,6 +110,7 @@ sub show_finances {
         <tr class="even"> <td>2007/06/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-\$2.00</td> <td>\$8.00</td> </tr>
         <tr class="odd"> <td>2007/07/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-\$2.00</td> <td>\$6.00</td> </tr>
         <tr class="even"> <td>2007/08/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-\$2.00</td> <td>\$4.00</td> </tr>
+      </tbody>
       </table>
   });
 }
