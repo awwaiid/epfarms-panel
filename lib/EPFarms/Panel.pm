@@ -47,27 +47,14 @@ sub main {
   my $user = $auth->get_authenticated_user;
 
   $self->load_apps;
+  my $page = $self->load_main_page($user);
 
-  my $page = DOMTemplate->new('tpl/with-sidebar.html');
-  $page->set('#sid' => $self->{request}->session_id);
-  $page->set('.username' => $user->{username});
-
-  my $sidebar_item_html = '';
-  foreach my $sidebar_item (@{$self->{sidebar}}) {
-    $sidebar_item_html .= qq{
-      <li> <a href="$sidebar_item->{name}">
-        <img border=0 align=top src="$sidebar_item->{icon}">
-        $sidebar_item->{title}</a> </li>
-    };
-  }
-
-  $page->set('#sidebar_apps' => $sidebar_item_html);
-
-  $self->{mainpage} = $page;
-
+  # Main page event loop
   while(1) {
     $self->output($page->as_HTML);
+
     my $action = $self->get_action;
+
     if($action) {
       print STDERR "***** ACTION: $action\n\n";
       if($self->{action}->{$action}) {
@@ -79,6 +66,7 @@ sub main {
       }
     }
   }
+
   my $page = DOMTemplate->new('tpl/modal-dialog.tpl');
   $page->set('#dialog' => qq{
       <h1>You are now logged out!</h1>
@@ -104,6 +92,27 @@ sub load_apps {
     }
     my $app = $appname->new(panel => $self, request => $self->{request});
   }
+}
+
+sub load_main_page {
+  my ($self, $user) = @_;
+  my $page = DOMTemplate->new('tpl/with-sidebar.html');
+  $page->set('#sid' => $self->{request}->session_id);
+  $page->set('.username' => $user->{username});
+
+  my $sidebar_item_html = '';
+  foreach my $sidebar_item (@{$self->{sidebar}}) {
+    $sidebar_item_html .= qq{
+      <li> <a href="$sidebar_item->{name}">
+        <img border=0 align=top src="$sidebar_item->{icon}">
+        $sidebar_item->{title}</a> </li>
+    };
+  }
+
+  $page->set('#sidebar_apps' => $sidebar_item_html);
+
+  $self->{mainpage} = $page;
+  return $page;
 }
 
 sub add_sidebar_action {
