@@ -70,16 +70,16 @@ sub show_finances {
 
          <table border=0 cellspacing=0 cellpadding=4>
            <tr>
-             <th align=right>Charge Amount:</th>
-             <td><input type="text" id="charge-amount" name="charge-amount" value="24.00" size=6></td>
-           </tr>
-           <tr>
-             <th align=right>Fee Amount:</th>
-             <td><input type="text" id="fee-amount" name="fee-amount" value="1.50" size=6></td>
-           </tr>
-           <tr>
              <th align=right>Deposit Amount:</th>
              <td><input type="text" id="amount" name="amount" value="22.50" size=6></td>
+           </tr>
+           <tr>
+             <th align=right>Transaction Fee:</th>
+             <td><input type="text" readonly class="readonly" id="fee-amount" name="fee-amount" value="1.50" size=6></td>
+           </tr>
+           <tr>
+             <th align=right>Charge Amount:</th>
+             <td><input type="text" readonly class="readonly" id="charge-amount" name="charge-amount" value="24.00" size=6></td>
            </tr>
            <tr>
              <td colspan=2>

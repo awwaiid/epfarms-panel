@@ -223,4 +223,6 @@ table.data .odd td {
   background-color: #ddddff;
 }
 
-
+input.readonly {
+  background-color: #ccc;
+}
