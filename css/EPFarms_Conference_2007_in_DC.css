@@ -226,3 +226,8 @@ table.data .odd td {
 input.readonly {
   background-color: #ccc;
 }
+
+input.number {
+  text-align: right;
+}
+
