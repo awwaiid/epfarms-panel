@@ -1,0 +1,99 @@
+<script>
+
+  $(function(){
+    $('#amount').keyup(function(){
+      var amount_val = $('#amount').val();
+      amount_val = amount_val.replace(/\$/g, "");
+      var amount = parseFloat(amount_val);
+      if(amount_val == "" || amount == "NaN" || amount <= 0 ) {
+        $('#fee-amount').val('');
+        $('#charge-amount').val('');
+      } else {
+        $('#balance').innerHTML = amount;
+        var fee = (amount * 0.03) + 0.30;
+        var charge = amount + fee;
+        fee = fee.toFixed(2);
+        charge = charge.toFixed(2);
+        $('#fee-amount').innerHTML = fee;
+        $('#charge-amount').innerHTML = charge;
+      }
+    });
+  });
+
+</script>
+
+
+<h2>Finances</h2>
+Current Balance: <span id="balance">$4.00</span><br>
+Paid Until (estimated): 2007/10/31
+
+<h2>Add Money To Account</h2>
+
+<p>The easiest way to deposit money into your pre-paid Eggplant Farms
+account is through our Paypal payment gateway. <b>You do not have to use
+a Paypal account!</b> Paypal will accept any major credit card directly
+without signing up with them.</p>
+
+<p>Please use this form to send us payments. You can see here how much
+the transaction fee will be, which you are responsible for, and how much
+will actually go into your account. After entering an amount you will be
+redirected to Paypal's site to complete the details.</p>
+
+</form>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+ <input type="hidden" name="cmd" value="_xclick">
+ <input type="hidden" name="business" value="epfarms@epfarms.org">
+ <!-- <input type="hidden" name="business" value="awwaii_1187467527_biz@eggplantfarms.org"> -->
+ <input type="hidden" name="item_name" 
+ value="EPFarms Account Deposit">
+ <input class="username" type="hidden" name="on0" value="USERNAME">
+ <input type="hidden" name="no_shipping" value="2">
+ <input type="hidden" name="no_note" value="1">
+ <input type="hidden" name="currency_code" value="USD">
+ <input type="hidden" name="bn" value="IC_Sample">
+
+ <table border=0 cellspacing=0 cellpadding=4>
+   <tr>
+     <th align=right>Deposit Amount:</th>
+     <td>$<input class="number" type="text" id="amount" name="amount" value="" size=6></td>
+   </tr>
+   <tr>
+     <th align=right>Transaction Fee:</th>
+     <td><b>$<span id="fee-amount"></span></b></td>
+   </tr>
+   <tr>
+     <th align=right>Charge Amount:</th>
+     <td><b>$<span id="charge-amount"></span></b></td>
+   </tr>
+   <tr>
+     <td colspan=2>
+       <input type="submit" name="add_to_account" value="Add to account!">
+     </td>
+   </tr>
+ </table>
+</form>
+
+<h2>Transaction History</h2>
+<table border=0 cellspacing=0 cellpadding=4 width="100%" class="data" id="transaction-data">
+<thead>
+<tr class="header">
+  <th>Date</th>
+  <th>Title</th>
+  <th>Origin</th>
+  <th>Amount</th>
+  <th>Balance</th>
+</tr>
+</thead>
+<tbody>
+<tr> <td>2007/01/01</td><td>Deposit by user</td> <td>Paypal</td><td>$20.00</td> <td>$20.00</td> </tr>
+<tr> <td>2007/01/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$18.00</td> </tr>
+<tr> <td>2007/02/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$16.00</td> </tr>
+<tr> <td>2007/03/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$14.00</td> </tr>
+<tr> <td>2007/04/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$12.00</td> </tr>
+<tr> <td>2007/05/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$10.00</td> </tr>
+<tr> <td>2007/06/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$8.00</td> </tr>
+<tr> <td>2007/07/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$6.00</td> </tr>
+<tr> <td>2007/08/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$4.00</td> </tr>
+</tbody>
+</table>
+
