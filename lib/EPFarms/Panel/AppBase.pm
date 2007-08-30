@@ -12,7 +12,7 @@ sub display {
   #print STDERR "PAGE: " . ($page->as_HTML) . "\n\n";
   $self->output($page->as_HTML);
   #$request->send_header("Refresh: 0; url=/blah");
-  $request->next;
+  #$request->next;
 }
 
 1;
