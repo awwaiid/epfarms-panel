@@ -22,6 +22,14 @@ sub new {
 
 package HTML::Element;
 
+sub elementify {
+  return $_[0];
+}
+
+sub render {
+  return $_[0]->as_HTML;
+}
+
 sub apply {
   my ($self, $rules) = @_;
   while(@$rules) {
