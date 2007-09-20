@@ -41,7 +41,13 @@ $server->loop;
 sub main {
   my $request = shift;
   my $panel = EPFarms::Panel->new(run_mode => $run_mode, request => $request);
-  $panel->main;
+  eval {
+    $panel->main;
+  };
+  if($@) {
+    $request->print("Fatal Error: $@");
+    $request->print("Restarting application...");
+  }
 }
 
 
