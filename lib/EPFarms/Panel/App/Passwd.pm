@@ -4,6 +4,8 @@ package EPFarms::Panel::App::Passwd;
 use strict;
 use EPFarms::Panel::AppBase;
 use base 'EPFarms::Panel::AppBase';
+use Expect;
+$Expect::Log_Stdout = 0;
 
 =head1 NAME
 
@@ -38,47 +40,97 @@ sub debug {
   print STDERR "DEBUG: $msg\n";
 }
 
-sub show_change_password {
+sub password_template {
   my ($self) = @_;
-  $self->display(qq{
+  return qq{
       <h2>Password Changer</h2>
-      <h3>Change ALL user passwords (shell/ftp, email, and mysql)</h3>
+      <h3>Change passwords</h3>
+
+      <input type=checkbox name="change" value="shell" checked>
+      Change shell, FTP, and email passwords
+      <!--
+      <br>
+      <input type=checkbox name="change" value="mysql" checked>
+      Change MySQL password
+      -->
+
       <table border=0 cellspacing=0 cellpadding=4>
         <tr>
+          <th>Current Password:</th>
+          <td><input type=password name="cur_password"></td>
+        </tr>
+        <tr>
           <th>New Password:</th>
-          <td><input type=password name=password1></td>
+          <td><input type=password name="new_password1"></td>
         </tr>
         <tr>
           <th>New Password Again:</th>
-          <td><input type=password name=password2></td>
+          <td><input type=password name="new_password2"></td>
         </tr>
         <tr>
           <td colspan=2>
-            <input type=submit name=change value="Change Password">
-            <input type=submit name=cancel value="Cancel">
+            <input type=submit name=passwd_action value="Change Password(s)">
+            <input type=submit name=passwd_action value="Cancel">
           </td>
         </tr>
       </table>
       <script>document.getElementById('password1').focus()</script>
-      
-      <h3>Shell Password</h3>
-      <table border=0 cellspacing=0 cellpadding=4>
-        <tr>
-          <th>New Password:</th>
-          <td><input type=password name=password1></td>
-        </tr>
-        <tr>
-          <th>New Password Again:</th>
-          <td><input type=password name=password2></td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <input type=submit name=change value="Change Password">
-            <input type=submit name=cancel value="Cancel">
-          </td>
-        </tr>
-      </table>
+
+      <!--
+      <h2>Password Reset</h2>
+
+      <p>Use this if you need to reset your MySQL password. Since you were able
+      to log in to the panel, it doesn't make much sense for you to reset your
+      shell password, now does it?</p>
+
+      <p><input type=submit name=passwd_action value="Reset MySQL Password"></p>
+      -->
+  };
+}
+
+sub changeSSHPass {
+  my ($self, $host, $cur, $pass1, $pass2) = @_;
+  my $result = 'ERROR';
+  my $timeout = 5;
+  my $passwd = Expect->spawn("ssh -o StrictHostKeyChecking=no $host");
+  #$passwd->log_file("/tmp/passwd_log.txt");
+  $passwd->expect($timeout,
+    [ qr/Password: /                   => sub { print $passwd "$cur\n";   exp_continue }],
+    [ qr/:\\\$ /                       => sub { print $passwd "passwd\n"; exp_continue }],
+    [ qr/^\(current\) UNIX password: / => sub { print $passwd "$cur\n";   exp_continue }],
+    [ qr/^Enter new UNIX password: /   => sub { print $passwd "$pass1\n"; exp_continue }],
+    [ qr/^Retype new UNIX password: /  => sub { print $passwd "$pass2\n"; exp_continue }],
+    [ qr/^(passwd:|Bad:|Sorry,) .*$/   => sub { $result = $passwd->match() }]
+  );
+  $passwd->hard_close();
+  return $result;
+}
+
+sub show_change_password {
+  my ($self) = @_;
+  my $tpl = $self->password_template;
+  print STDERR "self: $self\ntpl: $tpl\n\n";
+  $self->display($tpl);
+
+  my $action = $self->param('passwd_action');
+  my $cur_password = $self->param('cur_password');
+  my $password1 = $self->param('new_password1');
+  my $password2 = $self->param('new_password2');
+
+  # TODO: insert some user-input sanity checks
+  
+  my $mirabel_shell_result = $self->changeSSHPass(
+    'mirabel.epfarms.org',$cur_password, $password1, $password2);
+
+  my $pointless_shell_result = $self->changeSSHPass(
+    'pointless.epfarms.org',$cur_password, $password1, $password2);
+
+  $self->display(qq{
+    Mirabel Result: $mirabel_shell_result<br>
+    Pointless Result: $pointless_shell_result<br>
+    <a href="change_password">Return to password changer</a>
   });
+
 }
 
 =head1 SEE ALSO
