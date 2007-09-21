@@ -38,18 +38,17 @@ sub message {
 
 sub show_finances {
   my ($self) = @_;
+  my $username = $self->{panel}->{user}->{username};
   my $tpl = DOMTemplate->new('tpl/accounting.html');
-  $tpl->set('.username' => 'JOE');
+  $tpl->set('.username' => $username);
+  $tpl->set('#item_name' => "Deposit for $username");
   while(1) {
-    $tpl->set('#balance' => '$42.23');
-
+    $tpl->set('#balance' => '----');
     $self->display( $tpl->render );
-
-
-    $self->display( 'page 1' );
-
-    $self->display( 'page 2' );
-    $self->display( 'page 3' );
+    my $action = $self->get_action;
+    if($action ne 'account_finance') {
+      return;
+    }
   }
 }
 
