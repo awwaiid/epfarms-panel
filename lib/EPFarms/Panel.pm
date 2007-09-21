@@ -52,7 +52,6 @@ sub main {
 
   # Main page event loop
   while(1) {
-    $self->output($page->as_HTML);
 
     my $action = $self->get_action || 'home';
 
@@ -65,6 +64,8 @@ sub main {
         undef $auth;
         last;
       }
+    } else {
+      $self->output($page->as_HTML);
     }
   }
 
