@@ -34,6 +34,7 @@ sub new {
 sub message {
   my ($self, $msg) = @_;
   print STDERR "MESSAGE: $msg\n";
+  $self->next;
 }
 
 =head1 SEE ALSO
