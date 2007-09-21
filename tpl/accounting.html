@@ -1,51 +1,63 @@
 <script>
 
   $(function(){
-    $('#amount').keyup(function(){
-      var amount_val = $('#amount').val();
+
+    $('#add_to_account').click(function() {
+      $('#f').attr('action', "https://www.paypal.com/cgi-bin/webscr");
+      $('#f').submit();
+      return false;
+    });
+
+    $('#deposit-amount').keyup(function(){
+      var amount_val = $('#deposit-amount').val();
       amount_val = amount_val.replace(/\$/g, "");
       var amount = parseFloat(amount_val);
       if(amount_val == "" || amount == "NaN" || amount <= 0 ) {
-        $('#fee-amount').val('');
-        $('#charge-amount').val('');
+        $('#fee-amount').empty();
+        $('#charge-amount').empty();
+        $('#amount').val('');
       } else {
         $('#balance').innerHTML = amount;
-        var fee = (amount * 0.03) + 0.30;
+        var fee = (amount * 0.029) + 0.30; // 2.9% + 30cents
         var charge = amount + fee;
         fee = fee.toFixed(2);
         charge = charge.toFixed(2);
-        $('#fee-amount').innerHTML = fee;
-        $('#charge-amount').innerHTML = charge;
+        $('#fee-amount').empty().append(fee);
+        $('#charge-amount').empty().append(charge);
+        $('#amount').val(charge);
       }
     });
+
   });
 
 </script>
 
 
 <h2>Finances</h2>
-Current Balance: <span id="balance">$4.00</span><br>
-Paid Until (estimated): 2007/10/31
+Current Balance: $<span id="balance">---</span><br>
+<!--
+Paid until: October 13, 2007<br>
+
+1 basic service @ $2.00 / month
+3 domains @ $7.50 / year
+3 static IP @ $1.00 / month
+1 SSL Certificate @ $1.00 / month
+1 extra 3-gigs storage @ $1.00 / month
+1 extra 10-gigs transfer @ $1.00 / month
+
+-->
 
 <h2>Add Money To Account</h2>
 
-<p>The easiest way to deposit money into your pre-paid Eggplant Farms
-account is through our Paypal payment gateway. <b>You do not have to use
+<p>We accept online payments through paypal. <b>You do not have to use
 a Paypal account!</b> Paypal will accept any major credit card directly
-without signing up with them.</p>
+without signing up with them. Here you will see how much the payment fee will cost.</p>
 
-<p>Please use this form to send us payments. You can see here how much
-the transaction fee will be, which you are responsible for, and how much
-will actually go into your account. After entering an amount you will be
-redirected to Paypal's site to complete the details.</p>
-
-</form>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
  <input type="hidden" name="cmd" value="_xclick">
  <input type="hidden" name="business" value="epfarms@epfarms.org">
  <!-- <input type="hidden" name="business" value="awwaii_1187467527_biz@eggplantfarms.org"> -->
- <input type="hidden" name="item_name" 
- value="EPFarms Account Deposit">
+ <input type="hidden" name="item_name" id="item_name"
+   value="EPFarms Account Deposit">
  <input class="username" type="hidden" name="on0" value="USERNAME">
  <input type="hidden" name="no_shipping" value="2">
  <input type="hidden" name="no_note" value="1">
@@ -55,24 +67,21 @@ redirected to Paypal's site to complete the details.</p>
  <table border=0 cellspacing=0 cellpadding=4>
    <tr>
      <th align=right>Deposit Amount:</th>
-     <td>$<input class="number" type="text" id="amount" name="amount" value="" size=6></td>
+     <td align=right>$<input class="number" type="text" id="deposit-amount" name="depsoit-amount" value="" size=6></td>
    </tr>
    <tr>
      <th align=right>Transaction Fee:</th>
-     <td><b>$<span id="fee-amount"></span></b></td>
+     <td align=right><b>$<span id="fee-amount"></span></b></td>
    </tr>
    <tr>
      <th align=right>Charge Amount:</th>
-     <td><b>$<span id="charge-amount"></span></b></td>
-   </tr>
-   <tr>
-     <td colspan=2>
-       <input type="submit" name="add_to_account" value="Add to account!">
-     </td>
+     <td align=right><b>$<span id="charge-amount"></span><input type=hidden name=amount id=amount value=""></b></td>
    </tr>
  </table>
-</form>
+       <input type="submit" id="add_to_account" name="add_to_account" value="Add to account!">
+       &nbsp; (<i>You will be redirected to Paypal to enter your payment information.</i>)
 
+<!--
 <h2>Transaction History</h2>
 <table border=0 cellspacing=0 cellpadding=4 width="100%" class="data" id="transaction-data">
 <thead>
@@ -96,4 +105,7 @@ redirected to Paypal's site to complete the details.</p>
 <tr> <td>2007/08/01</td><td>Monthly Hosting Fee</td> <td>EPFarms</td><td>-$2.00</td> <td>$4.00</td> </tr>
 </tbody>
 </table>
+
+-->
+
 
