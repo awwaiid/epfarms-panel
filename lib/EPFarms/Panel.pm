@@ -122,15 +122,6 @@ sub add_sidebar_action {
   $self->{action}->{ $action{name} } = $action{code};
 }
 
-sub get_action {
-  my ($self) = @_;
-  my $url = $self->{request}->{request}->url->path;
-  if($url =~ /\/(\w+)$/ && $1 ne 'epfarms-panel') {
-    return $1;
-  }
-  return undef;
-}
-
 =head1 SEE ALSO
 
 L<http://community.epfarms.org/Panel_Documentation>
