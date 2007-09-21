@@ -23,4 +23,18 @@ sub output {
   $self->{request}->next;
 }
 
+sub get_action {
+  my ($self) = @_;
+
+  my $action = $self->param('action');
+  return $action if $action;
+
+  my $url = $self->{request}->{request}->url->path;
+  if($url =~ /\/(\w+)$/ && $1 ne 'epfarms-panel') {
+    return $1;
+  }
+  return undef;
+}
+
+
 1;
