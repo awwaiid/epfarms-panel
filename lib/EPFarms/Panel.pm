@@ -103,6 +103,7 @@ sub load_main_page {
   $page->set('.username' => $user->{username});
 
   my $sidebar_item_html = '';
+  my @apps = @{$self->{sidebar}};
   foreach my $sidebar_item (@{$self->{sidebar}}) {
     $sidebar_item_html .= qq{
       <li> <a href="$sidebar_item->{name}">
