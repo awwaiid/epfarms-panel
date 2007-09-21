@@ -45,6 +45,7 @@ sub main {
   my ($self) = @_;
   my $auth = EPFarms::Panel::Auth->new(%$self);
   my $user = $auth->get_authenticated_user;
+  $self->{user} = $user;
 
   $self->load_apps;
   my $page = $self->load_main_page($user);
