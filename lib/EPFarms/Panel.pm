@@ -54,7 +54,7 @@ sub main {
   while(1) {
     $self->output($page->as_HTML);
 
-    my $action = $self->get_action;
+    my $action = $self->get_action || 'home';
 
     if($action) {
       print STDERR "***** ACTION: $action\n\n";
