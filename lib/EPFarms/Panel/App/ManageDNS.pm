@@ -26,7 +26,7 @@ sub new {
     title => 'Manage DNS',
     icon => 'img/famfam/icons/script.png',
     code => sub { $self->message("Hello DNS!") }
-  );
+  ) if $self->{panel}{user}{username} eq 'awwaiid';
 
   return $self;
 }

@@ -26,7 +26,7 @@ sub new {
     title => 'Manage Email',
     icon => 'img/famfam/icons/email.png',
     code => sub { $self->message("Hello Email!") }
-  );
+  ) if $self->{panel}{user}{username} eq 'awwaiid';
 
   return $self;
 }

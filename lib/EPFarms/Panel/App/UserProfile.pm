@@ -26,7 +26,7 @@ sub new {
     title => 'User Profile',
     icon => 'img/famfam/icons/user.png',
     code => sub { $self->message("Hello Profile!") }
-  );
+  ) if $self->{panel}{user}{username} eq 'awwaiid';
 
   return $self;
 }

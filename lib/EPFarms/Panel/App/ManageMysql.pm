@@ -26,7 +26,7 @@ sub new {
     title => 'Manage MySQL',
     icon => 'img/famfam/icons/database.png',
     code => sub { $self->message("Hello MySQL!") }
-  );
+  ) if $self->{panel}{user}{username} eq 'awwaiid';
 
   return $self;
 }

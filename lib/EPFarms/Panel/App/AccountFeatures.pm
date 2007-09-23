@@ -26,7 +26,7 @@ sub new {
     title => 'Account Features',
     icon => 'img/famfam/icons/tick.png',
     code => sub { $self->message("Hello Money!") }
-  );
+  ) if $self->{panel}{user}{username} eq 'awwaiid';
 
   return $self;
 }

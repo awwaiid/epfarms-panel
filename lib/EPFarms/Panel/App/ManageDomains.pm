@@ -26,7 +26,7 @@ sub new {
     title => 'Manage Domains',
     icon => 'img/famfam/icons/server.png',
     code => sub { $self->message("Hello Domains!") }
-  );
+  ) if $self->{panel}{user}{username} eq 'awwaiid';
 
   return $self;
 }

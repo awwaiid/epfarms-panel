@@ -26,7 +26,7 @@ sub new {
     title => 'Manage Files',
     icon => 'img/famfam/icons/folder.png',
     code => sub { $self->message("Hello Files!") }
-  );
+  ) if $self->{panel}{user}{username} eq 'awwaiid';
 
   return $self;
 }
