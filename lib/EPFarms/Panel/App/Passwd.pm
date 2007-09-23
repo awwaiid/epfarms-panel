@@ -91,12 +91,13 @@ sub password_template {
 sub changeSSHPass {
   my ($self, $host, $cur, $pass1, $pass2) = @_;
   my $result = 'ERROR';
-  my $timeout = 5;
-  my $passwd = Expect->spawn("ssh -o StrictHostKeyChecking=no $host");
+  my $timeout = 10;
+  my $passwd = Expect->spawn(
+    "ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password $host");
   #$passwd->log_file("/tmp/passwd_log.txt");
   $passwd->expect($timeout,
-    [ qr/Password: /                   => sub { print $passwd "$cur\n";   exp_continue }],
-    [ qr/:\\\$ /                       => sub { print $passwd "passwd\n"; exp_continue }],
+    [ qr/assword: /                    => sub { print $passwd "$cur\n";   exp_continue }],
+    [ qr/:(\\|~)\$ /                   => sub { print $passwd "passwd\n"; exp_continue }],
     [ qr/^\(current\) UNIX password: / => sub { print $passwd "$cur\n";   exp_continue }],
     [ qr/^Enter new UNIX password: /   => sub { print $passwd "$pass1\n"; exp_continue }],
     [ qr/^Retype new UNIX password: /  => sub { print $passwd "$pass2\n"; exp_continue }],
