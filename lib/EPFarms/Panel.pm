@@ -89,6 +89,7 @@ sub load_apps {
   @applist = map {s/\.pm$//g;$_} @applist;
   @applist = map {s/\//::/g;$_} @applist;
 
+
   # Load them all (they register themselves)
   foreach my $appname (@applist) {
     eval "use $appname";
@@ -107,7 +108,12 @@ sub load_main_page {
 
   my $sidebar_item_html = '';
   my @apps = @{$self->{sidebar}};
-  foreach my $sidebar_item (@{$self->{sidebar}}) {
+
+  my @items = map  { $_->[0] }
+              sort { $a->[1] <=> $b->[1] }
+              map  { [ $_, ($_->{rank} || '50') . $_->{name} ] } @{$self->{sidebar}};
+
+  foreach my $sidebar_item (@items) {
     $sidebar_item_html .= qq{
       <li> <a href="$sidebar_item->{name}">
         <img border=0 align=top src="$sidebar_item->{icon}">

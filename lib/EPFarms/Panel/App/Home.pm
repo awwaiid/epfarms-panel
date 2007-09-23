@@ -22,7 +22,7 @@ sub new {
   my $self = $class->SUPER::new(@_);
 
   $self->{panel}->add_sidebar_action(
-    rank => 0,
+    rank => '00',
     name => 'home',
     title => 'Panel Home',
     icon => 'img/famfam/icons/house.png',
