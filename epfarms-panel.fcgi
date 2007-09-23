@@ -4,7 +4,8 @@
 
 use strict;
 
-open STDERR, ">>", "/tmp/epfarms-panel-log.txt";
+my $process_user = getpwuid($<);
+open STDERR, ">>", "/tmp/epfarms-panel-log-$process_user.txt";
 
 BEGIN { chdir 'EPFarms-Panel' if -d 'EPFarms-Panel' }
 use lib 'lib';
