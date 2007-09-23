@@ -11,7 +11,7 @@ RewriteEngine on
 RewriteRule _darcs - [L]
 
 # Don't rewrite the main script (prevents infinite loops).
-RewriteRule panel\.fcgi - [L]
+RewriteRule epfarms-panel\.fcgi - [L]
 
 # Don't rewrite these directories or files.
 # These are static content
