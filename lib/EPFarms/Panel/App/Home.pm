@@ -26,7 +26,17 @@ sub new {
     name => 'home',
     title => 'Panel Home',
     icon => 'img/famfam/icons/house.png',
-    code => sub { $self->message("Home!") }
+    code => sub { $self->message(qq{
+      <h2>EPFarms User Panel Home</h2>
+      <p><b>(2007-09-23)</b> The user panel is being reborn! So please be
+      patient with us while we grow it, as some of the things that are going
+      into the panel are quite experimental. See the <a
+      href="http://community.epfarms.org/User_Panel_Development">User Panel
+      Development</a> page on the community wiki for development updates or to
+      join in the fun.
+      </p>
+    }
+    ) }
   );
 
   return $self;
