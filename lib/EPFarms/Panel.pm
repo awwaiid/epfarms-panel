@@ -69,12 +69,15 @@ sub main {
     }
   }
 
-  my $page = DOMTemplate->new('tpl/modal-dialog.tpl');
+  my $page = DOMTemplate->new('tpl/modal-dialog.html');
   $page->set('#dialog' => qq{
-      <h1>You are now logged out!</h1>
+      <h2>You are now logged out!</h2>
+      <a href="http://epfarms.org/">Return to epfarms.org</a>
+      <br><br>
+      <a href="./">Restart User Panel</a>
   });
-  my $sid = $self->{request}->session_id;
-  $page->set_value('#sid' => $sid);
+  $page->set('#sid', $self->{request}->session_id);
+  # $self->{request}->print($page->render);
   $self->{request}->print($page->as_HTML);
 }
 
