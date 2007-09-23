@@ -54,20 +54,16 @@ sub do_auth {
   |);
   $page->set('#sid', $self->{request}->session_id);
   while(1) {
-    print STDERR "Message: $msg\n";
-    $page->set('#msg' => $msg);
-    $self->{request}->print($page->as_HTML);
-    $self->{request}->next;
     my $username = $self->param('username');
     my $password = $self->param('password');
     my $c = Authen::Simple::FTP->new(host => 'localhost');
     my $process_user = getpwuid($<);
     print STDERR "process_user: <$process_user>\tusername: <$username>\n";
-    if($process_user ne $username) {
+    if($username && $process_user ne $username) {
       $msg = "Wrong user!";
       next;
     }
-    if($c->authenticate($username, $password)) {
+    if($username && $c->authenticate($username, $password)) {
       my $user = EPFarms::Panel::User->new(
         auth_ok => 1,
         has_javascript => $self->param('has_javascript'),
@@ -75,8 +71,13 @@ sub do_auth {
       );
       $self->{user} = $user;
       return;
+    } elsif($username) {
+      $msg = "Login incorrect.\n";
     }
-    $msg = "Login incorrect.\n";
+    print STDERR "Message: $msg\n";
+    $page->set('#msg' => $msg);
+    $self->{request}->print($page->as_HTML);
+    $self->{request}->next;
   }
 }
 
