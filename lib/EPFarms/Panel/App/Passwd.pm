@@ -70,7 +70,7 @@ sub password_template {
         <tr>
           <td colspan=2>
             <input type=submit name=passwd_action value="Change Password(s)">
-            <input type=submit name=passwd_action value="Cancel">
+            (it takes a minute after you submit!)
           </td>
         </tr>
       </table>
@@ -113,23 +113,27 @@ sub show_change_password {
   $self->display($tpl);
 
   my $action = $self->param('passwd_action');
-  my $cur_password = $self->param('cur_password');
-  my $password1 = $self->param('new_password1');
-  my $password2 = $self->param('new_password2');
+  if($action eq "Change Password(s)") {
 
-  # TODO: insert some user-input sanity checks
-  
-  my $mirabel_shell_result = $self->changeSSHPass(
-    'mirabel.epfarms.org',$cur_password, $password1, $password2);
+    my $cur_password = $self->param('cur_password');
+    my $password1 = $self->param('new_password1');
+    my $password2 = $self->param('new_password2');
 
-  my $pointless_shell_result = $self->changeSSHPass(
-    'pointless.epfarms.org',$cur_password, $password1, $password2);
+    # TODO: insert some user-input sanity checks
+    
+    my $mirabel_shell_result = $self->changeSSHPass(
+      'mirabel.epfarms.org',$cur_password, $password1, $password2);
 
-  $self->display(qq{
-    Mirabel Result: $mirabel_shell_result<br>
-    Pointless Result: $pointless_shell_result<br>
-    <a href="change_password">Return to password changer</a>
-  });
+    my $pointless_shell_result = $self->changeSSHPass(
+      'pointless.epfarms.org',$cur_password, $password1, $password2);
+
+    $self->display(qq{
+      Mirabel Result: $mirabel_shell_result<br>
+      Pointless Result: $pointless_shell_result<br>
+      <a href="change_password">Return to password changer</a>
+    });
+
+  }
 
 }
 
