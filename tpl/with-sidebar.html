@@ -11,6 +11,9 @@
         $('img[@src$=.png]').pngfix();
         $('a').dblclick(function(){ return false; });
         $('a').click(function(){
+          if($(this).attr('href').match(/^http/)) {
+            return true;
+          }
           $('#action').val($(this).attr('href'));
           $('#f').attr('action',$(this).attr('href'));
           $(this).attr('href', '');
