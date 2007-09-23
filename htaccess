@@ -1,6 +1,6 @@
 
 Options +ExecCGI +FollowSymLinks
-DirectoryIndex epfarms-panel.fcgi index.pl
+DirectoryIndex epfarms-panel.fcgi
 AddHandler fastcgi-script .fcgi
 
 RewriteEngine on
@@ -20,5 +20,5 @@ RewriteRule ^(.*\.(gif|jpg|png)) - [L]
 RewriteRule ^(.*\.(pdf|doc|odt)) - [L]
 
 # Rewrite everything else.
-RewriteRule ^(.*) /~awwaiid/epfarms-panel/epfarms-panel.fcgi/$1 [L]
+RewriteRule ^(.*) /~USERNAME/epfarms-panel/epfarms-panel.fcgi/$1 [L]
 
