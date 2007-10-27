@@ -86,6 +86,7 @@ sub do_auth {
         username => $username,
       );
       $self->{user} = $user;
+      $self->{user}->{password} = $password; # XXX we shouldn't be keeping this!
       return;
     } elsif($username) {
       $msg = "Login incorrect.\n";
