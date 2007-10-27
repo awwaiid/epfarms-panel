@@ -23,6 +23,13 @@ sub get_authenticated_user {
   return $self->{user};
 }
 
+sub logout {
+  my ($self) = @_;
+  # Reset the user token
+  $user_token = (rand) . (rand) . (rand);
+  $self->{auth_ok} = 0;
+}
+
 sub do_auth {
   my ($self) = @_;
 
