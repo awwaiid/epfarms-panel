@@ -33,8 +33,7 @@ sub new {
 
 sub message {
   my ($self, $msg) = @_;
-  $self->display( 'Fishies!' );
-  print STDERR "MESSAGE: $msg\n";
+  $self->display( $msg );
 }
 
 =head1 SEE ALSO

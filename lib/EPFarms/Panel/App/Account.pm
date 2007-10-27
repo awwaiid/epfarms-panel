@@ -31,11 +31,6 @@ sub new {
   return $self;
 }
 
-sub message {
-  my ($self, $msg) = @_;
-  print STDERR "MESSAGE: $msg\n";
-}
-
 sub show_finances {
   my ($self) = @_;
   my $username = $self->{panel}->{user}->{username};
