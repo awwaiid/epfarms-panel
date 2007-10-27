@@ -2,8 +2,9 @@
 package EPFarms::Panel::App::ManageEmail;
 
 use strict;
-use EPFarms::Panel::AppBase;
 use base 'EPFarms::Panel::AppBase';
+use Net::SCP::Expect;
+use File::Slurp;
 
 =head1 NAME
 
@@ -25,15 +26,31 @@ sub new {
     name => 'manage_email',
     title => 'Manage Email',
     icon => 'img/famfam/icons/email.png',
-    code => sub { $self->message("Hello Email!") }
+    code => sub { $self->main }
   ) if $self->{panel}{user}{username} eq 'awwaiid';
 
   return $self;
 }
 
-sub message {
-  my ($self, $msg) = @_;
-  print STDERR "MESSAGE: $msg\n";
+sub main {
+  my ($self) = @_;
+  my @domains = $self->user_domains;
+  my $output;
+  $output .= "<h2>Domains:</h2>";
+  $output .= join '', map { "<li><a href='?domain=$_'>$_</a></li>" } @domains;
+  $self->display( $output );
+  my $domain = $self->param('domain');
+  if($domain) {
+    $output = "<h2>Domain: $domain</h2>";
+    my $scp = Net::SCP::Expect->new( timeout => 30 );
+    $scp->login($self->{panel}->{user}->{username}, $self->{panel}->{user}->{password});
+    print STDERR "scp pointless.epfarms.org:/etc/exim4/dom-aliases/$domain /tmp/dom-alias-$domain\n";
+    $scp->scp("pointless.epfarms.org:/etc/exim4/dom-aliases/$domain", "/tmp/dom-alias-$domain");
+    print STDERR "Done with scp!\n";
+    my $content = read_file("/tmp/dom-alias-$domain");
+    $output .= "<hr>$content<hr>";
+    $self->display($output);
+  }
 }
 
 =head1 SEE ALSO
