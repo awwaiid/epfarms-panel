@@ -15,5 +15,22 @@ sub display {
   #$request->next;
 }
 
+sub user_domains {
+  my ($self) = @_;
+  my $username = $self->{panel}->{user}->{username};
+  my @domains = `ls /var/www/$username`;
+  @domains = map { chomp ; $_ } @domains;
+  @domains = grep { $_ !~ /
+    ^(  back_to_home
+      | public_html
+      | tmp
+      | web_logfiles
+      | web_passwds
+      | web_uploads
+    )$/x
+  } @domains;
+  return @domains;
+}
+
 1;
 
