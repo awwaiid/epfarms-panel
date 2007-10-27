@@ -63,6 +63,8 @@ sub main {
         $auth->logout;
         undef $auth;
         last;
+      } else {
+        $self->{action}->{home}->();
       }
     } else {
       $self->output($page->as_HTML);
