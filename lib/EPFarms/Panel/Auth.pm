@@ -5,16 +5,27 @@ use base 'EPFarms::Panel::Base';
 use Authen::Simple::FTP;
 use EPFarms::Panel::User;
 
+our $user_token = (rand) . (rand) . (rand);
+our $auth_user;
+
 sub get_authenticated_user {
   my ($self) = @_;
+  my $token = $self->{request}->get_cookie('auth_token');
+  if($token eq $user_token) {
+    $self->{user} = $auth_user;
+    return $self->{user};
+  }
   unless($self->{auth_ok}) {
     $self->do_auth;
   }
+  $auth_user = $self->{user};
+  $self->{request}->set_cookie(CGI->cookie(-name => 'auth_token', -value => $user_token));
   return $self->{user};
 }
 
 sub do_auth {
   my ($self) = @_;
+
   my $msg;
   my $page = DOMTemplate->new('tpl/modal-dialog.html');
   my $sid = $self->{request}->session_id;
