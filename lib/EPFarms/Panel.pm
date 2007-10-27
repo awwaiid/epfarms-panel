@@ -59,8 +59,8 @@ sub main {
       print STDERR "***** ACTION: $action\n\n";
       if($self->{action}->{$action}) {
         $self->{action}->{$action}->();
-      }
-      if($action eq 'logout') {
+      } elsif($action eq 'logout') {
+        $auth->logout;
         undef $auth;
         last;
       }
