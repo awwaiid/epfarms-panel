@@ -79,9 +79,7 @@ sub do_auth {
     print STDERR "process_user: <$process_user>\tusername: <$username>\n";
     if($username && $process_user ne $username) {
       $msg = "Wrong user!";
-      next;
-    }
-    if($username && $c->authenticate($username, $password)) {
+    } elsif($username && $c->authenticate($username, $password)) {
       my $user = EPFarms::Panel::User->new(
         auth_ok => 1,
         has_javascript => $self->param('has_javascript'),
