@@ -17,8 +17,9 @@ use vars qw( $run_mode $server );
 use Coro;
 use Coro::Event;
 
+# If this file is changed, restart the server
 async {
-    my $timer = Coro::Event->timer( interval => 2, );
+    my $timer = Coro::Event->timer( interval => 10, );
     my $mod_time = -M __FILE__;
     while(1) {
         $timer->next;
