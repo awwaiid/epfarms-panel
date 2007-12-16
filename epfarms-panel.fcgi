@@ -5,7 +5,6 @@
 use strict;
 
 my $process_user = getpwuid($<);
-open STDERR, ">>", "/tmp/epfarms-panel-log-$process_user.txt";
 
 BEGIN { chdir 'EPFarms-Panel' if -d 'EPFarms-Panel' }
 use lib 'lib';
@@ -48,6 +47,7 @@ if($ARGV[0] eq '-d') {
 } else {
   # Default to FastCGI web mode
   $run_mode = 'web';
+  open STDERR, ">>", "/tmp/epfarms-panel-log-$process_user.txt";
   $server = Continuity->new(
     adaptor => Continuity::Adapt::FCGI->new,
     cookie_session => 0,
