@@ -1,9 +1,17 @@
 package EPFarms::Panel;
 
 use strict;
-use base 'EPFarms::Panel::Base';
+use Data::Dumper;
+use Moose;
+extends 'EPFarms::Panel::Base';
 
 use EPFarms::Panel::Auth;
+
+has 'apps' => ( is => 'rw', isa => 'ArrayRef', default => sub { [] });
+has 'app' => ( is => 'rw', default => sub { {} } );
+has 'mainpage' => ( is => 'rw' );
+has 'user' => (is => 'rw');
+has 'action' => (is => 'rw', default => sub { {} });
 
 our $VERSION = '2.01';
 
@@ -40,12 +48,13 @@ per-window.
 
 =cut
 
-# our $auth;
 sub main {
   my ($self) = @_;
   my $auth = EPFarms::Panel::Auth->new(%$self);
   my $user = $auth->get_authenticated_user;
-  $self->{user} = $user;
+  return unless $user;
+
+  $self->user($user);
 
   $self->load_apps;
   my $page = $self->load_main_page($user);
@@ -53,34 +62,37 @@ sub main {
   # Main page event loop
   while(1) {
 
-    my $action = $self->get_action || 'home';
+    my $action = $self->get_action;
 
-    if($action) {
-      print STDERR "***** ACTION: $action\n\n";
-      if($self->{action}->{$action}) {
-        $self->{action}->{$action}->();
-      } elsif($action eq 'logout') {
-        $auth->logout;
-        undef $auth;
-        last;
-      } else {
-        $self->{action}->{home}->();
-      }
+    if($action eq 'logout') {
+      $self->logout;
+      undef $auth;
+      last;
+    }
+
+    my $app = $self->param('app') || 'home';
+    print STDERR "Looking to execute $app.\n";
+
+    if($self->app->{$app}) {
+      print STDERR "Executing $app...\n";
+      $self->app->{$app}->process();
+      $self->mainpage->set('#content', $self->app->{$app}->output);
+      $self->output($self->mainpage->as_HTML);
     } else {
-      $self->output($page->as_HTML);
+      $self->output("Error");
     }
   }
 
-  my $page = DOMTemplate->new('tpl/modal-dialog.html');
+  $page = DOMTemplate->new('tpl/modal-dialog.html');
   $page->set('#dialog' => qq{
       <h2>You are now logged out!</h2>
       <a href="http://epfarms.org/">Return to epfarms.org</a>
       <br><br>
       <a href="./">Restart User Panel</a>
   });
-  $page->set('#sid', $self->{request}->session_id);
-  # $self->{request}->print($page->render);
-  $self->{request}->print($page->as_HTML);
+  $page->set('#sid', $self->request->session_id);
+  # $self->request->print($page->render);
+  $self->request->print($page->as_HTML);
 }
 
 sub load_apps {
@@ -91,48 +103,51 @@ sub load_apps {
   @applist = map {s/\.pm$//g;$_} @applist;
   @applist = map {s/\//::/g;$_} @applist;
 
+  # XXX Temporary override!
+  @applist = qw( EPFarms::Panel::App::Home );
 
   # Load them all (they register themselves)
   foreach my $appname (@applist) {
     eval "use $appname";
     if($@) {
       print STDERR "Error: $@\n";
+    } else {
+      my $app = $appname->new(panel => $self, request => $self->request);
+      push @{$self->apps}, $app;
     }
-    my $app = $appname->new(panel => $self, request => $self->{request});
   }
 }
 
 sub load_main_page {
   my ($self, $user) = @_;
   my $page = DOMTemplate->new('tpl/with-sidebar.html');
-  $page->set('#sid' => $self->{request}->session_id);
+  $page->set('#sid' => $self->request->session_id);
   $page->set('.username' => $user->{username});
 
   my $sidebar_item_html = '';
-  my @apps = @{$self->{sidebar}};
 
   my @items = map  { $_->[0] }
-              sort { $a->[1] <=> $b->[1] }
-              map  { [ $_, ($_->{rank} || '50') . $_->{name} ] } @{$self->{sidebar}};
+              sort { $a->[1] cmp $b->[1] }
+              map  { [ $_, ($_->config->{rank} || '50') . $_->config->{name} ] }
+              @{$self->apps};
 
   foreach my $sidebar_item (@items) {
-    $sidebar_item_html .= qq{
-      <li> <a href="$sidebar_item->{name}">
-        <img border=0 align=top src="$sidebar_item->{icon}">
-        $sidebar_item->{title}</a> </li>
-    };
+    print STDERR "Loading item using config:\n" . Dumper($sidebar_item->config) . "\n";
+    $sidebar_item_html .= qq|
+      <li> <a href="?app=@{[$sidebar_item->config->{name}]}">
+        <img border=0 align=top src="@{[$sidebar_item->config->{icon}]}">
+        @{[$sidebar_item->config->{title}]}</a> </li>
+    |;
+    print STDERR "Name: " . $sidebar_item->config->{name} . "\n";
+    my $name = $sidebar_item->config->{name};
+    print STDERR "Exec: \$self->app->{$name} = \$sidebar_item;\n";
+    $self->app->{$name} = $sidebar_item;
   }
 
   $page->set('#sidebar_apps' => $sidebar_item_html);
 
-  $self->{mainpage} = $page;
+  $self->mainpage($page);
   return $page;
-}
-
-sub add_sidebar_action {
-  my ($self, %action) = @_;
-  push @{$self->{sidebar}}, { %action };
-  $self->{action}->{ $action{name} } = $action{code};
 }
 
 =head1 SEE ALSO

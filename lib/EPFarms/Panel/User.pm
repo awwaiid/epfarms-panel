@@ -1,7 +1,13 @@
 package EPFarms::Panel::User;
 
 use strict;
-use base 'EPFarms::Panel::Base';
+use Moose;
+extends 'EPFarms::Panel::Base';
+
+has auth_ok => ( is => 'rw' );
+has 'has_javascript' => ( is => 'rw' );
+has 'username' => ( is => 'rw' );
+has 'password' => ( is => 'rw' );
 
 =head1 NAME
 

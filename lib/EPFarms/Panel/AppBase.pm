@@ -1,12 +1,21 @@
 package EPFarms::Panel::AppBase;
 
 use strict;
-use base 'EPFarms::Panel::Base';
+use Moose;
+extends 'EPFarms::Panel::Base';
+
+has 'panel' => (is => 'ro');
+has 'config' => (default => {
+  rank => '50',
+  name => '',
+  title => '',
+  icon => 'img/famfam/icons/house.png'
+});
 
 sub display {
   my ($self, $content) = @_;
-  my $request = $self->{request};
-  my $page = $self->{panel}->{mainpage}->clone;
+  my $request = $self->request;
+  my $page = $self->panel->{mainpage}->clone;
   $page->set('#sid' => $request->session_id);
   $page->set('#content' => $content);
   #print STDERR "PAGE: " . ($page->as_HTML) . "\n\n";
@@ -17,7 +26,7 @@ sub display {
 
 sub user_domains {
   my ($self) = @_;
-  my $username = $self->{panel}->{user}->{username};
+  my $username = $self->panel->{user}->{username};
   my @domains = `ls /var/www/$username`;
   @domains = map { chomp ; $_ } @domains;
   @domains = grep { $_ !~ /

@@ -2,32 +2,37 @@
 package EPFarms::Panel::App::Home;
 
 use strict;
-use EPFarms::Panel::AppBase;
-use base 'EPFarms::Panel::AppBase';
+use Moose;
+extends 'EPFarms::Panel::App';
+
+has '+config' => (default => sub {{
+  rank => '00',
+  name => 'home',
+  title => 'Panel Home',
+  icon => 'img/famfam/icons/house.png'
+}});
 
 =head1 NAME
 
-EPFarms::Panel::App::Passwd - Password Changer
+EPFarms::Panel::App::Home - Main page
 
 =head1 DESCRIPTION
 
-Allows users to change their password.
+Main entry page of panel. For now just displays a static message, but in the
+future will perhaps agregate several apps.
 
 =head1 METHODS
 
 =cut
 
-sub new {
-  my $class = shift;
-  my $self = $class->SUPER::new(@_);
-
-  $self->{panel}->add_sidebar_action(
-    rank => '00',
-    name => 'home',
-    title => 'Panel Home',
-    icon => 'img/famfam/icons/house.png',
-    code => sub { $self->message(qq{
-      <h2>EPFarms User Panel Home</h2>
+sub main {
+  my $self = shift;
+  print STDERR "Entering Home::main()\n";
+  my $count = 0;
+  while(1) {
+  $count++;
+  $self->output(qq{
+      <h2>EPFarms User Panel Home ($count)</h2>
       <p><b>(2007-09-23)</b> The user panel is being reborn! So please be
       patient with us while we grow it, as some of the things that are going
       into the panel are quite experimental. See the <a
@@ -35,16 +40,9 @@ sub new {
       Development</a> page on the community wiki for development updates or to
       join in the fun.
       </p>
-    }
-    ) }
-  );
-
-  return $self;
-}
-
-sub message {
-  my ($self, $msg) = @_;
-  $self->display( $msg );
+    });
+  $self->next;
+  }
 }
 
 =head1 SEE ALSO

@@ -2,8 +2,15 @@
 package EPFarms::Panel::App::Account;
 
 use strict;
-use EPFarms::Panel::AppBase;
-use base 'EPFarms::Panel::AppBase';
+use Moose;
+extends 'EPFarms::Panel::App';
+
+has '+config' => (default => sub {{
+  rank => '10',
+  name => 'account_finance',
+  title => 'Account Finances',
+  icon => 'img/famfam/icons/money.png',
+}});
 
 =head1 NAME
 
@@ -17,21 +24,8 @@ Allows users to change their password.
 
 =cut
 
-sub new {
-  my $class = shift;
-  my $self = $class->SUPER::new(@_);
 
-  $self->{panel}->add_sidebar_action(
-    name => 'account_finance',
-    title => 'Account Finances',
-    icon => 'img/famfam/icons/money.png',
-    code => sub { $self->show_finances }
-  );
-
-  return $self;
-}
-
-sub show_finances {
+sub main {
   my ($self) = @_;
   my $username = $self->{panel}->{user}->{username};
   my $tpl = DOMTemplate->new('tpl/accounting.html');

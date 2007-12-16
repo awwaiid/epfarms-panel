@@ -1,12 +1,15 @@
 package EPFarms::Panel::Base;
 
 use strict;
+use Moose;
 
-use base 'EPFarms::Base';
+extends 'EPFarms::Base';
+
+has 'request' => (is => 'rw');
 
 sub param {
   my ($self, $v) = @_;
-  return $self->{request}->param($v);
+  return $self->request->param($v);
 }
 
 =head2 C<< $panel->output($html) >>
@@ -19,8 +22,8 @@ TODO: Send and receive a RequestID, so that we can detect the 'back' button.
 
 sub output {
   my ($self, $page) = @_;
-  $self->{request}->print($page);
-  $self->{request}->next;
+  $self->request->print($page);
+  $self->request->next;
 }
 
 sub get_action {
@@ -29,7 +32,7 @@ sub get_action {
   my $action = $self->param('action');
   return $action if $action;
 
-  my $url = $self->{request}->{request}->url->path;
+  my $url = $self->request->{request}->url->path;
   if($url =~ /\/(\w+)$/ && $1 ne 'epfarms-panel') {
     return $1;
   }

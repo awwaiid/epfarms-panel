@@ -1,41 +1,50 @@
 package EPFarms::Panel::Auth;
 
 use strict;
-use base 'EPFarms::Panel::Base';
+use Moose;
+extends 'EPFarms::Panel::Base';
+
 use Authen::Simple::FTP;
+use Net::FTP;
 use EPFarms::Panel::User;
 
+has 'user' => ( is => 'rw' );
+
+# We have one unique user per process
 our $user_token = (rand) . (rand) . (rand);
 our $auth_user;
 
 sub get_authenticated_user {
   my ($self) = @_;
-  my $token = $self->{request}->get_cookie('auth_token');
+  my $token = $self->request->get_cookie('auth_token') || '';
   if($token eq $user_token) {
-    $self->{user} = $auth_user;
-    return $self->{user};
+    $self->user($auth_user);
+    return $self->user;
   }
-  unless($self->{auth_ok}) {
+  unless($self->user && $self->user->auth_ok) {
     $self->do_auth;
   }
-  $auth_user = $self->{user};
-  $self->{request}->set_cookie(CGI->cookie(-name => 'auth_token', -value => $user_token));
-  return $self->{user};
+  return unless $self->user;
+  $auth_user = $self->user;
+  $self->request->set_cookie(CGI->cookie(
+    -name => 'auth_token',
+    -value => $user_token));
+  return $self->user;
 }
 
 sub logout {
   my ($self) = @_;
   # Reset the user token
   $user_token = (rand) . (rand) . (rand);
-  $self->{auth_ok} = 0;
+  $self->user->auth_ok(0);
 }
 
 sub do_auth {
   my ($self) = @_;
 
-  my $msg;
+  my $msg = '';
   my $page = DOMTemplate->new('tpl/modal-dialog.html');
-  my $sid = $self->{request}->session_id;
+  my $sid = $self->request->session_id;
   $page->set('#dialog' => qq|
     <script>
       \$(function() {
@@ -70,7 +79,7 @@ sub do_auth {
         <script>\$('#username').focus()</script>
       </form>
   |);
-  $page->set('#sid', $self->{request}->session_id);
+  $page->set('#sid', $self->request->session_id);
   while(1) {
     my $username = $self->param('username');
     my $password = $self->param('password');
@@ -84,19 +93,48 @@ sub do_auth {
         auth_ok => 1,
         has_javascript => $self->param('has_javascript'),
         username => $username,
+        password => $password,
       );
-      $self->{user} = $user;
-      $self->{user}->{password} = $password; # XXX we shouldn't be keeping this!
-      return;
+      $self->user($user);
+      $self->setup_remote_access($password);
+      return $self->user;
     } elsif($username) {
       $msg = "Login incorrect.\n";
     }
     print STDERR "Message: $msg\n";
     $page->set('#msg' => $msg);
-    $self->{request}->print($page->as_HTML);
-    $self->{request}->next;
+    $self->request->print($page->as_HTML);
+    return;
+    #$self->request->next;
   }
 }
+
+sub setup_remote_access {
+  my ($self, $password) = @_;
+  my $conf_dir = "/home/" . $self->user->username . "/.epfarms-panel";
+  unless(-d $conf_dir) {
+    print STDERR "Creating configuration directory.\n";
+    mkdir $conf_dir;
+    `chmod 700 $conf_dir`;
+    mkdir "$conf_dir/tmp";
+  }
+  # unless(-e "$conf_dir/rsa_key") {
+    # print STDERR "Generating ssh key for remote access.\n";
+    # `ssh-keygen -t rsa -N "" -f $conf_dir/rsa_key`;
+    # print STDERR "Copying public ssh key to pointless.\n";
+    # my $ftp = Net::FTP->new("pointless.epfarms.org", Passive => 1)
+      # or print STDERR "FTP connect faild\n";
+    # $ftp->login($self->user->{username}, $password)
+      # or print STDERR "FTP auth faild\n";
+    # $ftp->mkdir('.ssh')
+      # or print STDERR "FTP mkdir faild\n" . $ftp->message;
+    # $ftp->append("$conf_dir/rsa_key.pub", '.ssh/authorized_keys')
+      # or print STDERR "FTP append faild\n" . $ftp->message;
+    # $ftp->quit;
+    # print STDERR "Done setting up remote access.\n";
+  # }
+}
+
 
 1;
 
