@@ -36,22 +36,58 @@ sub main {
   my ($self) = @_;
   my @domains = $self->user_domains;
   my $output;
-  $output .= "<h2>Domains:</h2>";
-  $output .= join '', map { "<li><a href='?domain=$_'>$_</a></li>" } @domains;
+  $output .= "<h2>Domain Email Management</h2>";
+  $output .= "<table><tr><th>Domain</th></tr>";
+  $output .= join '', map { qq{
+    <tr>
+      <td>$_</td>
+      <td><a href='?domain=$_&edit=alias'>Aliases</a></td>
+      <td><a href='?domain=$_&edit=accounts'>Accounts</a></td>
+      <td><a href='?domain=$_&edit=lists'>Lists</a></td>
+    </tr>
+  } } @domains;
+  $output .= "</table>";
   $self->display( $output );
   my $domain = $self->param('domain');
   if($domain) {
-    $output = "<h2>Domain: $domain</h2>";
-    my $scp = Net::SCP::Expect->new( timeout => 30 );
-    $scp->login($self->{panel}->{user}->{username}, $self->{panel}->{user}->{password});
-    print STDERR "scp pointless.epfarms.org:/etc/exim4/dom-aliases/$domain /tmp/dom-alias-$domain\n";
-    $scp->scp("pointless.epfarms.org:/etc/exim4/dom-aliases/$domain", "/tmp/dom-alias-$domain");
-    print STDERR "Done with scp!\n";
-    my $content = read_file("/tmp/dom-alias-$domain");
-    $output .= "<hr>$content<hr>";
-    $self->display($output);
+    my $edit = $self->param('edit');
+    if($edit eq 'alias') {
+      $self->edit_remote_file('pointless.epfarms.org', "/etc/exim4/dom-aliases/$domain");
+    } elsif($edit eq 'accounts') {
+      $self->edit_remote_file('pointless.epfarms.org', "/etc/exim4/dom-accounts/$domain");
+    }
   }
 }
+
+sub edit_remote_file {
+  my ($self, $host, $file) = @_;
+  my $username = $self->{panel}->{user}->{username};
+  my $password = $self->{panel}->{user}->{password};
+  my $local_file = $file;
+  $local_file =~ s/\//-/g;
+  my $scp = Net::SCP::Expect->new( timeout => 30 );
+  $scp->login($username, $password);
+  $scp->scp("$host:$file", "/home/$username/.epfarms-panel/tmp/$local_file");
+  my $content = read_file("/home/$username/.epfarms-panel/tmp/$local_file");
+  my $output = qq{
+    <h2>Edit File</h2>
+    Filename: $host:$file<br>
+    <textarea style='width:100\%;height:30em' name=content>$content</textarea>
+    <input type=submit name="email-action" value="Save">
+    <input type=submit name="email-action" value="Cancel">
+  };
+  $self->display($output);
+  my $action = $self->param('email-action');
+  if($action eq 'Save') {
+    $content = $self->param('content');
+    write_file("/home/$username/.epfarms-panel/tmp/$local_file", $content);
+    $scp->scp("/home/$username/.epfarms-panel/tmp/$local_file", "$host:$file");
+    $self->display("Saved!");
+  }
+
+}
+
+
 
 =head1 SEE ALSO
 
