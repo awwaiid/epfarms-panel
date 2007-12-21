@@ -2,7 +2,16 @@
 package EPFarms::Panel::App::ManageEmail;
 
 use strict;
-use base 'EPFarms::Panel::AppBase';
+use Moose;
+extends 'EPFarms::Panel::App';
+
+has '+config' => (default => sub {{
+  rank => '30',
+  name => 'manage_email',
+  title => 'Manage Email',
+  icon => 'img/famfam/icons/email.png',
+}});
+
 use Net::SCP::Expect;
 use File::Slurp;
 
@@ -18,20 +27,6 @@ Allows users to change their password.
 
 =cut
 
-sub new {
-  my $class = shift;
-  my $self = $class->SUPER::new(@_);
-
-  $self->{panel}->add_sidebar_action(
-    name => 'manage_email',
-    title => 'Manage Email',
-    icon => 'img/famfam/icons/email.png',
-    code => sub { $self->main }
-  ) if $self->{panel}{user}{username} eq 'awwaiid';
-
-  return $self;
-}
-
 sub main {
   my ($self) = @_;
   my @domains = $self->user_domains;
@@ -43,7 +38,7 @@ sub main {
       <td>$_</td>
       <td><a href='?domain=$_&edit=alias'>Aliases</a></td>
       <td><a href='?domain=$_&edit=accounts'>Accounts</a></td>
-      <td><a href='?domain=$_&edit=lists'>Lists</a></td>
+    <!--  <td><a href='?domain=$_&edit=lists'>Lists</a></td> -->
     </tr>
   } } @domains;
   $output .= "</table>";
