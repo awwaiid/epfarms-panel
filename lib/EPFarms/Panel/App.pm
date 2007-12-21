@@ -2,8 +2,7 @@ package EPFarms::Panel::App;
 
 use strict;
 use Moose;
-extends 'EPFarms::Panel::Base';
-extends 'Continuity::Widget';
+extends qw( EPFarms::Panel::Base Continuity::Widget );
 
 our $VERSION = '2.01';
 
