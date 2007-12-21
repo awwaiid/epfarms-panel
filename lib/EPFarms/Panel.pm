@@ -85,7 +85,7 @@ sub main {
       <h2>You are now logged out!</h2>
       <a href="http://epfarms.org/">Return to epfarms.org</a>
       <br><br>
-      <a href="/">Restart User Panel</a>
+      <a href="./">Restart User Panel</a>
   });
   $page->set('#sid', $self->request->session_id);
   # $self->request->print($page->render);
@@ -128,7 +128,7 @@ sub load_main_page {
   foreach my $sidebar_item (@items) {
     print STDERR "Loading item using config:\n" . Dumper($sidebar_item->config) . "\n";
     $sidebar_item_html .= qq|
-      <li> <a href="/@{[$sidebar_item->config->{name}]}">
+      <li> <a href="@{[$sidebar_item->config->{name}]}">
         <img border=0 align=top src="@{[$sidebar_item->config->{icon}]}">
         @{[$sidebar_item->config->{title}]}</a> </li>
     |;
