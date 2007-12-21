@@ -2,8 +2,16 @@
 package EPFarms::Panel::App::Passwd;
 
 use strict;
-use EPFarms::Panel::AppBase;
-use base 'EPFarms::Panel::AppBase';
+use Moose;
+extends 'EPFarms::Panel::App';
+
+has '+config' => (default => sub {{
+  rank => '20',
+  name => 'change_password',
+  title => 'Change Passwords',
+  icon => 'img/famfam/icons/key.png',
+}});
+
 use Expect;
 $Expect::Log_Stdout = 0;
 
@@ -19,21 +27,6 @@ Allows users to change their password.
 
 =cut
 
-sub new {
-  my $class = shift;
-  my $self = $class->SUPER::new(@_);
-
-  $self->{request} = $self->{panel}->{request};
-
-  $self->{panel}->add_sidebar_action(
-    name => 'change_password',
-    title => 'Change Passwords',
-    icon => 'img/famfam/icons/key.png',
-    code => sub { $self->show_change_password() }
-  );
-
-  return $self;
-}
 
 sub debug {
   my ($self, $msg) = @_;
@@ -107,7 +100,7 @@ sub changeSSHPass {
   return $result;
 }
 
-sub show_change_password {
+sub main {
   my ($self) = @_;
   my $tpl = $self->password_template;
   print STDERR "self: $self\ntpl: $tpl\n\n";
