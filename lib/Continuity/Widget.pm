@@ -16,7 +16,7 @@ has 'output' => (is => 'rw',   isa => 'Str', default => '');
 
 sub process {
   my ($self) = @_;
-  $self->{cont} ||= continuation { $self->main };
+  $self->{cont} ||= continuation { while(1) { $self->main } };
   $self->{cont}->();
 }
 
