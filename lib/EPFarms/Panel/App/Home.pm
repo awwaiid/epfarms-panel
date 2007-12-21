@@ -30,18 +30,18 @@ sub main {
   print STDERR "Entering Home::main()\n";
   my $count = 0;
   while(1) {
-  $count++;
-  $self->output(qq{
-      <h2>EPFarms User Panel Home ($count)</h2>
-      <p><b>(2007-09-23)</b> The user panel is being reborn! So please be
-      patient with us while we grow it, as some of the things that are going
-      into the panel are quite experimental. See the <a
-      href="http://community.epfarms.org/User_Panel_Development">User Panel
-      Development</a> page on the community wiki for development updates or to
-      join in the fun.
-      </p>
-    });
-  $self->next;
+    $count++;
+    $self->output(qq{
+        <h2>EPFarms User Panel Home ($count)</h2>
+        <p><b>(2007-09-23)</b> The user panel is being reborn! So please be
+        patient with us while we grow it, as some of the things that are going
+        into the panel are quite experimental. See the <a
+        href="http://community.epfarms.org/User_Panel_Development">User Panel
+        Development</a> page on the community wiki for development updates or to
+        join in the fun.
+        </p>
+      });
+    $self->next;
   }
 }
 
