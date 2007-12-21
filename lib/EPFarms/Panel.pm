@@ -85,7 +85,7 @@ sub main {
       <h2>You are now logged out!</h2>
       <a href="http://epfarms.org/">Return to epfarms.org</a>
       <br><br>
-      <a href="./">Restart User Panel</a>
+      <a href="/">Restart User Panel</a>
   });
   $page->set('#sid', $self->request->session_id);
   # $self->request->print($page->render);
