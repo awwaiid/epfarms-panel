@@ -31,7 +31,7 @@ sub main {
   my $count = 0;
   while(1) {
     $count++;
-    $self->output(qq{
+    $self->display(qq{
         <h2>EPFarms User Panel Home ($count)</h2>
         <p><b>(2007-09-23)</b> The user panel is being reborn! So please be
         patient with us while we grow it, as some of the things that are going
@@ -41,7 +41,6 @@ sub main {
         join in the fun.
         </p>
       });
-    $self->next;
   }
 }
 
