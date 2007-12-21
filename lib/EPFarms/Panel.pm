@@ -62,7 +62,7 @@ sub main {
   # Main page event loop
   while(1) {
 
-    my $action = $self->get_action;
+    my $action = $self->get_action || 'home';
 
     if($action eq 'logout') {
       $self->logout;
