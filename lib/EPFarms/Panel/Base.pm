@@ -30,6 +30,7 @@ sub get_action {
   my ($self) = @_;
 
   my $action = $self->param('action');
+  $action =~ s/^\/// if $action;
   return $action if $action;
 
   my $url = $self->request->{request}->url->path;
