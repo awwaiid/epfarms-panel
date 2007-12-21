@@ -20,7 +20,7 @@ TODO: Send and receive a RequestID, so that we can detect the 'back' button.
 
 =cut
 
-sub output {
+sub disp {
   my ($self, $page) = @_;
   $self->request->print($page);
   $self->request->next;

@@ -79,7 +79,7 @@ sub main {
       $self->mainpage->set('#content', $self->app->{$app}->output);
       $self->output($self->mainpage->as_HTML);
     } else {
-      $self->output("Error");
+      $self->disp("Error");
     }
   }
 
