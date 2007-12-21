@@ -70,14 +70,11 @@ sub main {
       last;
     }
 
-    my $app = $self->param('app') || 'home';
-    print STDERR "Looking to execute $app.\n";
-
-    if($self->app->{$app}) {
-      print STDERR "Executing $app...\n";
-      $self->app->{$app}->process();
-      $self->mainpage->set('#content', $self->app->{$app}->output);
-      $self->output($self->mainpage->as_HTML);
+    if($action) {
+      print STDERR "Executing $action...\n";
+      $self->app->{$action}->process();
+      $self->mainpage->set('#content', $self->app->{$action}->output);
+      $self->disp($self->mainpage->as_HTML);
     } else {
       $self->disp("Error");
     }
@@ -134,7 +131,7 @@ sub load_main_page {
   foreach my $sidebar_item (@items) {
     print STDERR "Loading item using config:\n" . Dumper($sidebar_item->config) . "\n";
     $sidebar_item_html .= qq|
-      <li> <a href="?app=@{[$sidebar_item->config->{name}]}">
+      <li> <a href="/@{[$sidebar_item->config->{name}]}">
         <img border=0 align=top src="@{[$sidebar_item->config->{icon}]}">
         @{[$sidebar_item->config->{title}]}</a> </li>
     |;
