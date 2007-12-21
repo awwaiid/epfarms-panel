@@ -65,7 +65,7 @@ sub main {
     my $action = $self->get_action || 'home';
 
     if($action eq 'logout') {
-      $self->logout;
+      $auth->logout;
       undef $auth;
       last;
     }
