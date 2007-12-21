@@ -100,15 +100,6 @@ sub load_apps {
   @applist = map {s/\.pm$//g;$_} @applist;
   @applist = map {s/\//::/g;$_} @applist;
 
-  # XXX Temporary override!
-  @applist = qw(
-    EPFarms::Panel::App::Home
-    EPFarms::Panel::App::Account
-    EPFarms::Panel::App::Passwd
-    EPFarms::Panel::App::ManageEmail
-    EPFarms::Panel::App::Demo
-  );
-
   # Load them all (they register themselves)
   foreach my $appname (@applist) {
     eval "use $appname";
