@@ -9,15 +9,19 @@
     <script type="text/javascript">
       $(function(){
         $('img[@src$=.png]').pngfix();
-        $('a').dblclick(function(){ return false; });
-        $('a').click(function(){
-          if($(this).attr('href').match(/^http/)) {
-            return true;
+        $('a').each(function(){
+          var link = $(this);
+          if(!(link.attr('href').match(/^http/))) {
+            var href = link.attr('href');
+            link.click(function(event){
+              event.preventDefault();
+              //$('#action').val(href);
+              $('#f').attr('action',href);
+              $('#f').submit();
+              return false;
+            });
+            link.attr('href', '#'+href);
           }
-          $('#action').val($(this).attr('href'));
-          $('#f').attr('action',$(this).attr('href'));
-          $('#f').submit();
-          return false;
         });
         $('table.data').tablesorter({widgets: ['zebra']});
       });
