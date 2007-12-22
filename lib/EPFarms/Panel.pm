@@ -95,8 +95,9 @@ sub main {
 sub load_apps {
   my ($self) = @_;
   # Look up all the available apps
-  my @applist = ((glob 'lib/EPFarms/Panel/App/*.pm'), (glob 'App/*.pm'));
-  @applist = map {s/^lib\///g;$_} @applist;
+  my @applist = ((glob 'lib/EPFarms/Panel/App/*.pm'), (glob '~/.epfarms-panel/App/*.pm'));
+  eval q|use lib "/home/" . $self->user->{username} . "/.epfarms-panel"; |;
+  @applist = map {s/^(lib|.*epfarms-panel)\///g;$_} @applist;
   @applist = map {s/\.pm$//g;$_} @applist;
   @applist = map {s/\//::/g;$_} @applist;
 
