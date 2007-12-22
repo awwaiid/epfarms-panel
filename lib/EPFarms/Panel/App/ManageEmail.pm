@@ -61,6 +61,7 @@ sub edit_remote_file {
   my $local_file = $file;
   $local_file =~ s/\//-/g;
   my $scp = Net::SCP::Expect->new( timeout => 30 );
+  $scp->option('StrictHostKeyChecking=no');
   $scp->login($username, $password);
   $scp->scp("$host:$file", "/home/$username/.epfarms-panel/tmp/$local_file");
   my $content = read_file("/home/$username/.epfarms-panel/tmp/$local_file");
