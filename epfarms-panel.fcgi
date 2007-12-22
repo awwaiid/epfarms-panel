@@ -4,6 +4,10 @@
 
 use strict;
 
+$SIG{TERM} = sub {
+  exit;
+};
+
 my $process_user = getpwuid($<);
 
 BEGIN { chdir 'EPFarms-Panel' if -d 'EPFarms-Panel' }
