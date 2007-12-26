@@ -1,6 +1,5 @@
 package EPFarms::Panel::User;
 
-use strict;
 use Moose;
 extends 'EPFarms::Panel::Base';
 

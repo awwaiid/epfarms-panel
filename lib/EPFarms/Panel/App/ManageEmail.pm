@@ -1,7 +1,6 @@
 
 package EPFarms::Panel::App::ManageEmail;
 
-use strict;
 use Moose;
 extends 'EPFarms::Panel::App';
 

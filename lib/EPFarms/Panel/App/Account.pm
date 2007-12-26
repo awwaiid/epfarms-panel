@@ -1,7 +1,6 @@
 
 package EPFarms::Panel::App::Account;
 
-use strict;
 use Moose;
 extends 'EPFarms::Panel::App';
 

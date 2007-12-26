@@ -1,6 +1,5 @@
 package Continuity::Widget;
 
-use strict;
 use Moose;
 use Coro::Continuation;
 use Data::UUID;

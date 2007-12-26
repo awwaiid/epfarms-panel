@@ -1,6 +1,5 @@
 package EPFarms::Panel;
 
-use strict;
 use Data::Dumper;
 use Moose;
 extends 'EPFarms::Panel::Base';

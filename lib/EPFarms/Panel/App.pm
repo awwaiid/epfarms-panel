@@ -1,6 +1,5 @@
 package EPFarms::Panel::App;
 
-use strict;
 use Moose;
 extends qw( EPFarms::Panel::Base Continuity::Widget );
 
