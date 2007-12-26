@@ -39,7 +39,7 @@ if($ARGV[0] eq '-d') {
   # Debugging / Development server, running outside of FastCGI
   $run_mode = 'webdev';
   $server = Continuity->new(
-    port => 8080,
+    port => $ARGV[1] || 8080,
     cookie_session => 0,
     query_session => 'sid',
   );
