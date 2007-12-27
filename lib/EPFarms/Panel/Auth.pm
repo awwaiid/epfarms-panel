@@ -47,7 +47,8 @@ sub do_auth {
   $page->set('#dialog' => qq|
     <script>
       \$(function() {
-        if(location.href.indexOf("epfarms.org") > -1) {
+        if(location.href.indexOf("epfarms.org") > -1 &&
+          location.href.indexOf("-dev") == -1) {
           \$('#f').submit(function() {
             \$('#f').attr('action',('/~' + f.username.value + '/epfarms-panel/'));
           });
