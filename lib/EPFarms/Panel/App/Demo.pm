@@ -8,6 +8,7 @@ has '+config' => (default => sub {{
   name => 'demo',
   title => 'Demo',
   icon => 'img/famfam/icons/script.png',
+  user_group => 'paneldev',
 }});
 
 sub main {
