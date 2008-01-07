@@ -126,6 +126,13 @@ sub load_main_page {
               @{$self->apps};
 
   foreach my $sidebar_item (@items) {
+
+    # Check to see if this user should see this app
+    if($sidebar_item->config->{user_group}) {
+      my $groups = (getgrnam($sidebar_item->config->{user_group}))[3];
+      next unless $groups =~ /\b$user->{username}\b/;
+    }
+
     print STDERR "Loading item using config:\n" . Dumper($sidebar_item->config) . "\n";
     $sidebar_item_html .= qq|
       <li> <a href="@{[$sidebar_item->config->{name}]}">
