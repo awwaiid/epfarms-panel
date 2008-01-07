@@ -23,15 +23,44 @@ Allows users to change their password.
 
 =cut
 
+use EPFarms::Effin;
 
 sub main {
   my ($self) = @_;
   my $username = $self->{panel}->{user}->{username};
+  my $password = $self->{panel}->{user}->{password};
+  my $db = EPFarms::Effin->connect(
+    'dbi:mysql:database=epfarms_effin_effin',
+    $username,
+    $password
+  );
   my $tpl = DOMTemplate->new('tpl/accounting.html');
   $tpl->set('.username' => $username);
   $tpl->set('#item_name' => "Deposit for $username");
+
   while(1) {
-    $tpl->set('#balance' => '----');
+
+    # Fill in the transaction history
+    my $bal = 0;
+    my @transactions = $db->resultset('MyTransactions')->search(
+      undef, {order_by => 'trn_date'});
+    if(@transactions) {
+      my $rows = [
+        map {[
+          $_->trn_date->ymd,
+          $_->trn_memo,
+          (sprintf '$%.02f', $_->trn_amount),
+          (sprintf '$%.02f', $bal += $_->trn_amount)
+        ]} @transactions
+      ];
+      $tpl->fill_rows('#transaction-data tbody' => $rows);
+    } else {
+      $tpl->set('#transaction-data' => 'NO TRANSACTIONS');
+      $bal = '---';
+    }
+
+    $tpl->set('#balance' => $bal);
+
     $self->display( $tpl->render );
     my $action = $self->get_action;
     if($action ne 'account_finance') {
