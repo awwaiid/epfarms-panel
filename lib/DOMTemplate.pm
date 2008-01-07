@@ -173,10 +173,10 @@ sub find_by_selector {
   my @tokens = split(/ /, $selector);
   my (@ok_nodes) = ();
   foreach my $token (@tokens) {
-    while($token =~ /^(#|\.)?(\w+)/) {
+    while($token =~ /^(#|\.)?([-\w]+)/) {
       my $type = $1;
       my $name = $2;
-      $token =~ s/^(#|\.)?(\w+)//; # Kill this part
+      $token =~ s/^(#|\.)?([-\w]+)//; # Kill this part
       if($type eq '') {
         # Tag
         if($root) {
