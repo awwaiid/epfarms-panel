@@ -8,3 +8,9 @@ Places for apps to hook:
 * Normal call
 * AJAX thread
 
+
+select date_format(min(trn_date),'%Y-%m-%d'), trn_usr_efid from transactions group by trn_usr_efid into outfile '/tmp/out.csv' FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+/usr/bin/perl -e 'use Date::Manip;while(<>){ $_ =~ /^(.*),(.*)$/; $d = $1; $u = $2;$d = ParseDate($d);$today = ParseDate("today"); while($d < $today) { print UnixDate($d, "INSERT INTO transactions SET trn_usr_efid=$u, trn_date = \"%Y-%m-%d\";\n"); $d = DateCalc($d, "+ 1 month")}}' out.csv > expand.sql
+
+
