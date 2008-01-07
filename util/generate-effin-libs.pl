@@ -1,14 +1,15 @@
 #!/usr/bin/perl
 
-package EPFarms::DB;
+package EPFarms::Effin;
 use base 'DBIx::Class::Schema::Loader';
 
 package main;
+use strict;
 
 print "Enter password: ";
 my $passwd = <>;
-chomp $password;
+chomp $passwd;
 
-EPFarms::DB->dump_to_dir('../lib');
-EPFarms::DB->connection('dbi:mysql:database=epfarms', 'root', $passwd);
+EPFarms::Effin->dump_to_dir('../lib');
+EPFarms::Effin->connection('dbi:mysql:database=epfarms_effin_effin', 'root', $passwd);
 
