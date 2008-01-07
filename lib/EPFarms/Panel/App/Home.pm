@@ -27,11 +27,9 @@ future will perhaps agregate several apps.
 sub main {
   my $self = shift;
   print STDERR "Entering Home::main()\n";
-  my $count = 0;
   while(1) {
-    $count++;
     $self->display(qq{
-        <h2>EPFarms User Panel Home ($count)</h2>
+        <h2>EPFarms User Panel Home</h2>
         <p><b>(2007-09-23)</b> The user panel is being reborn! So please be
         patient with us while we grow it, as some of the things that are going
         into the panel are quite experimental. See the <a
