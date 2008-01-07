@@ -16,11 +16,11 @@ use File::Slurp;
 
 =head1 NAME
 
-EPFarms::Panel::App::Passwd - Password Changer
+EPFarms::Panel::App::ManageEmail - Simple email settings management
 
 =head1 DESCRIPTION
 
-Allows users to change their password.
+Allows users to edit their basic email settings.
 
 =head1 METHODS
 
@@ -83,8 +83,6 @@ sub edit_remote_file {
   }
 
 }
-
-
 
 =head1 SEE ALSO
 
