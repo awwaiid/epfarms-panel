@@ -209,6 +209,23 @@ sub find_by_selector {
   return @ok_nodes;
 }
 
+sub fill_rows {
+  my ($self, $selector, $data) = @_;
+  my @nodes = $self->find_by_selector($selector);
+  if(@nodes) {
+    my $n = shift @nodes;
+    my $rows =
+      join "\n",
+      map { "<tr>$_</tr>" }
+        map {
+          join "\n", map { "<td>$_</td>" } @$_
+        } @$data
+      ;
+    $n->replace_content(to_node($rows));
+  }
+}
+
+
 
 1;
 
