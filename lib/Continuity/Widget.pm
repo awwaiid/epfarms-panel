@@ -12,15 +12,19 @@ has 'id' => (
   default => sub { Data::UUID->new->create_str }
 );
 has 'output' => (is => 'rw',   isa => 'Str', default => '');
+has 'input' => (is => 'rw', defualt => sub {{}});
 
 sub process {
-  my ($self) = @_;
+  my ($self, $input) = @_;
+  $self->input($input);
   $self->{cont} ||= continuation { while(1) { $self->main } };
   $self->{cont}->();
+  return $self->output;
 }
 
 sub next {
-  my ($self) = @_;
+  my ($self, $output) = @_;
+  $self->output($output);
   yield;
 }
 
