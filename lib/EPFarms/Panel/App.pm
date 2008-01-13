@@ -40,8 +40,7 @@ has 'config' => (is => 'ro', default => sub {{
 
 sub display {
   my ($self, $content) = @_;
-  $self->output($content);
-  $self->next;
+  return $self->next($content);
 }
 
 sub user_domains {
