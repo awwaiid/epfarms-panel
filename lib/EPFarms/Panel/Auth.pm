@@ -50,12 +50,12 @@ sub do_auth {
         if(location.href.indexOf("epfarms.org") > -1 &&
           location.href.indexOf("-dev") == -1) {
           \$('#f').submit(function() {
-            var new_url = '/~' + f.username.value + '/epfarms-panel/';
-            var m = location.match(/epfarms-panel\\\/(.*)\$/);
-            if(m[1])
-              new_url += m[1];
+            var new_url = '/~' + \$('#username').val() + '/epfarms-panel/';
+            var m = location.href.match(/(epfarms-)?panel\\\/(.*)\$/);
+            if(m[2]) {
+              new_url += m[2];
             }
-            \$('#f').attr('action', new_url));
+            \$('#f').attr('action', new_url);
           });
         }
       });
