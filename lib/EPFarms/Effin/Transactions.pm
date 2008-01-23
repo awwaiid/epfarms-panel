@@ -65,6 +65,11 @@ __PACKAGE__->set_primary_key("trn_uid");
 
 __PACKAGE__->load_components("InflateColumn::DateTime");
 
+sub trn_amount_formatted {
+  my ($self) = @_;
+  my $amount = $self->trn_amount;
+  return sprintf('$%.02f', $amount);
+}
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;
