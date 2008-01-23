@@ -85,12 +85,14 @@ sub user_detail {
     if(scalar ($user->transactions) > 0) {
       $out .= qq|
         <h4>Transactions</h4>
-        <table border=1 cellspacing=0 cellpadding=2 width="100%">
-          <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Amount</th>
-          </tr>
+        <table class="data">
+          <thead>
+            <tr class=header>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
       |;
       foreach my $transaction ($user->transactions) {
         $out .= qq|
