@@ -55,7 +55,7 @@ sub main {
           <th>Balance</th>
         </tr>
       </thead>";
-    foreach my $user ($db->resultset('Users')->all) {
+    foreach my $user ($db->resultset('Users')->search(undef,{order_by => 'usr_nname'})) {
       $out .= "<tr><td>"
         . $self->add_link($user->usr_nname => sub { $self->user_detail($user) })
         . "</td>"
