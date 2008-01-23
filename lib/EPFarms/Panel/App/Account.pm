@@ -3,6 +3,7 @@ package EPFarms::Panel::App::Account;
 
 use Moose;
 extends 'EPFarms::Panel::App';
+use EPFarms::Effin;
 
 has '+config' => (default => sub {{
   rank => '10',
@@ -22,80 +23,6 @@ Allows users to change their password.
 =head1 METHODS
 
 =cut
-
-use EPFarms::Effin;
-
-use DBI;
-
-sub get_mysql_auth {
-  my ($self) = @_;
-  my $dsn = 'DBI:mysql:database=epfarms_effin_effin';
-  my $username = $self->{panel}->{user}->{username};
-  my $password = $self->{panel}->{user}->{password};
-
-  # First try with what we have
-  eval { DBI->connect($dsn, $username, $password, { RaiseError => 1}) };
-  return ($username, $password) unless $@;
-
-  while(1) {
-
-    $password = `cat ~/.epfarms-panel/mysql_password`;
-    chomp $password;
-
-    # Try with the cached password
-    eval { DBI->connect($dsn, $username, $password, { RaiseError => 1}) };
-    return ($username, $password) unless $@;
-
-    # Then ask for the password
-    $self->display(qq|
-      <p>Our default entry for your MySQL username and password failed. If you
-      do not use MySQL in any web applications, you can just reset your
-      password and continue.</p>
-      <br>
-      
-      <input type=submit name="resetpassword" value="Reset MySQL Password">
-
-      <p>If you do use your MySQL password in web applications, you might have
-      set a separate MySQL password. Please enter your MySQL username and
-      password, and I will remember it in the future.</p>
-
-      <br><br>
-
-      Username: <input type=text name=username value="$username"><br>
-      Password: <input type=password name=password><br>
-
-      <input type=submit name="authenticate" value="Authenticate to MySQL">
-    |);
-
-    if($self->param('resetpassword')) {
-      `/usr/local/bin/mysql_passwd_reset -y`;
-      $password = `cat ~/.epfarms-panel/mysql_password`;
-      chomp $password;
-      $self->display(qq{
-        <p>Password reset to '$password'. You may want to keep this password in
-        case you install any MySQL-based web applications, though you can
-        always reset it again later.</p>
-        <br><br>
-        <input type=submit value=Continue>
-      });
-    } else {
-      $username = $self->param('username');
-      $password = $self->param('password');
-      print STDERR "Trying MySQL User: $username\n";
-
-      eval { DBI->connect($dsn, $username, $password, { RaiseError => 1}) };
-      return ($username, $password) unless $@;
-
-      print STDERR "Error logging in to DB: $@\n";
-      $self->display(qq|
-        <p>Well that didn't work either. I'm letting support know that there is a problem and they will contact you. You can try again too, if you like.</p>
-        <p>(DB Error: $@)</p>
-      |);
-      return;
-    }
-  }
-
-}
 
 
 sub main {

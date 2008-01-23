@@ -14,38 +14,6 @@ has '+config' => (default => sub {{
 
 has callback => (is => 'rw', default => sub{{}});
 
-sub get_mysql_auth {
-  my ($self) = @_;
-  my $dsn = 'DBI:mysql:database=epfarms_effin_effin';
-  my $username = $self->{panel}->{user}->{username};
-  my $password = $self->{panel}->{user}->{password};
-
-  # First try with what we have
-  eval { DBI->connect($dsn, $username, $password, { RaiseError => 1}) };
-  return ($username, $password) unless $@;
-
-  # Then ask for the password
-  $self->display(qq|
-    <p>Our default entry for your MySQL username and password failed. Please enter your MySQL username and password. This will be automated in the near future.</p>
-    <br><br>
-    Username: <input type=text name=username value="$username"><br>
-    Password: <input type=password name=password><br>
-    <input type=submit>
-  |);
-  $username = $self->param('username');
-  $password = $self->param('password');
-  print STDERR "Trying MySQL User: $username\n";
-
-  eval { DBI->connect($dsn, $username, $password, { RaiseError => 1}) };
-  return ($username, $password) unless $@;
-
-  $self->display(qq|
-    <p>Well that didn't work either. I'm letting support know that there is a problem and they will contact you. You can try again too, if you like.</p>
-  |);
-  return;
-
-}
-
 sub add_link {
   my ($self, $text, $subref) = @_;
   my $name = scalar $subref;
