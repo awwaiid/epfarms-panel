@@ -9,7 +9,7 @@ my $skip_confirm = 0;
 if($ARGV[0] eq '-y') {
   $skip_confirm = 1;
   $ENV{PATH} = '';
-  my $admin_password = `/bin/cat /root/.mysql_password`;
+  my $admin_password = `/bin/cat /root/.mysql_passwd`;
   chomp $admin_password;
 
   my $username = getpwuid($<);
