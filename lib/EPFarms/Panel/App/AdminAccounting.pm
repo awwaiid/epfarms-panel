@@ -94,7 +94,7 @@ sub user_detail {
             </tr>
           </thead>
       |;
-      foreach my $transaction ($user->transactions) {
+      foreach my $transaction ($user->transactions(undef,{order_by => 'trn_date'})) {
         $out .= qq|
           <tr>
             <td>@{[$transaction->trn_date]}</td>
