@@ -100,6 +100,8 @@ sub load_apps {
   @applist = map {s/\.pm$//g;$_} @applist;
   @applist = map {s/\//::/g;$_} @applist;
 
+  print STDERR "*** Loading: @applist\n";
+
   # Load them all (they register themselves)
   foreach my $appname (@applist) {
     eval "use $appname";
@@ -127,21 +129,22 @@ sub load_main_page {
 
   foreach my $sidebar_item (@items) {
 
+    print STDERR "    Found app: " . $sidebar_item->config->{name} . "\n";
+
     # Check to see if this user should see this app
     if($sidebar_item->config->{user_group}) {
       my $groups = (getgrnam($sidebar_item->config->{user_group}))[3];
       next unless $groups =~ /\b$user->{username}\b/;
     }
 
-    print STDERR "Loading item using config:\n" . Dumper($sidebar_item->config) . "\n";
+    print STDERR "  Loading app: " . $sidebar_item->config->{name} . "\n";
+
     $sidebar_item_html .= qq|
       <li> <a href="@{[$sidebar_item->config->{name}]}">
         <img border=0 align=top src="@{[$sidebar_item->config->{icon}]}">
         @{[$sidebar_item->config->{title}]}</a> </li>
     |;
-    print STDERR "Name: " . $sidebar_item->config->{name} . "\n";
     my $name = $sidebar_item->config->{name};
-    print STDERR "Exec: \$self->app->{$name} = \$sidebar_item;\n";
     $self->app->{$name} = $sidebar_item;
   }
 

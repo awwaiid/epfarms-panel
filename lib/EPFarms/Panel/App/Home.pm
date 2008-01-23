@@ -26,7 +26,6 @@ future will perhaps agregate several apps.
 
 sub main {
   my $self = shift;
-  print STDERR "Entering Home::main()\n";
   while(1) {
     $self->display(qq{
         <h2>EPFarms User Panel Home</h2>
