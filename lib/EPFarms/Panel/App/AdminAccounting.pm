@@ -97,9 +97,9 @@ sub user_detail {
       foreach my $transaction ($user->transactions(undef,{order_by => 'trn_date'})) {
         $out .= qq|
           <tr>
-            <td>@{[$transaction->trn_date]}</td>
+            <td>@{[$transaction->trn_date->ymd]}</td>
             <td>@{[$transaction->trn_memo]}</td>
-            <td>@{[$transaction->trn_amount]}</td>
+            <td>@{[$transaction->trn_amount_formatted]}</td>
           </tr>
         |;
       }
