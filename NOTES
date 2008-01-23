@@ -13,4 +13,65 @@ select date_format(min(trn_date),'%Y-%m-%d'), trn_usr_efid from transactions gro
 
 /usr/bin/perl -e 'use Date::Manip;while(<>){ $_ =~ /^(.*),(.*)$/; $d = $1; $u = $2;$d = ParseDate($d);$today = ParseDate("today"); while($d < $today) { print UnixDate($d, "INSERT INTO transactions SET trn_usr_efid=$u, trn_date = \"%Y-%m-%d\";\n"); $d = DateCalc($d, "+ 1 month")}}' out.csv > expand.sql
 
+sub main {
+  my $self = shift;
+  handler '/' => sub { ... };
+
+# ...
+
+Unobtrusive Perl
+
+$dom = DOMTemplate->new('demo.html');
+$dom->add_callback('a.add_txn' => sub {
+  my ($node) = @_;
+  my $username = $node->attr('user');
+  $self->add_txn($username);
+}
+
+
+
+div => { id => 'user' } => [
+  $user->render,
+  $user->userinfo->render,
+],
+
+
+
+html => [
+
+  head => [
+    title => ['Eggplant Farms User Panel'],
+    script => {src => '/js/jquery.js'},
+  ],
+
+  body => [
+
+    div => { id => 'header' } => [
+      img => { src => 'img/logo.png' },
+      div => { class => 'float-right' } => [
+        a => { action => sub { $panel->logout } } => [
+          "Logout " . $panel->username
+        ],
+      ]
+    ],
+
+    div => { id => 'sidebar' } => [
+      h2 => [ 'Apps' ],
+      $self->render_applist,
+      h2 => [ 'Eggplant Farms' ],
+      ul => [
+        li => [ a => { href => 'http://epfarms.org/' }          => [ 'Home' ] ],
+        li => [ a => { href => 'http://community.epfarms.org' } => [ 'Community' ] ],
+      ],
+      h2 => [ 'Featured Sites' ],
+      $self->render_featured_sites,
+    ],
+
+    div => { id => 'content' } => [
+      $self->render_content
+    ]
+  ]
+]
+
+
 
