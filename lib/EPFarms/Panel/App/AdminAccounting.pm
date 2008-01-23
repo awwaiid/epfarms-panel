@@ -25,7 +25,7 @@ sub add_link {
 sub process_links {
   my ($self) = @_;
   my $name = $self->param('callback');
-  if($self->callback->{$name}) {
+  if(defined $self->callback->{$name}) {
     $self->callback->{$name}->();
     $self->callback({});
     return 1;
