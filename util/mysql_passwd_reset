@@ -25,11 +25,10 @@ if($ARGV[0] eq '-y') {
   my $timeout = 10;
   my $mysql = Expect->spawn('/usr/bin/mysql', '-u', 'root', '-p');
   $mysql->log_stdout(0);
-  $mysql->expect($timeout,
-    [ qr/assword: / => sub { print $mysql "$admin_password\n"; exp_continue }],
-    [ qr/mysql> /   => sub { print $mysql "$change_cmd\n";                  }],
-  );
-  $mysql->hard_close;
+  $mysql->expect($timeout, [ qr/assword: / => sub { print $mysql "$admin_password\n" }]);
+  $mysql->expect($timeout, [ qr/mysql> /   => sub { print $mysql "$change_cmd\n";    }]);
+  $mysql->expect($timeout, [ qr/mysql> /   => sub { print $mysql "quit\n";           }]);
+  $mysql->soft_close;
 
   # Cache it for the panel and reset permissions
   $username =~ /^(.*)$/;
