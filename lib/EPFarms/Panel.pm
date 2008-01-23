@@ -70,9 +70,9 @@ sub main {
     }
 
     if($action) {
-      print STDERR "Executing $action...\n";
-      $self->app->{$action}->process();
-      $self->mainpage->set('#content', $self->app->{$action}->output);
+      print STDERR "Executing app: $action\n";
+      my $output = $self->app->{$action}->process;
+      $self->mainpage->set('#content', $output);
       $self->disp($self->mainpage->as_HTML);
     } else {
       $self->disp("Error");
