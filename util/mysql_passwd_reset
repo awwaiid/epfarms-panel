@@ -1,0 +1,47 @@
+#!/usr/bin/perl
+
+use strict;
+use Expect;
+
+print "MySQL Password Reset\n";
+
+my $skip_confirm = 0;
+if($ARGV[0] eq '-y') {
+  $skip_confirm = 1;
+  $ENV{PATH} = '';
+  my $admin_password = `/bin/cat /home/awwaiid/.mysql_password`;
+  chomp $admin_password;
+
+  my $username = getpwuid($<);
+  my $new_passwd = `/usr/bin/pwgen -cnB`;
+  $new_passwd =~ /^(.*)$/;
+  $new_passwd = $1;
+  chomp $new_passwd;
+  print "Username: $username\n";
+  print "Password: $new_passwd\n";
+
+  my $change_cmd = "set password for '$username'\@'%' = password('$new_passwd');";
+
+  my $timeout = 10;
+  my $mysql = Expect->spawn('/usr/bin/mysql', '-u', 'root', '-p');
+  $mysql->log_stdout(0);
+  #$mysql->log_file("/tmp/mysql.txt");
+  $mysql->expect($timeout,
+    [ qr/assword: / => sub { print $mysql "$admin_password\n"; exp_continue }],
+    [ qr/mysql> /   => sub { print $mysql "$change_cmd\n";                  }],
+  );
+  $mysql->hard_close;
+
+  # Cache it for the panel and reset permissions
+  $username =~ /^(.*)$/;
+  $username = $1;
+  my $cache_file = '/home/' . $username . '/.epfarms-panel/mysql_password';
+  open(my $cache, '>', $cache_file) or die "Error opening $cache_file: $!\n";
+  print $cache "$new_passwd\n";
+  close $cache;
+
+  `/bin/chown $username:$username $cache_file`;
+  `/bin/chmod 700 $cache_file`;
+}
+
+
