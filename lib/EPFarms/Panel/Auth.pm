@@ -86,7 +86,7 @@ sub do_auth {
   |);
   $page->set('#sid', $self->request->session_id);
   while(1) {
-    my $username = $self->param('username');
+    my $username = $self->param('username') || '';
     my $password = $self->param('password');
     my $c = Authen::Simple::FTP->new(host => 'localhost');
     my $process_user = getpwuid($<);
