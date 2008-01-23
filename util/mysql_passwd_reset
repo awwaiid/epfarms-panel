@@ -9,7 +9,7 @@ my $skip_confirm = 0;
 if($ARGV[0] eq '-y') {
   $skip_confirm = 1;
   $ENV{PATH} = '';
-  my $admin_password = `/bin/cat /home/awwaiid/.mysql_password`;
+  my $admin_password = `/bin/cat /root/.mysql_password`;
   chomp $admin_password;
 
   my $username = getpwuid($<);
@@ -25,7 +25,6 @@ if($ARGV[0] eq '-y') {
   my $timeout = 10;
   my $mysql = Expect->spawn('/usr/bin/mysql', '-u', 'root', '-p');
   $mysql->log_stdout(0);
-  #$mysql->log_file("/tmp/mysql.txt");
   $mysql->expect($timeout,
     [ qr/assword: / => sub { print $mysql "$admin_password\n"; exp_continue }],
     [ qr/mysql> /   => sub { print $mysql "$change_cmd\n";                  }],
