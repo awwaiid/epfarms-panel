@@ -32,8 +32,8 @@ sub get_mysql_auth {
     Password: <input type=password name=password><br>
     <input type=submit>
   |);
-  my $username = $self->param('username');
-  my $password = $self->param('password');
+  $username = $self->param('username');
+  $password = $self->param('password');
   print STDERR "Trying MySQL User: $username\n";
 
   eval { DBI->connect($dsn, $username, $password, { RaiseError => 1}) };
