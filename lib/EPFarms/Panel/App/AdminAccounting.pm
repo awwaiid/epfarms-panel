@@ -1,4 +1,4 @@
-package EPFarms::Panel::App::EffinTest;
+package EPFarms::Panel::App::AdminAccounting;
 
 use Moose;
 extends 'EPFarms::Panel::App';
@@ -6,9 +6,9 @@ use EPFarms::Effin;
 
 has '+config' => (default => sub {{
   rank => '99',
-  name => 'effin_test',
-  title => 'Effin Test',
-  icon => 'img/famfam/icons/script.png',
+  name => 'admin_accounting',
+  title => 'Accounting Admin',
+  icon => 'img/famfam/icons/money.png',
   user_group => 'paneldev',
 }});
 
