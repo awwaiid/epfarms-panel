@@ -4,11 +4,12 @@
     <link type="text/css" rel="stylesheet" href="css/EPFarms_Conference_2007_in_DC.css">
     <link type="text/css" rel="stylesheet" href="css/tablesorter.css">
     <script src="js/jquery.js" type="text/javascript"></script>
-    <script src="js/jquery.iepnghack.1.5.js" type="text/javascript"></script>
+    <!-- <script src="js/jquery.iepnghack.1.5.js" type="text/javascript"></script> -->
+    <script src="js/jquery.ifixpng.js" type="text/javascript"></script>
     <script src="js/jquery.tablesorter.pack.js" type="text/javascript"></script>
     <script type="text/javascript">
       $(function(){
-        $('img[@src$=.png]').pngfix();
+        $('img[@src$=.png]').ifixpng();
         $('a').each(function(){
           var link = $(this);
           if(!(link.attr('href').match(/^http/))) {
