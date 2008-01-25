@@ -4,7 +4,9 @@
 
     $('#add_to_account').click(function() {
       $('#f').attr('action', "https://www.paypal.com/cgi-bin/webscr");
+      $('#f').attr('target', '_blank');
       $('#f').submit();
+      $('#f').attr('target', '');
       return false;
     });
 
