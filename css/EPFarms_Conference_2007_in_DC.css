@@ -124,10 +124,13 @@ div#sidebar a:hover {
 
   line-height: 1.3em; /* Be friendly lookin! */
 }
-
+#dialog-holder {
+  text-align: center;
+}
 #dialog {
   width: 20em;
   margin: 5em auto;
+  text-align: left;
 }
 
 div#sidebar h2 {
