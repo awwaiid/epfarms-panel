@@ -25,10 +25,11 @@ sub disp {
   $self->request->next;
 }
 
+
 sub get_action {
   my ($self) = @_;
 
-  my $action = $self->param('action');
+  my $action = $self->param('event');
   $action =~ s/^\/// if $action;
   return $action if $action;
 
