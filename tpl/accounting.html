@@ -20,8 +20,9 @@
         $('#amount').val('');
       } else {
         $('#balance').innerHTML = amount;
-        var fee = (amount * 0.029) + 0.30; // 2.9% + 30cents
-        var charge = amount + fee;
+        var charge = (amount + 0.3) / (1 - 0.029);
+        charge = Math.round(charge * 100) / 100;
+        var fee = charge - amount;
         fee = fee.toFixed(2);
         charge = charge.toFixed(2);
         $('#fee-amount').empty().append(fee);
