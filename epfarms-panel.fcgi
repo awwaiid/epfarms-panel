@@ -54,7 +54,7 @@ if($ARGV[0] eq '-d') {
   $run_mode = 'web';
   open STDERR, ">>", "/tmp/epfarms-panel-log-$process_user.txt";
   $server = Continuity->new(
-    adaptor => Continuity::Adapt::FCGI->new,
+    adapter => 'FCGI',
     cookie_session => 0,
     query_session => 'sid',
   );
