@@ -56,10 +56,21 @@ sub main {
       $tpl->fill_rows('#transaction-data tbody' => $rows);
     } else {
       $tpl->set('#transaction-data' => 'NO TRANSACTIONS');
-      $bal = '---';
+      $bal = '--- (we have no transactions on record for this account)';
     }
 
+    $bal = sprintf '%.02f', $bal;
+
+    my $bal_msg = '';
+    if($bal >= 0) {
+      $bal_msg = "I see that your account has a positive balance. This means that you have pre-paid \$$bal and are in good standings.";
+    } elsif($bal < 0) {
+      my $neg_bal = 0 - $bal;
+      $bal_msg = "I see that your account has a negative balance. This means that you must pay at least \$$neg_bal to be in good standings.";
+    }
+      
     $tpl->set('#balance' => $bal);
+    $tpl->set('#balance-msg' => $bal_msg);
 
     $self->display( $tpl->render );
     my $action = $self->get_action;
