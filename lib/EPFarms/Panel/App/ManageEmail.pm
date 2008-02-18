@@ -48,9 +48,9 @@ sub main {
   if($domain) {
     my $edit = $self->param('edit');
     if($edit eq 'alias') {
-      $self->edit_remote_file('pointless.epfarms.org', "/etc/exim4/dom-aliases/$domain");
+      $self->edit_remote_file('mail.epfarms.org', "/etc/exim4/dom-aliases/$domain");
     } elsif($edit eq 'accounts') {
-      $self->edit_remote_file('pointless.epfarms.org', "/etc/exim4/dom-accounts/$domain");
+      $self->edit_remote_file('mail.epfarms.org', "/etc/exim4/dom-accounts/$domain");
     }
   }
   if($self->param('op') eq 'spamassassin_advanced') {
