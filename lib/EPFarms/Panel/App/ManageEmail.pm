@@ -29,7 +29,9 @@ Allows users to edit their basic email settings.
 sub main {
   my ($self) = @_;
   my @domains = $self->user_domains;
-  my $output;
+  my $output = '';
+  $output .= "<h2>Spamassassin Settings</h2>";
+  $output .= '<a href="?op=spamassassin_advanced">Advanced Spamassassin Settings Editor</a><br>';
   $output .= "<h2>Domain Email Management</h2>";
   $output .= "<table><tr><th>Domain</th></tr>";
   $output .= join '', map { qq{
@@ -50,6 +52,9 @@ sub main {
     } elsif($edit eq 'accounts') {
       $self->edit_remote_file('pointless.epfarms.org', "/etc/exim4/dom-accounts/$domain");
     }
+  }
+  if($self->param('op') eq 'spamassassin_advanced') {
+    $self->edit_remote_file('mail.epfarms.org', "/home/$self->{panel}{user}{username}/.spamassassin/user_prefs");
   }
 }
 
