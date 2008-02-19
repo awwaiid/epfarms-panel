@@ -29,6 +29,13 @@ sub main {
   while(1) {
     $self->display(qq{
         <h2>EPFarms User Panel Home</h2>
+        <p><b>(2008-02-18)</b>
+        We've made quite a few improvements since the last update. The payment
+        system is working nicely, and we've added more advanced email
+        management tools. The TODO list is too long to put here, but the
+        biggest highlight is a domain management tool. This will allow you to
+        register, add, and modify various aspects of your domains.
+        </p>
         <p><b>(2007-09-23)</b> The user panel is being reborn! So please be
         patient with us while we grow it, as some of the things that are going
         into the panel are quite experimental. See the <a
