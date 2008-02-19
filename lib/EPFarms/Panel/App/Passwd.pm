@@ -6,8 +6,8 @@ extends 'EPFarms::Panel::App';
 
 has '+config' => (default => sub {{
   rank => '20',
-  name => 'change_password',
-  title => 'Change Passwords',
+  name => 'passwords',
+  title => 'Passwords',
   icon => 'img/famfam/icons/key.png',
 }});
 

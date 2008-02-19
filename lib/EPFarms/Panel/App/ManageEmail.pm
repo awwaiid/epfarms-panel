@@ -6,8 +6,8 @@ extends 'EPFarms::Panel::App';
 
 has '+config' => (default => sub {{
   rank => '30',
-  name => 'manage_email',
-  title => 'Manage Email',
+  name => 'email_config',
+  title => 'Email Configuration',
   icon => 'img/famfam/icons/email.png',
 }});
 
