@@ -132,6 +132,19 @@ sub get_mysql_auth {
 
 }
 
+sub get_effin_db {
+  my ($self) = @_;
+  my ($username, $password) = $self->get_mysql_auth;
+  return unless $username;
+  my $db = EPFarms::Effin->connect(
+    'dbi:mysql:database=epfarms_effin_effin',
+    $username,
+    $password
+  );
+  return $db;
+}
+
+
 
 =head1 SEE ALSO
 
