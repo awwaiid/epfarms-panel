@@ -71,6 +71,7 @@ __PACKAGE__->add_columns(
 # Created by DBIx::Class::Schema::Loader v0.04003 @ 2007-12-30 17:11:54
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:A8uNk9rBSChj3UwlbhHMFg
 
+__PACKAGE__->set_primary_key("usr_uid");
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;
