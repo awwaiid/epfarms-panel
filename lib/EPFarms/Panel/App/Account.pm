@@ -63,10 +63,10 @@ sub main {
 
     my $bal_msg = '';
     if($bal >= 0) {
-      $bal_msg = "I see that your account has a positive balance. This means that you have pre-paid \$$bal and are in good standings.";
+      $bal_msg = "I see that your account has a positive balance. This means that you have pre-paid \$$bal and are in good standing.";
     } elsif($bal < 0) {
       my $neg_bal = 0 - $bal;
-      $bal_msg = "I see that your account has a negative balance. This means that you must pay at least \$$neg_bal to be in good standings.";
+      $bal_msg = "I see that your account has a negative balance. This means that you must pay at least \$$neg_bal to be in good standing.";
     }
       
     $tpl->set('#balance' => $bal);
