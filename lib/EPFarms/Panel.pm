@@ -90,6 +90,7 @@ sub main {
   # $self->request->print($page->render);
   $self->request->print($page->as_HTML);
   # This'll REALLY make sure we reset!
+  $self->request->end_request;
   exit;
 }
 

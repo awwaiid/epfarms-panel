@@ -73,6 +73,8 @@ sub main {
     $request->print("Fatal Error: $@");
     $request->print("Restarting application...");
   }
+  $request->end_request;
+  exit;
 }
 
 
