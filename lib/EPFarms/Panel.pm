@@ -89,6 +89,8 @@ sub main {
   $page->set('#sid', $self->request->session_id);
   # $self->request->print($page->render);
   $self->request->print($page->as_HTML);
+  # This'll REALLY make sure we reset!
+  exit;
 }
 
 sub load_apps {
