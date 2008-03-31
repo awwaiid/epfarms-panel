@@ -12,29 +12,6 @@ has '+config' => (default => sub {{
   user_group => 'paneldev',
 }});
 
-has callback => (is => 'rw', default => sub{{}});
-
-sub add_link {
-  my ($self, $text, $subref) = @_;
-  my $name = scalar $subref;
-  $name =~ s/CODE\(0x(.*)\)/$1/;
-  $self->callback->{$name} = $subref;
-  return qq{<a href="?callback=$name">$text</a>};
-}
-
-sub process_links {
-  my ($self) = @_;
-  my $name = $self->param('callback');
-  if(defined $self->callback->{$name}) {
-    $self->callback->{$name}->();
-    $self->callback({});
-    return 1;
-  }
-  # Reset callback hash
-  $self->callback({});
-  return 0;
-}
-
 sub main {
   my ($self) = @_;
   my ($username, $password) = $self->get_mysql_auth;

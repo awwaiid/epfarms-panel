@@ -144,6 +144,29 @@ sub get_effin_db {
   return $db;
 }
 
+has callback => (is => 'rw', default => sub{{}});
+
+sub add_link {
+  my ($self, $text, $subref) = @_;
+  my $name = scalar $subref;
+  $name =~ s/CODE\(0x(.*)\)/$1/;
+  $self->callback->{$name} = $subref;
+  return qq{<a href="?callback=$name">$text</a>};
+}
+
+sub process_links {
+  my ($self) = @_;
+  my $name = $self->param('callback');
+  if(defined $self->callback->{$name}) {
+    $self->callback->{$name}->();
+    $self->callback({});
+    return 1;
+  }
+  # Reset callback hash
+  $self->callback({});
+  return 0;
+}
+
 
 
 =head1 SEE ALSO
