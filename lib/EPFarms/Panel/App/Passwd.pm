@@ -80,29 +80,48 @@ sub password_template {
   };
 }
 
+sub expect_each {
+  my ($self, $cmd, $timeout, @expectations) = @_;
+  foreach my $expectation (@expectations) {
+    print STDERR "Looking for: $expectation->[0]\n";
+    my ($matched_pattern_position, $error, $successfully_matching_string,
+        $before_match, $after_match)
+      = $cmd->expect($timeout, $expectation);
+    return $error if $error;
+    return "Timeout" unless defined $matched_pattern_position;
+  }
+}
+
 sub changeSSHPass {
   my ($self, $host, $cur, $pass1, $pass2) = @_;
   my $result = 'ERROR';
-  my $timeout = 10;
+  my $timeout = 5;
   my $passwd = Expect->spawn(
     "ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password $host");
   #$passwd->log_file("/tmp/passwd_log.txt");
-  $passwd->expect($timeout,
-    [ qr/assword: /                    => sub { print $passwd "$cur\n";   exp_continue }],
-    [ qr/:(\\|~)\$ /                   => sub { print $passwd "passwd\n"; exp_continue }],
-    [ qr/^\(current\) UNIX password: / => sub { print $passwd "$cur\n";   exp_continue }],
-    [ qr/^Enter new UNIX password: /   => sub { print $passwd "$pass1\n"; exp_continue }],
-    [ qr/^Retype new UNIX password: /  => sub { print $passwd "$pass2\n"; exp_continue }],
-    [ qr/^(passwd:|Bad:|Sorry,) .*$/   => sub { $result = $passwd->match() }]
+  my $error = $self->expect_each($passwd, $timeout,
+    [ qr/assword: /                       => sub { print $passwd "$cur\n"   }],
+    [ qr/:(\\|~)\$ /                      => sub { print $passwd "passwd\n" }],
+    [ qr/\(current\) UNIX password: /     => sub { print $passwd "$cur\n"   }],
+    [ qr/Enter new UNIX password: /       => sub { print $passwd "$pass1\n" }],
+    [ qr/Retype new UNIX password: /      => sub { print $passwd "$pass2\n" }],
+    [ qr/(passwd:|Bad:|Sorry,) .*?[\r\n]/ => sub {
+      $result = $passwd->match;
+      print $passwd "logout\n"
+    }],
   );
-  $passwd->hard_close();
+  if($error && $passwd->before =~ /Permission denied/) {
+    $result = "Permission denied (couldn't log in to server)";
+  } elsif ($error) {
+    $result = "$error (" . $passwd->before . ")";
+  }
+  $passwd->hard_close;
   return $result;
 }
 
 sub main {
   my ($self) = @_;
   my $tpl = $self->password_template;
-  print STDERR "self: $self\ntpl: $tpl\n\n";
   $self->display($tpl);
 
   my $action = $self->param('passwd_action');
@@ -117,13 +136,13 @@ sub main {
     my $mirabel_shell_result = $self->changeSSHPass(
       'mirabel.epfarms.org',$cur_password, $password1, $password2);
 
-    my $pointless_shell_result = $self->changeSSHPass(
-      'pointless.epfarms.org',$cur_password, $password1, $password2);
+    my $nightshade_shell_result = $self->changeSSHPass(
+      'nightshade.epfarms.org',$cur_password, $password1, $password2);
 
     $self->display(qq{
       Mirabel Result: $mirabel_shell_result<br>
-      Pointless Result: $pointless_shell_result<br>
-      <a href="change_password">Return to password changer</a>
+      Nightshade Result: $nightshade_shell_result<br>
+      <a href="passwords">Return to password changer</a>
     });
 
   }
