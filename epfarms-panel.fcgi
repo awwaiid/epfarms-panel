@@ -22,18 +22,18 @@ use Coro;
 use Coro::Event;
 
 # If this file is changed, restart the server
-async {
-    my $timer = Coro::Event->timer( interval => 10, );
-    my $mod_time = -M __FILE__;
-    while(1) {
-        $timer->next;
-        if(-M __FILE__ != $mod_time) {
-            STDERR->print("Exec-ing self!\n\n");
-            system '/usr/bin/perl', '-c', __FILE__ and do { $mod_time = -M __FILE__; next; };
-            exec '/usr/bin/perl', __FILE__;
-        }
-    }
-};
+# async {
+    # my $timer = Coro::Event->timer( interval => 10, );
+    # my $mod_time = -M __FILE__;
+    # while(1) {
+        # $timer->next;
+        # if(-M __FILE__ != $mod_time) {
+            # STDERR->print("Exec-ing self!\n\n");
+            # system '/usr/bin/perl', '-c', __FILE__ and do { $mod_time = -M __FILE__; next; };
+            # exec '/usr/bin/perl', __FILE__;
+        # }
+    # }
+# };
 
 if($ARGV[0] eq '-d') {
   # Debugging / Development server, running outside of FastCGI
