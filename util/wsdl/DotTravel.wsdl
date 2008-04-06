@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.foundation.sfnb.order.domorder.DotTravel" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.foundation.sfnb.order.domorder.DotTravel" xmlns:intf="com.logicboxes.foundation.sfnb.order.domorder.DotTravel" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types/>
+
+   <wsdl:message name="getEligibleDomainsRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="uin" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEligibleDomainsResponse">
+
+      <wsdl:part name="getEligibleDomainsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="DotTravel">
+
+      <wsdl:operation name="getEligibleDomains" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID uin">
+
+         <wsdl:input message="impl:getEligibleDomainsRequest" name="getEligibleDomainsRequest"/>
+
+         <wsdl:output message="impl:getEligibleDomainsResponse" name="getEligibleDomainsResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="DotTravelServiceSoapBinding" type="impl:DotTravel">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getEligibleDomains">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getEligibleDomainsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotTravel" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getEligibleDomainsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotTravel" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="DotTravelService">
+
+      <wsdl:port binding="impl:DotTravelServiceSoapBinding" name="DotTravelService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

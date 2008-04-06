@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.foundation.sfnb.order.domorder.DotEu" xmlns:intf="com.logicboxes.foundation.sfnb.order.domorder.DotEu" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types/>
+
+   <wsdl:message name="addRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="domainName" type="xsd:string"/>
+
+      <wsdl:part name="noOfYears" type="xsd:int"/>
+
+      <wsdl:part name="nameServers" type="xsd:string"/>
+
+      <wsdl:part name="registrantContactId" type="xsd:int"/>
+
+      <wsdl:part name="technicalContactId" type="xsd:int"/>
+
+      <wsdl:part name="customerId" type="xsd:int"/>
+
+      <wsdl:part name="invoiceOption" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="transferRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="domainName" type="xsd:string"/>
+
+      <wsdl:part name="customerId" type="xsd:int"/>
+
+      <wsdl:part name="nameServers" type="xsd:string"/>
+
+      <wsdl:part name="childNameServers" type="xsd:string"/>
+
+      <wsdl:part name="invoiceOption" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="transferDomainRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="domainName" type="xsd:string"/>
+
+      <wsdl:part name="technicalContactId" type="xsd:int"/>
+
+      <wsdl:part name="customerId" type="xsd:int"/>
+
+      <wsdl:part name="invoiceOption" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEUCountryListRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isEUCountryResponse">
+
+      <wsdl:part name="isEUCountryReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="tradeDomainResponse">
+
+      <wsdl:part name="tradeDomainReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="transferDomainResponse">
+
+      <wsdl:part name="transferDomainReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="transferResponse">
+
+      <wsdl:part name="transferReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="tradeResponse">
+
+      <wsdl:part name="tradeReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEUCountryListResponse">
+
+      <wsdl:part name="getEUCountryListReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isEUCountryRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="countryCode" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="tradeRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="domainName" type="xsd:string"/>
+
+      <wsdl:part name="registrantContactId" type="xsd:int"/>
+
+      <wsdl:part name="customerId" type="xsd:int"/>
+
+      <wsdl:part name="nameServers" type="xsd:string"/>
+
+      <wsdl:part name="childNameServers" type="xsd:string"/>
+
+      <wsdl:part name="invoiceOption" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="tradeDomainRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="domainName" type="xsd:string"/>
+
+      <wsdl:part name="registrantContactId" type="xsd:int"/>
+
+      <wsdl:part name="technicalContactId" type="xsd:int"/>
+
+      <wsdl:part name="customerId" type="xsd:int"/>
+
+      <wsdl:part name="invoiceOption" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addResponse">
+
+      <wsdl:part name="addReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="DotEu">
+
+      <wsdl:operation name="getEUCountryList" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID">
+
+         <wsdl:input message="impl:getEUCountryListRequest" name="getEUCountryListRequest"/>
+
+         <wsdl:output message="impl:getEUCountryListResponse" name="getEUCountryListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="tradeDomain" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID domainName registrantContactId technicalContactId customerId invoiceOption">
+
+         <wsdl:input message="impl:tradeDomainRequest" name="tradeDomainRequest"/>
+
+         <wsdl:output message="impl:tradeDomainResponse" name="tradeDomainResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="trade" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID domainName registrantContactId customerId nameServers childNameServers invoiceOption">
+
+         <wsdl:input message="impl:tradeRequest" name="tradeRequest"/>
+
+         <wsdl:output message="impl:tradeResponse" name="tradeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="transferDomain" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID domainName technicalContactId customerId invoiceOption">
+
+         <wsdl:input message="impl:transferDomainRequest" name="transferDomainRequest"/>
+
+         <wsdl:output message="impl:transferDomainResponse" name="transferDomainResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isEUCountry" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID countryCode">
+
+         <wsdl:input message="impl:isEUCountryRequest" name="isEUCountryRequest"/>
+
+         <wsdl:output message="impl:isEUCountryResponse" name="isEUCountryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="add" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID domainName noOfYears nameServers registrantContactId technicalContactId customerId invoiceOption">
+
+         <wsdl:input message="impl:addRequest" name="addRequest"/>
+
+         <wsdl:output message="impl:addResponse" name="addResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="transfer" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID domainName customerId nameServers childNameServers invoiceOption">
+
+         <wsdl:input message="impl:transferRequest" name="transferRequest"/>
+
+         <wsdl:output message="impl:transferResponse" name="transferResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="DotEuServiceSoapBinding" type="impl:DotEu">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getEUCountryList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getEUCountryListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getEUCountryListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="tradeDomain">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="tradeDomainRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="tradeDomainResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="trade">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="tradeRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="tradeResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="transferDomain">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="transferDomainRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="transferDomainResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isEUCountry">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="isEUCountryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="isEUCountryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="add">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="transfer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="transferRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="transferResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotEu" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="DotEuService">
+
+      <wsdl:port binding="impl:DotEuServiceSoapBinding" name="DotEuService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
