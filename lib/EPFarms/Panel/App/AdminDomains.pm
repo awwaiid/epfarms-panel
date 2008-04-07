@@ -22,7 +22,7 @@ has '+config' => (default => sub {{
 sub load_domains {
   my ($self) = @_;
 
-  do "/home/awwaiid/.epfarms-panel/resellerclub.conf";
+  do "/home/" . $self->panel->user->username . "/.epfarms-panel/resellerclub.conf";
   my $recs = [];
   my $reccount = 0;
   my $totalrecs = 0;
