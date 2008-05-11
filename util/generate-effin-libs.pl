@@ -3,6 +3,10 @@
 package EPFarms::Effin;
 use base 'DBIx::Class::Schema::Loader';
 
+EPFarms::Effin->loader_options(
+  components => qw/ InflateColumn::DateTime /
+);
+
 package main;
 use strict;
 

@@ -5,25 +5,11 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("Core");
+__PACKAGE__->load_components("InflateColumn::DateTime", "Core");
 __PACKAGE__->table("my_users");
 __PACKAGE__->add_columns(
   "usr_efid",
-  { data_type => "INT", default_value => "", is_nullable => 0, size => 11 },
-  "usr_fname",
-  {
-    data_type => "VARCHAR",
-    default_value => undef,
-    is_nullable => 1,
-    size => 100,
-  },
-  "usr_lname",
-  {
-    data_type => "VARCHAR",
-    default_value => undef,
-    is_nullable => 1,
-    size => 100,
-  },
+  { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
   "usr_nname",
   {
     data_type => "VARCHAR",
@@ -65,11 +51,32 @@ __PACKAGE__->add_columns(
   },
   "usr_uid",
   { data_type => "INT", default_value => 0, is_nullable => 0, size => 11 },
+  "usr_mysql_username",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 100,
+  },
+  "usr_external_email",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 100,
+  },
+  "usr_name",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 100,
+  },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.04003 @ 2007-12-30 17:11:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:A8uNk9rBSChj3UwlbhHMFg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-10 21:30:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5av+uLGdRnptlgJPr/Io6A
 
 __PACKAGE__->set_primary_key("usr_uid");
 
