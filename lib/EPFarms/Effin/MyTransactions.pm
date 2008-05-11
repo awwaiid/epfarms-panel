@@ -70,7 +70,5 @@ __PACKAGE__->add_columns(
 # Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-10 21:30:48
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DLXNODVfw3CeMppNXGIHIQ
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "Core");
-
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;
