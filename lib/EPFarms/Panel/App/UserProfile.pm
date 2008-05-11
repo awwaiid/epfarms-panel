@@ -36,7 +36,13 @@ sub main {
     $user->usr_external_email($email);
     $user->usr_name($name);
     $user->update;
-    $self->display('updated.');
+    $self->display(qq|
+      Updated.<br>
+      Username: $username<br>
+      Name: $name<br>
+      External Email: $email<br>
+      Alternate Contact: $contact
+    |);
   }
 
 }

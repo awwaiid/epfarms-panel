@@ -7,8 +7,8 @@ extends 'EPFarms::Base';
 has 'request' => (is => 'rw');
 
 sub param {
-  my ($self, $v) = @_;
-  return $self->request->param($v);
+  my ($self, @v) = @_;
+  return $self->request->param(@v);
 }
 
 =head2 C<< $panel->output($html) >>
