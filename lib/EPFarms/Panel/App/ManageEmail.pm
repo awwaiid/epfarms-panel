@@ -66,6 +66,7 @@ sub edit_remote_file {
   $local_file =~ s/\//-/g;
   my $scp = Net::SCP::Expect->new(
     timeout => 30,
+    #option  => 'StrictHostKeyChecking=no -o PermitLocalCommand=no',
     option  => 'StrictHostKeyChecking=no',
   );
   $scp->login($username, $password);
