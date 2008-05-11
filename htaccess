@@ -1,7 +1,7 @@
 
 Options +ExecCGI +FollowSymLinks
 DirectoryIndex epfarms-panel.fcgi
-AddHandler fastcgi-script .fcgi
+AddHandler fcgid-script .fcgi
 
 RewriteEngine on
 
