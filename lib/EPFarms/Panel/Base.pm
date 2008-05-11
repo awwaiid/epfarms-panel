@@ -8,7 +8,8 @@ has 'request' => (is => 'rw');
 
 sub param {
   my ($self, @v) = @_;
-  return $self->request->param(@v);
+  return wantarray ? ($self->request->param(@v))
+    : (scalar $self->request->param(@v));
 }
 
 =head2 C<< $panel->output($html) >>
