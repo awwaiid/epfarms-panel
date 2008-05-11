@@ -21,13 +21,20 @@ sub main {
   $self->display(qq|
     <h2>User Profile</h2>
     Username: @{[ $user->usr_nname ]}<br>
-    Contact (email): <input type=text name=contact value="@{[ $user->usr_contact ]}"><br>
+    Name:
+      <input type=text name=name value="@{[ $user->usr_name ]}"><br>
+    External Email:
+      <input type=text name=email value="@{[ $user->usr_external_email ]}"><br>
+    Alternate Contact:
+      <input type=text name=contact value="@{[ $user->usr_contact ]}"><br>
     <input type=submit name=save value="Save">
   |);
 
   if($self->param('save')) {
-    my $contact = $self->param('contact');
+    my ($contact, $email, $name) = $self->param(qw( contact email name ));
     $user->usr_contact($contact);
+    $user->usr_external_email($email);
+    $user->usr_name($name);
     $user->update;
     $self->display('updated.');
   }
