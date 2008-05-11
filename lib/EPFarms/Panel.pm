@@ -71,8 +71,13 @@ sub main {
 
     if($action) {
       print STDERR "Executing app: $action\n";
-      my $output = $self->app->{$action}->process;
-      $self->mainpage->set('#content', $output);
+      my $output;
+      eval { $output = $self->app->{$action}->process };
+      if($@) {
+        $self->mainpage->set('#content', "Error: $@");
+      } else {
+        $self->mainpage->set('#content', $output);
+      }
       $self->disp($self->mainpage->as_HTML);
     } else {
       $self->disp("Error");
