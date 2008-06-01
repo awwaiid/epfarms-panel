@@ -1,4 +1,4 @@
-package EPFarms::Effin::Subscriptions;
+package EPFarms::Effin::Domains;
 
 use strict;
 use warnings;
@@ -6,54 +6,45 @@ use warnings;
 use base 'DBIx::Class';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "Core");
-__PACKAGE__->table("subscriptions");
+__PACKAGE__->table("domains");
 __PACKAGE__->add_columns(
-  "sub_usr_uid",
+  "dmn_uid",
+  { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
+  "dmn_usr_uid",
   { data_type => "INT", default_value => "", is_nullable => 0, size => 11 },
-  "sub_ser_uid",
-  { data_type => "INT", default_value => "", is_nullable => 0, size => 11 },
-  "sub_startdate",
-  { data_type => "DATETIME", default_value => "", is_nullable => 0, size => 19 },
-  "sub_termdate",
-  {
-    data_type => "DATETIME",
-    default_value => undef,
-    is_nullable => 1,
-    size => 19,
-  },
-  "sub_orderid",
+  "dmn_name",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 1,
     size => 100,
   },
-  "sub_deleted",
-  { data_type => "TINYINT", default_value => 0, is_nullable => 0, size => 1 },
-  "sub_createdon",
+  "dmn_efregisterd",
+  { data_type => "TINYINT", default_value => 0, is_nullable => 0, size => 4 },
+  "dmn_deleted",
+  { data_type => "TINYINT", default_value => 0, is_nullable => 0, size => 4 },
+  "dmn_createdon",
   { data_type => "DATETIME", default_value => "", is_nullable => 0, size => 19 },
-  "sub_alteredon",
+  "dmn_alteredon",
   {
     data_type => "DATETIME",
     default_value => undef,
     is_nullable => 1,
     size => 19,
   },
-  "sub_deletedon",
+  "dmn_deletedon",
   {
     data_type => "DATETIME",
     default_value => undef,
     is_nullable => 1,
     size => 19,
   },
-  "sub_uid",
-  { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
 );
-__PACKAGE__->set_primary_key("sub_uid");
+__PACKAGE__->set_primary_key("dmn_uid");
 
 
 # Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-26 12:36:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Wn7TyFxno/uvT0COKwHxfw
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sDrQ6BlsJs+KNnfC7+Ej9w
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

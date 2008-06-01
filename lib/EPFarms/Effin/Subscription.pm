@@ -1,4 +1,4 @@
-package EPFarms::Effin::Accounts;
+package EPFarms::Effin::Subscription;
 
 use strict;
 use warnings;
@@ -6,24 +6,29 @@ use warnings;
 use base 'DBIx::Class';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "Core");
-__PACKAGE__->table("accounts");
+__PACKAGE__->table("subscription");
 __PACKAGE__->add_columns(
-  "acc_uid",
+  "subscription_id",
   { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
-  "acc_name",
-  { data_type => "VARCHAR", default_value => "", is_nullable => 0, size => 100 },
-  "acc_deleted",
-  { data_type => "TINYINT", default_value => 0, is_nullable => 0, size => 1 },
-  "acc_createdon",
-  { data_type => "DATETIME", default_value => "", is_nullable => 0, size => 19 },
-  "acc_alteredon",
+  "service_id",
+  { data_type => "INT", default_value => undef, is_nullable => 1, size => 11 },
+  "user_id",
+  { data_type => "INT", default_value => undef, is_nullable => 1, size => 11 },
+  "start_time",
   {
     data_type => "DATETIME",
     default_value => undef,
     is_nullable => 1,
     size => 19,
   },
-  "acc_deletedon",
+  "end_time",
+  {
+    data_type => "DATETIME",
+    default_value => undef,
+    is_nullable => 1,
+    size => 19,
+  },
+  "last_bill_time",
   {
     data_type => "DATETIME",
     default_value => undef,
@@ -31,11 +36,11 @@ __PACKAGE__->add_columns(
     size => 19,
   },
 );
-__PACKAGE__->set_primary_key("acc_uid");
+__PACKAGE__->set_primary_key("subscription_id");
 
 
 # Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-26 12:36:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kCdYKPylEClSRE0JlVE3kQ
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Lo2E/o/TPOP3TCAgs+iCCA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

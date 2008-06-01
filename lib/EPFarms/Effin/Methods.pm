@@ -18,12 +18,7 @@ __PACKAGE__->add_columns(
   "met_deleted",
   { data_type => "TINYINT", default_value => 0, is_nullable => 0, size => 1 },
   "met_createdon",
-  {
-    data_type => "DATETIME",
-    default_value => undef,
-    is_nullable => 0,
-    size => 19,
-  },
+  { data_type => "DATETIME", default_value => "", is_nullable => 0, size => 19 },
   "met_alteredon",
   {
     data_type => "DATETIME",
@@ -44,8 +39,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("met_uid");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-10 21:30:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vjihnqKgs9lb8Ja0qekfgg
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-26 12:36:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:x71c2YP9hligX4BIS3lH7w
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

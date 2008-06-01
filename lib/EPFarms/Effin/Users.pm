@@ -9,7 +9,7 @@ __PACKAGE__->load_components("InflateColumn::DateTime", "Core");
 __PACKAGE__->table("users");
 __PACKAGE__->add_columns(
   "usr_efid",
-  { data_type => "INT", default_value => undef, is_nullable => 0, size => 11 },
+  { data_type => "INT", default_value => "", is_nullable => 0, size => 11 },
   "usr_nname",
   {
     data_type => "VARCHAR",
@@ -76,8 +76,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("usr_uid");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-10 21:30:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CJLJldzrAmQo2E98kdLUzw
+# Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-26 12:36:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qBpYwOsKrN6KAVfNoT/dCA
 
 __PACKAGE__->set_primary_key("usr_efid");
 __PACKAGE__->has_many('transactions', 'EPFarms::Effin::Transactions', 'trn_usr_efid');
