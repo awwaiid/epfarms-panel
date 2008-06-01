@@ -15,7 +15,7 @@ has '+config' => (default => sub {{
   rank => '99',
   name => 'admin_domains',
   title => 'Domain Admin',
-  icon => 'img/famfam/icons/money.png',
+  icon => 'img/famfam/icons/cog.png',
   user_group => 'paneldev',
 }});
 
@@ -83,7 +83,7 @@ sub main {
   my ($self) = @_;
   my $domains = $self->load_domains;
   do {
-    my $out = "<table class=data>
+    my $out = "<table class=data cellspacing=0 cellpadding=3>
       <thead>
         <tr class=header>
           <th>Domain</th>

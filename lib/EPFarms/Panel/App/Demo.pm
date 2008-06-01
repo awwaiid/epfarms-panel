@@ -7,7 +7,7 @@ has '+config' => (default => sub {{
   rank => '99',
   name => 'demo',
   title => 'Demo',
-  icon => 'img/famfam/icons/script.png',
+  icon => 'img/famfam/icons/plugin.png',
   user_group => 'paneldev',
 }});
 

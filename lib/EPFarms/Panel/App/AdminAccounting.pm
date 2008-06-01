@@ -8,7 +8,7 @@ has '+config' => (default => sub {{
   rank => '99',
   name => 'admin_accounting',
   title => 'Accounting Admin',
-  icon => 'img/famfam/icons/money.png',
+  icon => 'img/famfam/icons/money_dollar.png',
   user_group => 'paneldev',
 }});
 
@@ -21,11 +21,8 @@ sub main {
     $username,
     $password
   );
-
   do {
-    my $out = '';
-
-    $out .= "<table class=data>
+    my $out = "<table class=data>
       <thead>
         <tr class=header>
           <th>User</th>
