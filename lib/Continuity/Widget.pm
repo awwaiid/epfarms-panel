@@ -11,7 +11,7 @@ has 'id' => (
   isa     => 'Str', 
   default => sub { Data::UUID->new->create_str }
 );
-has 'output' => (is => 'rw',   isa => 'Str|Undef', default => '');
+has 'output' => (is => 'rw',   isa => 'Str', default => '');
 has 'input' => (is => 'rw', defualt => sub {{}});
 
 sub process {

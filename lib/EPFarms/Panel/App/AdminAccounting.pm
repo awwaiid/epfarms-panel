@@ -29,13 +29,19 @@ sub main {
           <th>Balance</th>
         </tr>
       </thead>";
-    foreach my $user ($db->resultset('Users')->search(undef,{order_by => 'usr_nname'})) {
-      $out .= "<tr><td>"
-        . $self->add_link($user->usr_nname => sub { $self->user_detail($user) })
-        . "</td>"
-        . "<td>"
-        . $user->balance_formatted
-        . "</td></tr>";
+    my @users = $db->resultset('Users')->search(undef,{order_by => 'usr_nname'});
+    foreach my $user (@users) {
+      $out .= qq{
+        <tr>
+          <td>
+            @{[
+              $self->add_link($user->usr_nname => sub { $self->user_detail($user) })
+            ]}
+        </td>
+        <td>
+        @{[ $user->balance_formatted ]}
+        </td></tr>
+      };
     }
     $out .= "</table>";
 
@@ -51,6 +57,7 @@ sub add_transaction_for {
 
 sub user_detail {
   my ($self, $user) = @_;
+  
   do {
     my $out = qq|
       <h2>User: @{[$user->usr_nname]}</h2>
