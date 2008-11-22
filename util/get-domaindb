@@ -10,6 +10,7 @@ if($username eq 'root') {
 my $admin_users = (getgrnam('paneldev'))[3];
 if($username ne 'root' && $admin_users !~ /\b$username\b/) {
   print "Permission Denied!\n";
+  exit;
 }
 
 our $domaindb;
