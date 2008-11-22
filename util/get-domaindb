@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $username = (getpwuid($<))[0];
+if($username eq 'root') {
+  $username = (shift @ARGV) || (getpwuid($>))[0];
+}
+
+my $admin_users = (getgrnam('paneldev'))[3];
+if($username ne 'root' && $admin_users !~ /\b$username\b/) {
+  print "Permission Denied!\n";
+}
+
+our $domaindb;
+do "/root/scripts/domaindb.pl";
+
+my $output_domaindb = $domaindb;
+# my $output_domaindb = {};
+# foreach my $domain (keys %$domaindb) {
+#   if($domaindb->{$domain}->{owner} eq $username) {
+#     $output_domaindb->{$domain} = $domaindb->{$domain};
+#   }
+# }
+
+use Data::Dumper;
+$Data::Dumper::Purity = 1;         # fill in the holes for eval
+$Data::Dumper::Terse = 1;          # don't output names where feasible
+print '$domaindb = ' . Dumper($output_domaindb) . ';';
+
