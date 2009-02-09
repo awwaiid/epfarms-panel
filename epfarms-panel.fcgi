@@ -74,7 +74,10 @@ sub main {
     $request->print("Restarting application...");
   }
   $request->end_request;
-  exit;
+  exit if $run_mode eq 'web';
 }
 
+END {
+  print STDERR "THIS IS THE END!\n";
+}
 
