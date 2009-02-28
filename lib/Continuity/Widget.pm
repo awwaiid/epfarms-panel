@@ -1,7 +1,7 @@
 package Continuity::Widget;
 
 use Moose;
-use Coro::Continuation;
+use Coro::Generator;
 use Data::UUID;
 
 has 'cont' => (is => 'rw');
@@ -17,7 +17,7 @@ has 'input' => (is => 'rw', defualt => sub {{}});
 sub process {
   my ($self, $input) = @_;
   $self->input($input);
-  $self->{cont} ||= continuation { while(1) { $self->main } };
+  $self->{cont} ||= generator { while(1) { $self->main } };
   $self->{cont}->();
   return $self->output;
 }
