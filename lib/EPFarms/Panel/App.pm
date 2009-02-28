@@ -144,26 +144,18 @@ sub get_effin_db {
   return $db;
 }
 
-has callback => (is => 'rw', default => sub{{}});
+#has callback => (is => 'rw', default => sub{{}});
+
+use Continuity::RequestCallbacks;
 
 sub add_link {
   my ($self, $text, $subref) = @_;
-  my $name = scalar $subref;
-  $name =~ s/CODE\(0x(.*)\)/$1/;
-  $self->callback->{$name} = $subref;
-  return qq{<a href="?callback=$name">$text</a>};
+  return $self->request->callback_link( $text => $subref );
 }
 
 sub process_links {
   my ($self) = @_;
-  my $name = $self->param('callback');
-  if(defined $self->callback->{$name}) {
-    $self->callback->{$name}->();
-    $self->callback({});
-    return 1;
-  }
-  # Reset callback hash
-  $self->callback({});
+  $self->request->execute_callbacks();
   return 0;
 }
 
