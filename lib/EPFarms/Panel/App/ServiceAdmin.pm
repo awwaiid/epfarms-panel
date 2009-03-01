@@ -64,6 +64,7 @@ sub main {
 
 sub service_detail {
   my ($self, $service) = @_;
+  my $do_exit = 0;
   do {
     my $out = qq|
       <h2>Service: @{[$service->name]}</h2>
@@ -87,21 +88,27 @@ sub service_detail {
       foreach my $field ($service->details) {
         my $edit_link = $self->add_link("Edit" =>
           sub { $self->edit_service_detail($field) });
+        my $delete_link = $self->add_link("Delete" =>
+          sub { $field->delete });
         $out .= qq|
           <tr>
             <td>@{[$field->name]}</td>
             <td>@{[$field->is_required]}</td>
             <td>@{[$field->type]}</td>
             <td>@{[$field->default_value]}&nbsp;</td>
-            <td>$edit_link</td>
+            <td>$edit_link $delete_link</td>
           </tr>
         |;
       }
       $out .= "</table>";
     }
     $out .= $self->add_link("Add new field" => sub { $self->create_service_detail($service) });
+    $out .= "<br><br>";
+    $out .= $self->add_link("Return" => sub {
+      $do_exit = 1;
+    });
     $self->display($out);
-  } while $self->process_links;
+  } while $self->process_links && !$do_exit;
 }
 
 sub edit_service_detail {
