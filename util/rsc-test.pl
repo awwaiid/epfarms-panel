@@ -2,7 +2,7 @@
 
 use strict;
 use lib '../lib';
-use SOAP::Lite; # +trace => qw( debug );
+use SOAP::Lite +trace => qw( debug );
 use ResellerClub::DomOrderService;
 
 use vars qw( $username $password );
@@ -31,7 +31,7 @@ sub get_all_orders {
       '', # orderId
       '', # resellerId
       '', # customerId
-      '', # showChildOrders
+      0, # showChildOrders
       '', # classKey
       '', # currentStatus
       '', # description
@@ -71,7 +71,7 @@ sub get_all_orders {
 
 my $recs = get_all_orders;
 use Data::Dumper;
-print STDERR Dumper($recs);
+print Dumper($recs);
 
 print "Record count: " . (scalar @$recs) . "\n";
 
