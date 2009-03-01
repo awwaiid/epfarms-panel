@@ -8,33 +8,41 @@ use Net::FTP;
 use EPFarms::Panel::User;
 
 has 'user' => ( is => 'rw' );
+has 'auth_token' => ( is => 'rw' );
 
-# We have one unique user per process
-our $user_token = (rand) . (rand) . (rand);
-our $auth_user;
+# $token => $user
+our $auth_users = {};
+
+sub create_auth_token {
+  return (rand).(rand).(rand);
+}
 
 sub get_authenticated_user {
   my ($self) = @_;
-  my $token = $self->request->get_cookie('auth_token') || '';
-  if($token eq $user_token) {
-    $self->user($auth_user);
+  my $auth_token = $self->request->get_cookie('auth_token') || '';
+  if($auth_token && $auth_users->{$auth_token}) {
+    $self->user($auth_users->{$auth_token});
+    $self->user->last_auth(time());
     return $self->user;
   }
   unless($self->user && $self->user->auth_ok) {
     $self->do_auth;
   }
   return unless $self->user;
-  $auth_user = $self->user;
+  $auth_token = $self->create_auth_token;
+  $self->user->auth_token($auth_token);
+  $auth_users->{$auth_token} = $self->user;
   $self->request->set_cookie(CGI->cookie(
     -name => 'auth_token',
-    -value => $user_token));
+    -value => $auth_token
+  ));
   return $self->user;
 }
 
 sub logout {
   my ($self) = @_;
   # Reset the user token
-  $user_token = (rand) . (rand) . (rand);
+  delete $auth_users->{$self->user->auth_token};
   $self->user->auth_ok(0);
 }
 
@@ -71,11 +79,11 @@ sub do_auth {
         <table border=0 cellspacing=0 cellpadding=4>
           <tr>
             <th>Username:</th>
-            <td><input type=text id=username name=username></td>
+            <td><input type=text id=username name=username size=15></td>
           </tr>
           <tr>
             <th>Password:</th>
-            <td><input type=password name=password></td>
+            <td><input type=password name=password size=15></td>
           </tr>
           <tr>
             <td colspan=2><input id=login type=submit name=login value="Login"></td>
@@ -89,16 +97,13 @@ sub do_auth {
     my $username = $self->param('username') || '';
     my $password = $self->param('password');
     my $c = Authen::Simple::FTP->new(host => 'localhost');
-    my $process_user = getpwuid($<);
-    print STDERR "process_user: <$process_user>\tusername: <$username>\n";
-    if($username && $process_user ne $username) {
-      $msg = "Wrong user!";
-    } elsif($username && $c->authenticate($username, $password)) {
+    if($username && $c->authenticate($username, $password)) {
       my $user = EPFarms::Panel::User->new(
         auth_ok => 1,
         has_javascript => $self->param('has_javascript'),
         username => $username,
         password => $password,
+        last_active => time(),
       );
       $self->user($user);
       $self->setup_remote_access($password);
