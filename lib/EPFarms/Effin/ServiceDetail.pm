@@ -38,6 +38,8 @@ __PACKAGE__->set_primary_key("service_detail_id");
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qnR6YBqTNwa9qpq3hfvRAw
 
 __PACKAGE__->belongs_to( service => 'EPFarms::Effin::Service', 'service_id' );
+__PACKAGE__->has_many( subscription_details => 'EPFarms::Effin::SubscriptionDetail',
+  'service_detail_id');
 
 use Moose;
 BEGIN {

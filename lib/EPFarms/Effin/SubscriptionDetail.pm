@@ -28,6 +28,11 @@ __PACKAGE__->set_primary_key("subscription_detail_id");
 # Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-26 12:36:40
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Yd/6xMJ5/KvJsUI2S/xXdQ
 
+__PACKAGE__->belongs_to(
+  subscription => 'EPFarms::Effin::Subscription', 'subscription_id');
+
+__PACKAGE__->belongs_to(
+  service_detail => 'EPFarms::Effin::ServiceDetail', 'service_detail_id');
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;

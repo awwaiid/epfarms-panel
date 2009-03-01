@@ -38,7 +38,7 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 100,
   },
-  "mysql_username",
+  "username_mysql",
   {
     data_type => "VARCHAR",
     default_value => undef,
@@ -54,6 +54,7 @@ __PACKAGE__->set_primary_key("user_id");
 # Created by DBIx::Class::Schema::Loader v0.04005 @ 2008-05-26 12:36:40
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:l669N5oPa281ef2uROO9+g
 
+__PACKAGE__->has_many(subscriptions => 'EPFarms::Effin::Subscription', 'user_id');
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;
