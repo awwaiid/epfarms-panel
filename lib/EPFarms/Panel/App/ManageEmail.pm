@@ -70,8 +70,8 @@ sub edit_remote_file {
     option  => 'StrictHostKeyChecking=no',
   );
   $scp->login($username, $password);
-  $scp->scp("$host:$file", "/home/$username/.epfarms-panel/tmp/$local_file");
-  my $content = read_file("/home/$username/.epfarms-panel/tmp/$local_file");
+  $scp->scp("$host:$file", "/tmp/epfarms-panel/$username/$local_file");
+  my $content = read_file("/tmp/epfarms-panel/$username/$local_file");
   my $output = qq{
     <h2>Edit File</h2>
     Filename: $host:$file<br>
