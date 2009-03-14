@@ -39,6 +39,7 @@ coerce 'Maybe[DateTime]'
     DateTime::Format::DateManip->parse_datetime($_)
   };
 
+
 sub is_active {
   my $self = shift;
   return (!$self->end_time || $self->end_time > DateTime->now) ? 1 : 0;
