@@ -1,4 +1,3 @@
-
 package EPFarms::Panel::App::Account;
 
 use Moose;
@@ -24,16 +23,13 @@ Allows users to change their password.
 
 =cut
 
+use EPFarms::DB;
 
 sub main {
   my ($self) = @_;
-  my ($username, $password) = $self->get_mysql_auth;
-  return unless $username;
-  my $db = EPFarms::Effin->connect(
-    'dbi:mysql:database=epfarms_effin_effin',
-    $username,
-    $password
-  );
+  my $db = EPFarms::DB->new;
+  my $username = $self->panel->user->username;
+  my $user = $db->find_user(username => $username);
   my $tpl = DOMTemplate->new('tpl/accounting.html');
   $tpl->set('.username' => $username);
   $tpl->set('#item_name' => "Deposit for $username");
@@ -42,15 +38,14 @@ sub main {
 
     # Fill in the transaction history
     my $bal = 0;
-    my @transactions = $db->resultset('MyTransactions')->search(
-      undef, {order_by => 'trn_date'});
+    my @transactions = $user->transactions->members;
     if(@transactions) {
       my $rows = [
         map {[
-          $_->trn_date->ymd,
-          $_->trn_memo,
-          (sprintf '$%.02f', $_->trn_amount),
-          (sprintf '$%.02f', $bal += $_->trn_amount)
+          $_->timestamp->ymd,
+          $_->description,
+          (sprintf '$%.02f', $_->amount),
+          (sprintf '$%.02f', $bal += $_->amount)
         ]} @transactions
       ];
       $tpl->fill_rows('#transaction-data tbody' => $rows);
