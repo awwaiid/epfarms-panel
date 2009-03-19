@@ -1,7 +1,12 @@
 package EPFarms::DB::Content;
 use Moose;
+use KiokuDB::Util qw(set);
 
-has users => (is => 'rw', isa => 'ArrayRef[EPFarms::User]', default => sub { [] });
+has users => (
+  is => 'rw',
+  does => 'KiokuDB::Set',
+  default => sub {set()}
+);
 
 package EPFarms::DB;
 
@@ -22,17 +27,17 @@ sub BUILD {
     KiokuDB->connect("bdb:dir=/tmp/data", create => 1)
   );
   $self->scope( $self->db->new_scope );
-  $self->content( $self->db->root_set->all );
+  $self->content( $self->db->lookup('content'));
 }
 
 sub add_user {
   my ($self, $user) = @_;
-  push @{$self->content->users}, $user;
+  $self->content->users->insert($user);
 }
 
 sub find_user {
   my ($self, %search) = @_;
-  my @users = @{ $self->content->users };
+  my @users = $self->content->users->members;
   foreach my $user (@users) {
     my $found = 1;
     foreach my $search_key (keys %search) {
@@ -48,7 +53,8 @@ sub find_user {
 
 sub save {
   my ($self) = @_;
-  $self->db->store($self->content);
+  my $id = $self->db->store(content => $self->content);
+  print "ID: $id\n";
 }
 
 1;

@@ -5,7 +5,7 @@ use Moose::Util::TypeConstraints;
 use DateTime;
 extends 'EPFarms';
 
-has timestamp => (is => 'rw', isa => 'DateTime', default => sub { DateTime->now }, coerce => 1);
+has timestamp => (is => 'rw', isa => 'DateTime', default => sub { DateTime->now }, );
 has amount => (is => 'rw', isa => 'Num');
 has description => (is => 'rw', isa => 'Str');
 has reference_number => (is => 'rw', isa => 'Str');
