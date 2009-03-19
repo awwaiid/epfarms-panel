@@ -40,6 +40,11 @@ sub main {
     # Fill in the transaction history
     my $bal = 0;
     my @transactions = $user->transactions->members;
+    @transactions =
+      map { $_->[1] }
+      sort { $a->[0] cmp $b->[0] }
+      map { [ $_->timestamp->ymd, $_ ] }
+      @transactions;
     if(@transactions) {
       my $rows = [
         map {[
