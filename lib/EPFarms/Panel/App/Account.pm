@@ -13,11 +13,12 @@ has '+config' => (default => sub {{
 
 =head1 NAME
 
-EPFarms::Panel::App::Passwd - Password Changer
+EPFarms::Panel::App::Account - Allow users to view their financial standings
 
 =head1 DESCRIPTION
 
-Allows users to change their password.
+Let users see their account balance and transaction history. Also a nice place
+for them to make payments.
 
 =head1 METHODS
 
