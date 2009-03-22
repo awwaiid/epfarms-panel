@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
+use lib '/usr/local/lib/EPFarms-Panel/lib';
 use Data::Dumper;
-use DBI;
+use EPFarms::DB;
 
 # read post from PayPal system and add 'cmd'
 read (STDIN, $query, $ENV{'CONTENT_LENGTH'});
@@ -70,25 +71,15 @@ if ($res->is_error) {
            trn_createdon = NOW();
     };
 
-    my $db = DBI->connect('DBI:mysql:database=epfarms_effin_effin', 'admin', 'XXXXXX');
-    $db->do(qq{
-    INSERT INTO transactions
-       SET trn_usr_efid = (select usr_efid from users where usr_nname = ?),
-           trn_amount = ?,
-           trn_memo = 'Payment from paypal',
-           trn_date = NOW(),
-           trn_tranid = ?,
-           trn_createdon = NOW();
-
-    }, undef, $username, $amount, $txn_id);
-
-    # INSERT INTO transactions
-    #    SET trn_usr_efid = ?,
-    #        trn_amount = ?,
-    #        trn_memo = 'Deposit from paypal',
-    #        trn_date = NOW(),
-    #        trn_tranid = ?,
-    #        trn_createdon = NOW();
+    my $db = EPFarms::DB->new;
+    my $user = $db->find_user(username => $username);
+    my $transaction = EPFarms::Transaction->new(
+      amount => $amount,
+      description => 'Payment from paypal',
+      reference_number => $txn_id,
+      user => $user,
+    );
+    $user->add_transaction($transaction);
 
   }
 
