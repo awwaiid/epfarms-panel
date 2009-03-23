@@ -14,28 +14,28 @@ has '+config' => (default => sub {{
 
 sub main {
   my ($self) = @_;
-  my $username = $self->{panel}->{user}->{username};
-  my $db = $self->get_effin_db;
-  my $user = $db->resultset('MyUsers')->single;
+  my $db = EPFarms::DB->new;
+  my $username = $self->panel->user->username;
+  my $user = $db->find_user(username => $username);
   
   $self->display(qq|
     <h2>User Profile</h2>
-    Username: @{[ $user->usr_nname ]}<br>
+    Username: @{[ $user->username ]}<br>
     Name:
-      <input type=text name=name value="@{[ $user->usr_name ]}"><br>
+      <input type=text name=name value="@{[ $user->name ]}"><br>
     External Email:
-      <input type=text name=email value="@{[ $user->usr_external_email ]}"><br>
+      <input type=text name=email value="@{[ $user->external_email ]}"><br>
     Alternate Contact:
-      <input type=text name=contact value="@{[ $user->usr_contact ]}"><br>
+      <input type=text name=contact value="@{[ $user->contact ]}"><br>
     <input type=submit name=save value="Save">
   |);
 
   if($self->param('save')) {
     my ($contact, $email, $name) = $self->param(qw( contact email name ));
-    $user->usr_contact($contact);
-    $user->usr_external_email($email);
-    $user->usr_name($name);
-    $user->update;
+    $user->contact($contact);
+    $user->external_email($email);
+    $user->name($name);
+    $db->db->update($user);
     $self->display(qq|
       Updated.<br>
       Username: $username<br>
