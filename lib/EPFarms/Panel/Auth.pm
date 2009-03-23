@@ -53,44 +53,29 @@ sub do_auth {
   my $page = DOMTemplate->new('tpl/modal-dialog.html');
   my $sid = $self->request->session_id;
   $page->set('#dialog' => qq|
-    <script>
-      \$(function() {
-        if(location.href.indexOf("epfarms.org") > -1 &&
-          location.href.indexOf("-dev") == -1) {
-          \$('#f').submit(function() {
-            var new_url = '/~' + \$('#username').val() + '/epfarms-panel/';
-            var m = location.href.match(/(epfarms-)?panel\\\/(.*)\$/);
-            if(m[2]) {
-              new_url += m[2];
-            }
-            \$('#f').attr('action', new_url);
-          });
-        }
-      });
-    </script>
-      <h2>Please login</h2>
-      <i>(and Don't Panic!)</i>
-      <span id=msg></span>
-      <form name=f id=f method=POST>
-        <input type=hidden id=sid name=sid value="$sid">
-        <input type=hidden id="has_javascript" name="has_javascript" value="0">
-        <script>\$('#has_javascript').val(1)</script>
-        <b>$msg</b>
-        <table border=0 cellspacing=0 cellpadding=4>
-          <tr>
-            <th>Username:</th>
-            <td><input type=text id=username name=username size=15></td>
-          </tr>
-          <tr>
-            <th>Password:</th>
-            <td><input type=password name=password size=15></td>
-          </tr>
-          <tr>
-            <td colspan=2><input id=login type=submit name=login value="Login"></td>
-          </tr>
-        </table>
-        <script>\$('#username').focus()</script>
-      </form>
+    <h2>Please login</h2>
+    <i>(and Don't Panic!)</i>
+    <span id=msg></span>
+    <form name=f id=f method=POST>
+      <input type=hidden id=sid name=sid value="$sid">
+      <input type=hidden id="has_javascript" name="has_javascript" value="0">
+      <script>\$('#has_javascript').val(1)</script>
+      <b>$msg</b>
+      <table border=0 cellspacing=0 cellpadding=4>
+        <tr>
+          <th>Username:</th>
+          <td><input type=text id=username name=username size=15></td>
+        </tr>
+        <tr>
+          <th>Password:</th>
+          <td><input type=password name=password size=15></td>
+        </tr>
+        <tr>
+          <td colspan=2><input id=login type=submit name=login value="Login"></td>
+        </tr>
+      </table>
+      <script>\$('#username').focus()</script>
+    </form>
   |);
   $page->set('#sid', $self->request->session_id);
   while(1) {
