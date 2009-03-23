@@ -64,14 +64,19 @@ sub edit_remote_file {
   my $password = $self->{panel}->{user}->{password};
   my $local_file = $file;
   $local_file =~ s/\//-/g;
+  unless(-e "$ENV{HOME}/tmp/$username") {
+    mkdir "$ENV{HOME}/tmp/$username";#, 0770;
+  }
+  $local_file = "$ENV{HOME}/tmp/$username/$local_file";
   my $scp = Net::SCP::Expect->new(
     timeout => 30,
     #option  => 'StrictHostKeyChecking=no -o PermitLocalCommand=no',
     option  => 'StrictHostKeyChecking=no',
+    auto_yes => 1,
   );
   $scp->login($username, $password);
-  $scp->scp("$host:$file", "/tmp/epfarms-panel/$username/$local_file");
-  my $content = read_file("/tmp/epfarms-panel/$username/$local_file");
+  $scp->scp("$host:$file", $local_file);
+  my $content = read_file($local_file);
   my $output = qq{
     <h2>Edit File</h2>
     Filename: $host:$file<br>
@@ -83,8 +88,8 @@ sub edit_remote_file {
   my $action = $self->param('email-action');
   if($action eq 'Save') {
     $content = $self->param('content');
-    write_file("/home/$username/.epfarms-panel/tmp/$local_file", $content);
-    $scp->scp("/home/$username/.epfarms-panel/tmp/$local_file", "$host:$file");
+    write_file($local_file, $content);
+    $scp->scp($local_file, "$host:$file");
     $self->display("Saved!");
   }
 
