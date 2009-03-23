@@ -5,8 +5,6 @@ AddHandler fcgid-script .fcgi
 
 RewriteEngine on
 
-# RewriteRule ^(.*) share/$1
-
 # Don't rewrite the darcs dir
 RewriteRule _darcs - [L]
 
@@ -20,5 +18,5 @@ RewriteRule ^(.*\.(gif|jpg|png)) - [L]
 RewriteRule ^(.*\.(pdf|doc|odt)) - [L]
 
 # Rewrite everything else.
-RewriteRule ^(.*) /~USERNAME/epfarms-panel/epfarms-panel.fcgi/$1 [L]
+RewriteRule ^(.*) /panel/epfarms-panel.fcgi/$1 [L]
 
