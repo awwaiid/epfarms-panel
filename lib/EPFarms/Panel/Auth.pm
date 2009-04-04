@@ -91,7 +91,6 @@ sub do_auth {
         last_active => time(),
       );
       $self->user($user);
-      $self->setup_remote_access($password);
       return $self->user;
     } elsif($username) {
       $msg = "Login incorrect.\n";
@@ -103,33 +102,6 @@ sub do_auth {
     #$self->request->next;
   }
 }
-
-sub setup_remote_access {
-  my ($self, $password) = @_;
-  my $conf_dir = "/home/" . $self->user->username . "/.epfarms-panel";
-  unless(-d $conf_dir) {
-    print STDERR "Creating configuration directory.\n";
-    mkdir $conf_dir;
-    `chmod 700 $conf_dir`;
-    mkdir "$conf_dir/tmp";
-  }
-  # unless(-e "$conf_dir/rsa_key") {
-    # print STDERR "Generating ssh key for remote access.\n";
-    # `ssh-keygen -t rsa -N "" -f $conf_dir/rsa_key`;
-    # print STDERR "Copying public ssh key to pointless.\n";
-    # my $ftp = Net::FTP->new("pointless.epfarms.org", Passive => 1)
-      # or print STDERR "FTP connect faild\n";
-    # $ftp->login($self->user->{username}, $password)
-      # or print STDERR "FTP auth faild\n";
-    # $ftp->mkdir('.ssh')
-      # or print STDERR "FTP mkdir faild\n" . $ftp->message;
-    # $ftp->append("$conf_dir/rsa_key.pub", '.ssh/authorized_keys')
-      # or print STDERR "FTP append faild\n" . $ftp->message;
-    # $ftp->quit;
-    # print STDERR "Done setting up remote access.\n";
-  # }
-}
-
 
 1;
 
