@@ -31,7 +31,9 @@ sub main {
   |);
 
   if($self->param('save')) {
-    my ($contact, $email, $name) = $self->param(qw( contact email name ));
+    my $contact = $self->param('contact');
+    my $email = $self->param('email');
+    my $name = $self->param('name');
     $user->contact($contact);
     $user->external_email($email);
     $user->name($name);
