@@ -139,6 +139,11 @@ sub add_link {
   return $self->request->callback_link( $text => $subref );
 }
 
+sub add_button {
+  my ($self, $text, $subref) = @_;
+  return $self->request->callback_submit( $text => $subref );
+}
+
 sub process_links {
   my ($self) = @_;
   $self->request->execute_callbacks();

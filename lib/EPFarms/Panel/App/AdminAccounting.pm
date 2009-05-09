@@ -1,7 +1,7 @@
-package EPFarms::Panel::App::AdminAccounting;
+use MooseX::Declare;
 
-use Moose;
-extends 'EPFarms::Panel::App';
+class EPFarms::Panel::App::AdminAccounting extends EPFarms::Panel::App {
+
 use EPFarms::Effin;
 
 has '+config' => (default => sub {{
@@ -90,6 +90,7 @@ sub user_detail {
   } while $self->process_links;
 }
 
+}
 
 1;
 

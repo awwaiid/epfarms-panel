@@ -62,6 +62,8 @@ foreach my $db_txn (@$transactions) {
 
 print "Saving database...\n";
 $db->save;
+use Data::Dumper;
+print "Root set contains: " . Dumper($db->content);
 
 print "done!\n";
 
