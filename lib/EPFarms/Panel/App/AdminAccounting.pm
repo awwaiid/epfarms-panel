@@ -2,8 +2,6 @@ use MooseX::Declare;
 
 class EPFarms::Panel::App::AdminAccounting extends EPFarms::Panel::App {
 
-use EPFarms::Effin;
-
 has '+config' => (default => sub {{
   rank => '99',
   name => 'admin_accounting',
@@ -14,13 +12,7 @@ has '+config' => (default => sub {{
 
 sub main {
   my ($self) = @_;
-  my ($username, $password) = $self->get_mysql_auth;
-  return unless $username;
-  my $db = EPFarms::Effin->connect(
-    'dbi:mysql:database=epfarms_effin_effin',
-    $username,
-    $password
-  );
+  my $db = EPFarms::DB->new;
   do {
     my $out = "<table class=data>
       <thead>
@@ -29,17 +21,21 @@ sub main {
           <th>Balance</th>
         </tr>
       </thead>";
-    my @users = $db->resultset('Users')->search(undef,{order_by => 'usr_nname'});
+      say STDERR "Loading users...";
+      my @users = $db->content->users->members;
+      @users = sort { $a->username cmp $b->username } @users;
+      say STDERR "done.";
     foreach my $user (@users) {
+    my $balance = $user->balance_formatted();
       $out .= qq{
         <tr>
           <td>
             @{[
-              $self->add_link($user->usr_nname => sub { $self->user_detail($user) })
+              $self->add_link($user->username => sub { $self->user_detail($user) })
             ]}
         </td>
+              $balance
         <td>
-        @{[ $user->balance_formatted ]}
         </td></tr>
       };
     }

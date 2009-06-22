@@ -31,5 +31,20 @@ sub add_transaction {
   $self->transactions->insert($transaction);
 }
 
+sub balance {
+    my ($self) = @_;
+    my $total = 0;
+    foreach my $txn ($self->transactions->members) {
+        $total += $txn->amount;
+    }
+    return $total;
+}
+
+sub balance_formatted {
+    my ($self) = @_;
+    my $balance = $self->balance;
+    return sprintf('$%.02f', $balance);
+}
+
 1;
 
