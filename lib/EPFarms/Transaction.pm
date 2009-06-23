@@ -1,11 +1,10 @@
 use MooseX::Declare;
 
-class EPFarms::Transaction {
+class EPFarms::Transaction extends EPFarms {
 
   use Moose;
   use Moose::Util::TypeConstraints;
   use DateTime;
-  extends 'EPFarms';
 
   has timestamp => (is => 'rw', isa => 'DateTime', default => sub { DateTime->now }, );
   has amount => (is => 'rw', isa => 'Num');

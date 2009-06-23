@@ -56,10 +56,11 @@ sub user_detail {
   
   do {
     my $out = qq|
-      <h2>User: @{[$user->usr_nname]}</h2>
+      <h2>User: @{[$user->username]}</h2>
       Balance: @{[$user->balance_formatted]}<br>
     |;
-    if(scalar ($user->transactions) > 0) {
+    my @transactions = $user->transactions->members;
+    if(scalar (@transactions) > 0) {
       $out .= qq|
         <h4>Transactions</h4>
         <table class="data">
@@ -71,12 +72,12 @@ sub user_detail {
             </tr>
           </thead>
       |;
-      foreach my $transaction ($user->transactions(undef,{order_by => 'trn_date'})) {
+      foreach my $transaction (@transactions) {
         $out .= qq|
           <tr>
-            <td>@{[$transaction->trn_date->ymd]}</td>
-            <td>@{[$transaction->trn_memo]}</td>
-            <td>@{[$transaction->trn_amount_formatted]}</td>
+            <td>@{[$transaction->timestamp->ymd]}</td>
+            <td>@{[$transaction->description]}</td>
+            <td>@{[$transaction->amount]}</td>
           </tr>
         |;
       }
