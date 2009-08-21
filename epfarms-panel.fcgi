@@ -3,6 +3,9 @@
 # This is just a wrapper script to get things started
 
 use strict;
+use lib 'lib';
+use everywhere 'MooseX::Declare',
+  matching => '^EPFarms';
 
 $SIG{TERM} = sub {
   exit;
@@ -11,7 +14,6 @@ $SIG{TERM} = sub {
 my $process_user = getpwuid($<);
 
 BEGIN { chdir 'EPFarms-Panel' if -d 'EPFarms-Panel' }
-use lib 'lib';
 use Continuity;
 use Continuity::Adapt::FCGI;
 use EPFarms::Panel;
