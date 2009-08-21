@@ -1,4 +1,3 @@
-use MooseX::Declare;
 
 class EPFarms::DB::Content {
   use KiokuDB::Util qw(set);

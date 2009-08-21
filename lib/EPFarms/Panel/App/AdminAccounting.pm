@@ -1,5 +1,3 @@
-use MooseX::Declare;
-
 class EPFarms::Panel::App::AdminAccounting extends EPFarms::Panel::App {
 
 has '+config' => (default => sub {{

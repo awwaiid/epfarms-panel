@@ -1,5 +1,3 @@
-use MooseX::Declare;
-
 class EPFarms::Transaction extends EPFarms {
 
   use Moose;

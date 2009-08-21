@@ -1,4 +1,3 @@
-use MooseX::Declare;
 
 class EPFarms::User extends EPFarms {
 

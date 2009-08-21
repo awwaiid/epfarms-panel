@@ -1,5 +1,3 @@
-use MooseX::Declare;
-
 class EPFarms::Panel::App::Account extends EPFarms::Panel::App {
 
   use EPFarms::DB;
