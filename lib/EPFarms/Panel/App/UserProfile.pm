@@ -1,9 +1,7 @@
 
 class EPFarms::Panel::App::UserProfile extends EPFarms::Panel::App {
 
-use Moose;
-extends 'EPFarms::Panel::App';
-use EPFarms::Effin;
+use EPFarms::DB;
 
 has '+config' => (default => sub {{
   rank => '10',
