@@ -1,9 +1,7 @@
-package EPFarms::Panel;
+
+class EPFarms::Panel extends EPFarms::Panel::Base {
 
 use Data::Dumper;
-use Moose;
-extends 'EPFarms::Panel::Base';
-
 use EPFarms::Panel::Auth;
 
 has 'apps' => ( is => 'rw', isa => 'ArrayRef', default => sub { [] });
@@ -160,6 +158,8 @@ sub load_main_page {
   return $page;
 }
 
+} # End of class EPFarms::Panel
+
 =head1 SEE ALSO
 
 L<http://community.epfarms.org/Panel_Documentation>
@@ -177,6 +177,7 @@ it under the same terms as Perl itself, either Perl version 5.8.8 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut
+
 
 1;
 

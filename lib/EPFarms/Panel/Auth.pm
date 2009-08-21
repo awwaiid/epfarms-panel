@@ -1,7 +1,4 @@
-package EPFarms::Panel::Auth;
-
-use Moose;
-extends 'EPFarms::Panel::Base';
+class EPFarms::Panel::Auth extends EPFarms::Panel::Base {
 
 use Authen::Simple::FTP;
 use Net::FTP;
@@ -101,6 +98,8 @@ sub do_auth {
     return;
     #$self->request->next;
   }
+}
+
 }
 
 1;

@@ -1,5 +1,5 @@
 
-package EPFarms::Panel::App::UserProfile;
+class EPFarms::Panel::App::UserProfile extends EPFarms::Panel::App {
 
 use Moose;
 extends 'EPFarms::Panel::App';
@@ -12,8 +12,7 @@ has '+config' => (default => sub {{
   icon => 'img/famfam/icons/user.png',
 }});
 
-sub main {
-  my ($self) = @_;
+method main {
   my $db = EPFarms::DB->new;
   my $username = $self->panel->user->username;
   my $user = $db->find_user(username => $username);
@@ -46,6 +45,7 @@ sub main {
       Alternate Contact: $contact
     |);
   }
+}
 
 }
 
