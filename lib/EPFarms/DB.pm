@@ -27,7 +27,8 @@ class EPFarms::DB {
     my $dsn = $::dsn || "dbi:SQLite:/home/admin/epfarms-data/data.db";
     $self->db(
       KiokuDB->connect(
-        "dbi:SQLite:/home/awwaiid/tmp/epfarms-data/data.db",
+        $dsn,
+        #"dbi:SQLite:/home/awwaiid/tmp/epfarms-data/data.db",
         #"bdb-gin:dir=/home/awwaiid/tmp/epfarms-data",
         extract => Search::GIN::Extract::Callback->new(
           extract => sub { $self->extract(@_) }
