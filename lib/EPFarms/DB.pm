@@ -22,7 +22,8 @@ class EPFarms::DB {
   );
   has scope => (is => 'rw');
 
-  method BUILD {
+  sub BUILD {
+    my $self = shift;
     my $dsn = $::dsn || "dbi:SQLite:/home/admin/epfarms-data/data.db";
     $self->db(
       KiokuDB->connect(
@@ -41,7 +42,7 @@ class EPFarms::DB {
   method extract($object, $extractor, @args) {
     if($object->can('index')) {
       print STDERR "indexing object $object\n";
-      return $object->can('index')->(@args);
+      return $object->index(@args);
     } else {
       print STDERR "object $object has no index method\n";
     }
@@ -51,8 +52,18 @@ class EPFarms::DB {
     $self->content->users->insert($user);
   }
 
+  use Search::GIN::Query::Manual;
   sub find_user {
     my ($self, %search) = @_;
+
+    my $query = Search::GIN::Query::Manual->new(
+      values => {
+        %search
+      },
+    );
+    my ($user) = $self->db->search($query)->all;
+    return $user if $user;
+
     print STDERR "Getting all users...\n";
     my @users = $self->content->users->members;
     foreach my $user (@users) {

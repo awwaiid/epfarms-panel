@@ -43,6 +43,7 @@ foreach my $db_user (@$users) {
   #$user->add_service($basic_service);
   $db->add_user($user);
 }
+$db->save;
 
 my $transactions = $mysql->selectall_arrayref(
   qq{ SELECT * FROM transactions}, {Slice => {}});
@@ -64,8 +65,8 @@ foreach my $db_txn (@$transactions) {
   $user->add_transaction($transaction);
 }
 
-print "Saving database...\n";
-$db->save;
+#print "Saving database...\n";
+#$db->save;
 use Data::Dumper;
 print "Root set contains: " . Dumper($db->content);
 

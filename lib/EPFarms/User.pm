@@ -49,6 +49,14 @@ class EPFarms::User extends EPFarms {
       return sprintf('$%.02f', $balance);
   }
 
+  sub index {
+    my ($self) = @_;
+    return +{
+      username => $self->username,
+      unixid   => $self->unixid,
+    };
+  }
+
 }
 
 1;
