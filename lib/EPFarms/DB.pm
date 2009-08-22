@@ -53,8 +53,10 @@ class EPFarms::DB {
 
   sub find_user {
     my ($self, %search) = @_;
+    print STDERR "Getting all users...\n";
     my @users = $self->content->users->members;
     foreach my $user (@users) {
+      print STDERR "Trying user " . $user->username . "\n";
       my $found = 1;
       foreach my $search_key (keys %search) {
         if($user->$search_key() ne $search{$search_key}) {
