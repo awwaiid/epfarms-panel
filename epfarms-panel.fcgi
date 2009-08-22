@@ -4,7 +4,7 @@
 
 use strict;
 use lib 'lib';
-use everywhere 'MooseX::Declare',
+use everywhere 'MooseX::Declare; use 5.010',
   matching => '^EPFarms';
 
 use Continuity;
