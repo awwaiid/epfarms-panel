@@ -1,9 +1,7 @@
 
-package EPFarms::Panel::App::AdminDomains;
+class EPFarms::Panel::App::AdminDomains extends EPFarms::Panel::App {
 
-use Moose;
-extends 'EPFarms::Panel::App';
-use EPFarms::Effin;
+use EPFarms::DB;
 use SOAP::Lite; # +trace => qw( debug );
 use ResellerClub::DomOrderService;
 use Data::Dumper;
@@ -159,5 +157,5 @@ sub renew_domain {
   $self->display("Sure... I'll get right on that.");
 }
 
-1;
+}
 

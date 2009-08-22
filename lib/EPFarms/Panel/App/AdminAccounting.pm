@@ -19,12 +19,15 @@ sub main {
           <th>Balance</th>
         </tr>
       </thead>";
-      say STDERR "Loading users...";
-      my @users = $db->content->users->members;
-      @users = sort { $a->username cmp $b->username } @users;
-      say STDERR "done.";
+    use Carp qw(cluck); cluck();
+    say STDERR "Loading users...";
+    my @users = $db->content->users->members;
+    say STDERR "done. Sorting...";
+    @users = sort { $a->username cmp $b->username } @users;
+    say STDERR "done.";
     foreach my $user (@users) {
-    my $balance = $user->balance_formatted();
+      say STDERR "Working on " . $user->username;
+      my $balance = $user->balance_formatted();
       $out .= qq{
         <tr>
           <td>
@@ -32,8 +35,8 @@ sub main {
               $self->add_link($user->username => sub { $self->user_detail($user) })
             ]}
         </td>
-              $balance
         <td>
+          $balance
         </td></tr>
       };
     }

@@ -12,6 +12,7 @@ class EPFarms::DB::Content {
 class EPFarms::DB {
 
   use KiokuDB;
+  use Search::GIN::Extract::Callback;
 
   has db => (is => 'rw');
   has content => (
@@ -21,17 +22,32 @@ class EPFarms::DB {
   );
   has scope => (is => 'rw');
 
-  sub BUILD {
-    my $self = shift;
+  method BUILD {
+    my $dsn = $::dsn || "dbi:SQLite:/home/admin/epfarms-data/data.db";
     $self->db(
-      KiokuDB->connect("bdb:dir=/home/awwaiid/tmp/epfarms-data", create => 1)
+      KiokuDB->connect(
+        "dbi:SQLite:/home/awwaiid/tmp/epfarms-data/data.db",
+        #"bdb-gin:dir=/home/awwaiid/tmp/epfarms-data",
+        extract => Search::GIN::Extract::Callback->new(
+          extract => sub { $self->extract(@_) }
+        ),
+        create => 1,
+      )
     );
     $self->scope( $self->db->new_scope );
     $self->content( $self->db->lookup('content'));
   }
 
-  sub add_user {
-    my ($self, $user) = @_;
+  method extract($object, $extractor, @args) {
+    if($object->can('index')) {
+      print STDERR "indexing object $object\n";
+      return $object->can('index')->(@args);
+    } else {
+      print STDERR "object $object has no index method\n";
+    }
+  }
+
+  method add_user($user) {
     $self->content->users->insert($user);
   }
 

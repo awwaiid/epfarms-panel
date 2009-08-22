@@ -2,6 +2,9 @@
 
 use strict;
 use lib '../lib';
+use everywhere 'MooseX::Declare; use 5.010',
+  matching => '^EPFarms';
+
 use DBI;
 use EPFarms::DB;
 use EPFarms::User;
@@ -24,6 +27,7 @@ my $mysql = DBI->connect('DBI:mysql:database=epfarms_effin_effin','root',$passwd
 
 my $db = EPFarms::DB->new;
 
+my $count = 0;
 my $users = $mysql->selectall_arrayref(qq{ SELECT * FROM users }, {Slice => {}});
 foreach my $db_user (@$users) {
   print "Processing user '$db_user->{usr_nname}'\n";
@@ -36,7 +40,7 @@ foreach my $db_user (@$users) {
     contact => $db_user->{usr_contact} || '',
   );
   my $basic_service = EPFarms::Service::Basic->new;
-  $user->add_service($basic_service);
+  #$user->add_service($basic_service);
   $db->add_user($user);
 }
 
