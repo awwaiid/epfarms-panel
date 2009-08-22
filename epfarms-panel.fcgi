@@ -7,15 +7,15 @@ use lib 'lib';
 use everywhere 'MooseX::Declare',
   matching => '^EPFarms';
 
-$SIG{TERM} = sub {
-  exit;
-};
-
 use Continuity;
 use Continuity::Adapt::FCGI;
 use EPFarms::Panel;
 
 use vars qw( $run_mode $server );
+
+$SIG{TERM} = sub {
+  exit;
+};
 
 if($ARGV[0] eq '-d') {
   # Debugging / Development server, running outside of FastCGI
