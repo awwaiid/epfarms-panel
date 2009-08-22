@@ -49,7 +49,7 @@ my $transactions = $mysql->selectall_arrayref(
   qq{ SELECT * FROM transactions}, {Slice => {}});
 foreach my $db_txn (@$transactions) {
   print "Processing transaction, unixid: $db_txn->{trn_usr_efid} date: $db_txn->{trn_date} amount: $db_txn->{trn_amount}\n";
-  my $user = $db->find_user(unixid => $db_txn->{trn_usr_efid});
+  my ($user) = $db->search(unixid => $db_txn->{trn_usr_efid});
   if(!$user) {
     die "Couldn't find user with unixid $db_txn->{trn_usr_efid}";
   }

@@ -72,7 +72,7 @@ if ($res->is_error) {
     };
 
     my $db = EPFarms::DB->new;
-    my $user = $db->find_user(username => $username);
+    my ($user) = $db->search(username => $username);
     my $transaction = EPFarms::Transaction->new(
       amount => $amount,
       description => 'Payment from paypal',

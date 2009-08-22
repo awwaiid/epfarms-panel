@@ -27,7 +27,7 @@ for them to make payments.
     my $db = EPFarms::DB->new;
     my $username = $self->panel->user->username;
     print STDERR "Finding user...\n";
-    my $user = $db->find_user(username => $username);
+    my ($user) = $db->search(username => $username);
     print STDERR "Found user.\n";
     my $tpl = DOMTemplate->new('tpl/accounting.html');
     $tpl->set('.username' => $username);

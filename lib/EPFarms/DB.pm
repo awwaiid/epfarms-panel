@@ -13,6 +13,7 @@ class EPFarms::DB {
 
   use KiokuDB;
   use Search::GIN::Extract::Callback;
+  use Search::GIN::Query::Manual;
 
   has db => (is => 'rw');
   has content => (
@@ -53,8 +54,7 @@ class EPFarms::DB {
     $self->content->users->insert($user);
   }
 
-  use Search::GIN::Query::Manual;
-  sub find_user {
+  sub search {
     my ($self, %search) = @_;
 
     my $query = Search::GIN::Query::Manual->new(
@@ -62,23 +62,7 @@ class EPFarms::DB {
         %search
       },
     );
-    my ($user) = $self->db->search($query)->all;
-    return $user if $user;
-
-    print STDERR "Getting all users...\n";
-    my @users = $self->content->users->members;
-    foreach my $user (@users) {
-      print STDERR "Trying user " . $user->username . "\n";
-      my $found = 1;
-      foreach my $search_key (keys %search) {
-        if($user->$search_key() ne $search{$search_key}) {
-          $found = 0;
-          last;
-        }
-      }
-      return $user if $found;
-    }
-    return undef;
+    return $self->db->search($query)->all;
   }
 
   sub save {

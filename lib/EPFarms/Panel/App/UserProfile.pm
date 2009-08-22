@@ -13,7 +13,7 @@ has '+config' => (default => sub {{
 method main {
   my $db = EPFarms::DB->new;
   my $username = $self->panel->user->username;
-  my $user = $db->find_user(username => $username);
+  my ($user) = $db->search(username => $username);
   
   $self->display(qq|
     <h2>User Profile</h2>
