@@ -11,7 +11,7 @@ use Continuity;
 use Continuity::Adapt::FCGI;
 use EPFarms::Panel;
 
-use vars qw( $run_mode $server );
+use vars qw( $run_mode $server $dsn );
 
 $SIG{TERM} = sub {
   exit;
@@ -20,6 +20,7 @@ $SIG{TERM} = sub {
 if($ARGV[0] eq '-d') {
   # Debugging / Development server, running outside of FastCGI
   $run_mode = 'webdev';
+  $dsn = "dbi:SQLite:$ENV{HOME}/tmp/epfarms-data/data.db";
   $server = Continuity->new(
     port => $ARGV[1] || 8080,
     cookie_session => 0,
