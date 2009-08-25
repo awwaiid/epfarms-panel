@@ -59,7 +59,8 @@ class EPFarms::DB {
         %search
       },
     );
-    return $self->db->search($query)->all;
+    my @results = $self->db->search($query)->all;
+    return @results if @results;
   }
 
   sub save {
