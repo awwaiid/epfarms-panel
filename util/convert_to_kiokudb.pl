@@ -40,11 +40,12 @@ foreach my $db_user (@$users) {
     contact => $db_user->{usr_contact} || '',
   );
   my $basic_service = EPFarms::Service::Basic->new;
-  #$user->add_service($basic_service);
+  $user->add_service($basic_service);
   $db->add_user($user);
 }
 $db->save;
 
+$db->db->txn_do(sub {
 my $transactions = $mysql->selectall_arrayref(
   qq{ SELECT * FROM transactions}, {Slice => {}});
 foreach my $db_txn (@$transactions) {
@@ -62,8 +63,10 @@ foreach my $db_txn (@$transactions) {
     user => $user,
     # service
   );
+  $db->db->store($transaction);
   $user->add_transaction($transaction);
 }
+});
 
 #print "Saving database...\n";
 #$db->save;
