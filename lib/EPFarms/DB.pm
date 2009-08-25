@@ -43,10 +43,7 @@ class EPFarms::DB {
 
   method extract($object, $extractor, @args) {
     if($object->can('index')) {
-      print STDERR "indexing object $object\n";
       return $object->index(@args);
-    } else {
-      print STDERR "object $object has no index method\n";
     }
   }
 
