@@ -25,7 +25,7 @@ class EPFarms::DB {
 
   sub BUILD {
     my $self = shift;
-    my $dsn = $::dsn || "dbi:SQLite:/home/admin/epfarms-data/data.db";
+    my $dsn = $::dsn || "dbi:SQLite:$ENV{HOME}/tmp/epfarms-data/data.db";
     $self->db(
       KiokuDB->connect(
         $dsn,
