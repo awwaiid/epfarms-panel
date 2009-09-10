@@ -2,15 +2,34 @@
 
 use strict;
 use lib '../lib';
-use SOAP::Lite +trace => qw( debug );
+use SOAP::Lite;# +trace => qw( debug );
 use ResellerClub::DomOrderService;
+use ResellerClub::OrderService;
+use Data::Dumper;
 
 use vars qw( $username $password );
 do "/home/awwaiid/.epfarms-panel/resellerclub.conf";
 
+sub result_to_hash {
+  my $result = shift;
+  print "Results before: $result\n";
+  # Lets just totally cheat and use a regex to turn this into a hash
+  $result =~ s/^<\?xml[^>]*>//;
+  $result =~ s/<Hashtable[^>]*>/{\n/g;
+  $result =~ s/<\/Hashtable>/}\n/g;
+  $result =~ s/<row name="([^"]*)">/'$1' => /g;
+  $result =~ s/<\/row>/,\n/g;
+  $result =~ s/ => (.*?),\n/ => '$1',\n/g;
+
+  my $data = eval $result;
+  # print "Input: $result, output: " . Dumper($data);
+  # print "Error: $@\n" if $@;
+  return $data;
+}
+
 sub get_all_orders {
-  my $dom_order = ResellerClub::DomOrderService->new;
-  $dom_order->readable(1);
+  # my $dom_order = ResellerClub::DomOrderService->new;
+  # $dom_order->readable(1);
 
   my $reccount = 0;
   my $totalrecs = 0;
@@ -47,55 +66,82 @@ sub get_all_orders {
       '', # orderBy
     );
 
-    # Lets just totally cheat and use a regex to turn this into a hash
-    $out =~ s/^<\?xml[^>]*>//;
-    $out =~ s/<Hashtable[^>]*>/{/g;
-    $out =~ s/<\/Hashtable>/}\n/g;
-    $out =~ s/<row name="([^"]*)">/'$1' => /g;
-    $out =~ s/<\/row>/,\n/g;
-    $out =~ s/ => ([^,{]+),/ => '$1',/g;
-
-    my $data = eval $out;
+    my $data = result_to_hash($out);
     $reccount += $data->{recsonpage};
     delete $data->{recsonpage};
     $totalrecs = $data->{recsindb};
     delete $data->{recsindb};
 
     push @$recs, values %$data;
-
-
   } while($reccount < $totalrecs);
-
   return $recs;
 }
 
-my $recs = get_all_orders;
-use Data::Dumper;
-print Dumper($recs);
+sub get_order_actions {
+  my $entityId = shift;
+  my $reccount = 0;
+  my $totalrecs = 0;
+  my $recs = [];
+  my $curpage = 1;
+  do {
+    my $out = ResellerClub::OrderService::listArchivedActions(
+      $username, # userName
+      $password, # password
+      'reseller', # role
+      'en', # langpref
+      1, # parentid
+      '', # int[] eaqId,
+      $entityId, # int[] entityId,
+      '', # int[] entitytypeid,
+      '', # java.lang.String[] actionStatus,
+      '', # java.lang.String[] actionType,
+      100, # numOfRecordPerPage
+      $curpage++, # pageNum
+      '', # orderBy
+    );
 
-print "Record count: " . (scalar @$recs) . "\n";
+    my $data = result_to_hash($out);
+    $reccount += $data->{recsonpage};
+    delete $data->{recsonpage};
+    $totalrecs = $data->{recsindb};
+    delete $data->{recsindb};
 
-my $domains = {};
-
-foreach my $row (@$recs) {
-  $domains->{$row->{'entity.description'}}->{$row->{'entity.currentstatus'}}++;
+    push @$recs, values %$data;
+    print "Recs: " . (scalar @$recs) . "\n";
+  } while($reccount < $totalrecs);
+  return $recs;
 }
 
-print "Active:\n";
-my $active_count = 0;
-foreach my $d (sort keys %$domains) {
-  print "$d\t$domains->{$d}->{Active}\n" if $domains->{$d}->{Active};
-  $active_count++ if $domains->{$d}->{Active};
-}
+# my $recs = get_all_orders;
+# print Dumper($recs);
 
-print "Deleted:\n";
-my $deleted_count = 0;
-foreach my $d (sort keys %$domains) {
-  print "$d\t$domains->{$d}->{Deleted}\n" if $domains->{$d}->{Deleted};
-  $deleted_count++ if $domains->{$d}->{Deleted};
-}
+# print "Record count: " . (scalar @$recs) . "\n";
 
-print "Active count: $active_count\n";
-print "Deleted count: $deleted_count\n";
+# my $domains = {};
 
+# foreach my $row (@$recs) {
+  # $domains->{$row->{'entity.description'}}->{$row->{'entity.currentstatus'}}++;
+# }
+
+# print "Active:\n";
+# my $active_count = 0;
+# foreach my $d (sort keys %$domains) {
+  # print "$d\t$domains->{$d}->{Active}\n" if $domains->{$d}->{Active};
+  # $active_count++ if $domains->{$d}->{Active};
+# }
+
+# print "Deleted:\n";
+# my $deleted_count = 0;
+# foreach my $d (sort keys %$domains) {
+  # print "$d\t$domains->{$d}->{Deleted}\n" if $domains->{$d}->{Deleted};
+  # $deleted_count++ if $domains->{$d}->{Deleted};
+# }
+
+# print "Active count: $active_count\n";
+# print "Deleted count: $deleted_count\n";
+
+
+my $actions = get_order_actions(3968305);
+
+print Dumper($actions);
 
