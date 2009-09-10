@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.foundation.sfnb.order.domorder.DotTel" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.foundation.sfnb.order.domorder.DotTel" xmlns:intf="com.logicboxes.foundation.sfnb.order.domorder.DotTel" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types/>
+
+   <wsdl:message name="getCTHLoginDetailsResponse">
+
+      <wsdl:part name="getCTHLoginDetailsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCTHLoginDetailsRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="orderId" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyWhoisPreferenceRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="orderId" type="xsd:int"/>
+
+      <wsdl:part name="whoisType" type="xsd:string"/>
+
+      <wsdl:part name="publish" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyWhoisPreferenceResponse">
+
+      <wsdl:part name="modifyWhoisPreferenceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="DotTel">
+
+      <wsdl:operation name="modifyWhoisPreference" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID orderId whoisType publish">
+
+         <wsdl:input message="impl:modifyWhoisPreferenceRequest" name="modifyWhoisPreferenceRequest"/>
+
+         <wsdl:output message="impl:modifyWhoisPreferenceResponse" name="modifyWhoisPreferenceResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCTHLoginDetails" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID orderId">
+
+         <wsdl:input message="impl:getCTHLoginDetailsRequest" name="getCTHLoginDetailsRequest"/>
+
+         <wsdl:output message="impl:getCTHLoginDetailsResponse" name="getCTHLoginDetailsResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="DotTelServiceSoapBinding" type="impl:DotTel">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="modifyWhoisPreference">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modifyWhoisPreferenceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotTel" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="modifyWhoisPreferenceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotTel" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCTHLoginDetails">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCTHLoginDetailsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotTel" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCTHLoginDetailsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domorder.DotTel" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="DotTelService">
+
+      <wsdl:port binding="impl:DotTelServiceSoapBinding" name="DotTelService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.foundation.sfnb.Product" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.foundation.sfnb.Product" xmlns:intf="com.logicboxes.foundation.sfnb.Product" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types/>
+
+   <wsdl:message name="getProductMetadataRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProductMetadataResponse">
+
+      <wsdl:part name="getProductMetadataReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getResellerActiveProductCategoryResponse">
+
+      <wsdl:part name="getResellerActiveProductCategoryReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getResellerActiveProductCategoryRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="includeAddDeniedProducts" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Product">
+
+      <wsdl:operation name="getResellerActiveProductCategory" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID includeAddDeniedProducts">
+
+         <wsdl:input message="impl:getResellerActiveProductCategoryRequest" name="getResellerActiveProductCategoryRequest"/>
+
+         <wsdl:output message="impl:getResellerActiveProductCategoryResponse" name="getResellerActiveProductCategoryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProductMetadata" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID">
+
+         <wsdl:input message="impl:getProductMetadataRequest" name="getProductMetadataRequest"/>
+
+         <wsdl:output message="impl:getProductMetadataResponse" name="getProductMetadataResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ProductServiceSoapBinding" type="impl:Product">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getResellerActiveProductCategory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getResellerActiveProductCategoryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.Product" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getResellerActiveProductCategoryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.Product" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProductMetadata">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProductMetadataRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.Product" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProductMetadataResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.Product" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ProductService">
+
+      <wsdl:port binding="impl:ProductServiceSoapBinding" name="ProductService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

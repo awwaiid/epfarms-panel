@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.foundation.sfnb.management.LegalAgreement" xmlns:intf="com.logicboxes.foundation.sfnb.management.LegalAgreement" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types>
+  <schema targetNamespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_xsd_string">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <element name="ArrayOf_xsd_string" nillable="true" type="impl:ArrayOf_xsd_string"/>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getProductCategoryRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="productKey" type="xsd:string"/>
+
+      <wsdl:part name="signupAction" type="xsd:string"/>
+
+      <wsdl:part name="resellerId" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgreementResponse">
+
+      <wsdl:part name="getAgreementReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRegistrantAgreementRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="callByParent" type="xsd:boolean"/>
+
+      <wsdl:part name="agreementType" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAgreementsRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="agreementType" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgreementRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="callByParent" type="xsd:boolean"/>
+
+      <wsdl:part name="agreementType" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProductCategoryResponse">
+
+      <wsdl:part name="getProductCategoryReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRegistrantAgreementResponse">
+
+      <wsdl:part name="getRegistrantAgreementReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAgreementsResponse">
+
+      <wsdl:part name="getAllAgreementsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="LegalAgreement">
+
+      <wsdl:operation name="getRegistrantAgreement" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID callByParent agreementType">
+
+         <wsdl:input message="impl:getRegistrantAgreementRequest" name="getRegistrantAgreementRequest"/>
+
+         <wsdl:output message="impl:getRegistrantAgreementResponse" name="getRegistrantAgreementResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProductCategory" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID productKey signupAction resellerId">
+
+         <wsdl:input message="impl:getProductCategoryRequest" name="getProductCategoryRequest"/>
+
+         <wsdl:output message="impl:getProductCategoryResponse" name="getProductCategoryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgreement" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID callByParent agreementType">
+
+         <wsdl:input message="impl:getAgreementRequest" name="getAgreementRequest"/>
+
+         <wsdl:output message="impl:getAgreementResponse" name="getAgreementResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllAgreements" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID agreementType">
+
+         <wsdl:input message="impl:getAllAgreementsRequest" name="getAllAgreementsRequest"/>
+
+         <wsdl:output message="impl:getAllAgreementsResponse" name="getAllAgreementsResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="LegalAgreementServiceSoapBinding" type="impl:LegalAgreement">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getRegistrantAgreement">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getRegistrantAgreementRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getRegistrantAgreementResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProductCategory">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProductCategoryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProductCategoryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgreement">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAgreementRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAgreementResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllAgreements">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllAgreementsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllAgreementsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.management.LegalAgreement" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="LegalAgreementService">
+
+      <wsdl:port binding="impl:LegalAgreementServiceSoapBinding" name="LegalAgreementService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

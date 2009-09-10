@@ -22,26 +22,6 @@
   </schema>
  </wsdl:types>
 
-   <wsdl:message name="addRequest">
-
-      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
-
-      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
-
-      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
-
-      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
-
-      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
-
-      <wsdl:part name="domainHash" type="xsd:string"/>
-
-      <wsdl:part name="customerId" type="xsd:int"/>
-
-      <wsdl:part name="invoiceOption" type="xsd:string"/>
-
-   </wsdl:message>
-
    <wsdl:message name="listRequest">
 
       <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
@@ -85,6 +65,32 @@
       <wsdl:part name="pageNum" type="xsd:int"/>
 
       <wsdl:part name="orderBy" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="domainHash" type="xsd:string"/>
+
+      <wsdl:part name="customerId" type="xsd:int"/>
+
+      <wsdl:part name="invoiceOption" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupDNSServiceResponse">
+
+      <wsdl:part name="setupDNSServiceReturn" type="xsd:string"/>
 
    </wsdl:message>
 
@@ -208,6 +214,22 @@
 
    </wsdl:message>
 
+   <wsdl:message name="setupDNSServiceRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="orderID" type="xsd:int"/>
+
+   </wsdl:message>
+
    <wsdl:message name="addResponse">
 
       <wsdl:part name="addReturn" type="xsd:string"/>
@@ -285,6 +307,14 @@
          <wsdl:input message="impl:getOrderIdByDomainRequest" name="getOrderIdByDomainRequest"/>
 
          <wsdl:output message="impl:getOrderIdByDomainResponse" name="getOrderIdByDomainResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupDNSService" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID orderID">
+
+         <wsdl:input message="impl:setupDNSServiceRequest" name="setupDNSServiceRequest"/>
+
+         <wsdl:output message="impl:setupDNSServiceResponse" name="setupDNSServiceResponse"/>
 
       </wsdl:operation>
 
@@ -401,6 +431,24 @@
          </wsdl:input>
 
          <wsdl:output name="getOrderIdByDomainResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.dnsbox.Zone" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupDNSService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setupDNSServiceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.dnsbox.Zone" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setupDNSServiceResponse">
 
             <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.dnsbox.Zone" use="encoded"/>
 

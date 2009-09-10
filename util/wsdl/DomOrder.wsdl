@@ -28,6 +28,22 @@
 
    </wsdl:message>
 
+   <wsdl:message name="resendTransferAuthorizationMailRequest">
+
+      <wsdl:part name="userName" type="xsd:string"/>
+
+      <wsdl:part name="password" type="xsd:string"/>
+
+      <wsdl:part name="role" type="xsd:string"/>
+
+      <wsdl:part name="langpref" type="xsd:string"/>
+
+      <wsdl:part name="parentid" type="xsd:int"/>
+
+      <wsdl:part name="orderId" type="xsd:int"/>
+
+   </wsdl:message>
+
    <wsdl:message name="addTransferDomainRequest">
 
       <wsdl:part name="userName" type="xsd:string"/>
@@ -59,6 +75,24 @@
    <wsdl:message name="modifyChildNameServerNameResponse">
 
       <wsdl:part name="modifyChildNameServerNameReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="restoreRequest">
+
+      <wsdl:part name="userName" type="xsd:string"/>
+
+      <wsdl:part name="password" type="xsd:string"/>
+
+      <wsdl:part name="role" type="xsd:string"/>
+
+      <wsdl:part name="langpref" type="xsd:string"/>
+
+      <wsdl:part name="parentid" type="xsd:int"/>
+
+      <wsdl:part name="orderId" type="xsd:int"/>
+
+      <wsdl:part name="invoiceOption" type="xsd:string"/>
 
    </wsdl:message>
 
@@ -285,6 +319,26 @@
       <wsdl:part name="customerId" type="xsd:int"/>
 
       <wsdl:part name="invoiceOption" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resendTransferAuthorizationMailResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelTransferRequest">
+
+      <wsdl:part name="userName" type="xsd:string"/>
+
+      <wsdl:part name="password" type="xsd:string"/>
+
+      <wsdl:part name="role" type="xsd:string"/>
+
+      <wsdl:part name="langpref" type="xsd:string"/>
+
+      <wsdl:part name="parentid" type="xsd:int"/>
+
+      <wsdl:part name="orderId" type="xsd:int"/>
 
    </wsdl:message>
 
@@ -604,6 +658,12 @@
 
    </wsdl:message>
 
+   <wsdl:message name="cancelTransferResponse">
+
+      <wsdl:part name="cancelTransferReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
    <wsdl:message name="modifyNameServerRequest">
 
       <wsdl:part name="userName" type="xsd:string"/>
@@ -753,6 +813,12 @@
    <wsdl:message name="modifyContactResponse">
 
       <wsdl:part name="modifyContactReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="restoreResponse">
+
+      <wsdl:part name="restoreReturn" type="xsd:string"/>
 
    </wsdl:message>
 
@@ -1152,6 +1218,22 @@
 
       </wsdl:operation>
 
+      <wsdl:operation name="resendTransferAuthorizationMail" parameterOrder="userName password role langpref parentid orderId">
+
+         <wsdl:input message="impl:resendTransferAuthorizationMailRequest" name="resendTransferAuthorizationMailRequest"/>
+
+         <wsdl:output message="impl:resendTransferAuthorizationMailResponse" name="resendTransferAuthorizationMailResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelTransfer" parameterOrder="userName password role langpref parentid orderId">
+
+         <wsdl:input message="impl:cancelTransferRequest" name="cancelTransferRequest"/>
+
+         <wsdl:output message="impl:cancelTransferResponse" name="cancelTransferResponse"/>
+
+      </wsdl:operation>
+
       <wsdl:operation name="add" parameterOrder="userName password role langpref parentid domainHash ns registrantContactId adminContactId techContactId billingContactId customerId invoiceOption">
 
          <wsdl:input message="impl:addRequest" name="addRequest"/>
@@ -1165,6 +1247,14 @@
          <wsdl:input message="impl:listRequest" name="listRequest"/>
 
          <wsdl:output message="impl:listResponse" name="listResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="restore" parameterOrder="userName password role langpref parentid orderId invoiceOption">
+
+         <wsdl:input message="impl:restoreRequest" name="restoreRequest"/>
+
+         <wsdl:output message="impl:restoreResponse" name="restoreResponse"/>
 
       </wsdl:operation>
 
@@ -1678,6 +1768,42 @@
 
       </wsdl:operation>
 
+      <wsdl:operation name="resendTransferAuthorizationMail">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="resendTransferAuthorizationMailRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.DomOrder" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="resendTransferAuthorizationMailResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.DomOrder" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelTransfer">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cancelTransferRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.DomOrder" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cancelTransferResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.DomOrder" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="add">
 
          <wsdlsoap:operation soapAction=""/>
@@ -1707,6 +1833,24 @@
          </wsdl:input>
 
          <wsdl:output name="listResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.DomOrder" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="restore">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="restoreRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.DomOrder" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="restoreResponse">
 
             <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.DomOrder" use="encoded"/>
 

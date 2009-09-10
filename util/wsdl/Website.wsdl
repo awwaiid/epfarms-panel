@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.foundation.sfnb.Website" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.foundation.sfnb.Website" xmlns:intf="com.logicboxes.foundation.sfnb.Website" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types>
+  <schema targetNamespace="com.logicboxes.foundation.sfnb.Website" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_xsd_int">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:int[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <element name="ArrayOf_xsd_int" nillable="true" type="impl:ArrayOf_xsd_int"/>
+   <complexType name="ArrayOf_xsd_string">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <element name="ArrayOf_xsd_string" nillable="true" type="impl:ArrayOf_xsd_string"/>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="moveWebsiteRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="websiteName" type="xsd:string"/>
+
+      <wsdl:part name="newCustomerId" type="xsd:int"/>
+
+      <wsdl:part name="defaultcontact" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="moveWebsiteResponse">
+
+      <wsdl:part name="moveWebsiteReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listResponse">
+
+      <wsdl:part name="listReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="listRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="resellerId" type="impl:ArrayOf_xsd_int"/>
+
+      <wsdl:part name="customerId" type="impl:ArrayOf_xsd_int"/>
+
+      <wsdl:part name="showChildWebSites" type="xsd:boolean"/>
+
+      <wsdl:part name="websiteName" type="xsd:string"/>
+
+      <wsdl:part name="status" type="impl:ArrayOf_xsd_string"/>
+
+      <wsdl:part name="productKey" type="impl:ArrayOf_xsd_string"/>
+
+      <wsdl:part name="numOfRecordPerPage" type="xsd:int"/>
+
+      <wsdl:part name="pageNum" type="xsd:int"/>
+
+      <wsdl:part name="orderBy" type="impl:ArrayOf_xsd_string"/>
+
+      <wsdl:part name="searchflag" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Website">
+
+      <wsdl:operation name="moveWebsite" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID websiteName newCustomerId defaultcontact">
+
+         <wsdl:input message="impl:moveWebsiteRequest" name="moveWebsiteRequest"/>
+
+         <wsdl:output message="impl:moveWebsiteResponse" name="moveWebsiteResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="list" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID resellerId customerId showChildWebSites websiteName status productKey numOfRecordPerPage pageNum orderBy searchflag">
+
+         <wsdl:input message="impl:listRequest" name="listRequest"/>
+
+         <wsdl:output message="impl:listResponse" name="listResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="WebsiteServiceSoapBinding" type="impl:Website">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="moveWebsite">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="moveWebsiteRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.Website" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="moveWebsiteResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.Website" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="list">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.Website" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.Website" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="WebsiteService">
+
+      <wsdl:port binding="impl:WebsiteServiceSoapBinding" name="WebsiteService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

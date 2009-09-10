@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.foundation.sfnb.order.OrderSetup" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.foundation.sfnb.order.OrderSetup" xmlns:intf="com.logicboxes.foundation.sfnb.order.OrderSetup" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types>
+  <schema targetNamespace="com.logicboxes.foundation.sfnb.order.OrderSetup" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_xsd_string">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <element name="ArrayOf_xsd_string" nillable="true" type="impl:ArrayOf_xsd_string"/>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getResellerCostPriceResponse">
+
+      <wsdl:part name="getResellerCostPriceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCustomerSlabPriceRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="productKeyArr" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPricingKeyDisplayNameRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="productKey" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPaymentCollectionParamsResponse">
+
+      <wsdl:part name="getPaymentCollectionParamsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPricingParamsDisplayNameResponse">
+
+      <wsdl:part name="getPricingParamsDisplayNameReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPricingParamsDisplayNameRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="productKey" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPricingKeyDisplayNameResponse">
+
+      <wsdl:part name="getPricingKeyDisplayNameReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCustomerSlabPriceResponse">
+
+      <wsdl:part name="getCustomerSlabPriceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCustomerCostPriceResponse">
+
+      <wsdl:part name="getCustomerCostPriceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPaymentCollectionParamsRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="productKey" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getResellerCostPriceRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="productKey" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getResellerSlabPriceForProductsRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="productKeyArr" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPricingKeyPricingParamMapResponse">
+
+      <wsdl:part name="getPricingKeyPricingParamMapReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPricingKeyPricingParamMapRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="productKey" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCustomerCostPriceRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="Customerid" type="xsd:string"/>
+
+      <wsdl:part name="productKey" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getResellerSlabPriceForProductsResponse">
+
+      <wsdl:part name="getResellerSlabPriceForProductsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="OrderSetup">
+
+      <wsdl:operation name="getPricingKeyPricingParamMap" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID productKey">
+
+         <wsdl:input message="impl:getPricingKeyPricingParamMapRequest" name="getPricingKeyPricingParamMapRequest"/>
+
+         <wsdl:output message="impl:getPricingKeyPricingParamMapResponse" name="getPricingKeyPricingParamMapResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCustomerCostPrice" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID Customerid productKey">
+
+         <wsdl:input message="impl:getCustomerCostPriceRequest" name="getCustomerCostPriceRequest"/>
+
+         <wsdl:output message="impl:getCustomerCostPriceResponse" name="getCustomerCostPriceResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getResellerCostPrice" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID productKey">
+
+         <wsdl:input message="impl:getResellerCostPriceRequest" name="getResellerCostPriceRequest"/>
+
+         <wsdl:output message="impl:getResellerCostPriceResponse" name="getResellerCostPriceResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPricingParamsDisplayName" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID productKey">
+
+         <wsdl:input message="impl:getPricingParamsDisplayNameRequest" name="getPricingParamsDisplayNameRequest"/>
+
+         <wsdl:output message="impl:getPricingParamsDisplayNameResponse" name="getPricingParamsDisplayNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPaymentCollectionParams" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID productKey">
+
+         <wsdl:input message="impl:getPaymentCollectionParamsRequest" name="getPaymentCollectionParamsRequest"/>
+
+         <wsdl:output message="impl:getPaymentCollectionParamsResponse" name="getPaymentCollectionParamsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPricingKeyDisplayName" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID productKey">
+
+         <wsdl:input message="impl:getPricingKeyDisplayNameRequest" name="getPricingKeyDisplayNameRequest"/>
+
+         <wsdl:output message="impl:getPricingKeyDisplayNameResponse" name="getPricingKeyDisplayNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getResellerSlabPriceForProducts" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID productKeyArr">
+
+         <wsdl:input message="impl:getResellerSlabPriceForProductsRequest" name="getResellerSlabPriceForProductsRequest"/>
+
+         <wsdl:output message="impl:getResellerSlabPriceForProductsResponse" name="getResellerSlabPriceForProductsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCustomerSlabPrice" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID productKeyArr">
+
+         <wsdl:input message="impl:getCustomerSlabPriceRequest" name="getCustomerSlabPriceRequest"/>
+
+         <wsdl:output message="impl:getCustomerSlabPriceResponse" name="getCustomerSlabPriceResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="OrderSetupServiceSoapBinding" type="impl:OrderSetup">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPricingKeyPricingParamMap">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPricingKeyPricingParamMapRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPricingKeyPricingParamMapResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCustomerCostPrice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCustomerCostPriceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCustomerCostPriceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getResellerCostPrice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getResellerCostPriceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getResellerCostPriceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPricingParamsDisplayName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPricingParamsDisplayNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPricingParamsDisplayNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPaymentCollectionParams">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPaymentCollectionParamsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPaymentCollectionParamsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPricingKeyDisplayName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPricingKeyDisplayNameRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPricingKeyDisplayNameResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getResellerSlabPriceForProducts">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getResellerSlabPriceForProductsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getResellerSlabPriceForProductsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCustomerSlabPrice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCustomerSlabPriceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCustomerSlabPriceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.OrderSetup" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="OrderSetupService">
+
+      <wsdl:port binding="impl:OrderSetupServiceSoapBinding" name="OrderSetupService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

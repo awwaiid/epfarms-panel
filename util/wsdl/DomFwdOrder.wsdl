@@ -54,6 +54,10 @@
 
    </wsdl:message>
 
+   <wsdl:message name="manageDomainForwardServiceResponse">
+
+   </wsdl:message>
+
    <wsdl:message name="listResponse">
 
       <wsdl:part name="listReturn" type="xsd:string"/>
@@ -63,22 +67,6 @@
    <wsdl:message name="getDetailsResponse">
 
       <wsdl:part name="getDetailsReturn" type="xsd:string"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="deleteServiceRequest">
-
-      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
-
-      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
-
-      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
-
-      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
-
-      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
-
-      <wsdl:part name="entityId" type="xsd:int"/>
 
    </wsdl:message>
 
@@ -130,6 +118,28 @@
 
    </wsdl:message>
 
+   <wsdl:message name="deleteServiceRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="entityId" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addResponse">
+
+      <wsdl:part name="addReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
    <wsdl:message name="getDetailsByDomainRequest">
 
       <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
@@ -147,12 +157,6 @@
       <wsdl:part name="option" type="xsd:string"/>
 
       <wsdl:part name="productkey" type="xsd:string"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="addResponse">
-
-      <wsdl:part name="addReturn" type="xsd:string"/>
 
    </wsdl:message>
 
@@ -188,9 +192,57 @@
 
    </wsdl:message>
 
+   <wsdl:message name="setupDomainFwdServiceResponse">
+
+      <wsdl:part name="setupDomainFwdServiceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
    <wsdl:message name="deleteServiceResponse">
 
       <wsdl:part name="deleteServiceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="manageDomainForwardServiceRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="domainName" type="xsd:string"/>
+
+      <wsdl:part name="urlMasking" type="xsd:boolean"/>
+
+      <wsdl:part name="subdomainForwarding" type="xsd:boolean"/>
+
+      <wsdl:part name="forward" type="xsd:string"/>
+
+      <wsdl:part name="noframes" type="xsd:string"/>
+
+      <wsdl:part name="headerTags" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setupDomainFwdServiceRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="orderID" type="xsd:int"/>
 
    </wsdl:message>
 
@@ -301,6 +353,22 @@
          <wsdl:input message="impl:getDetailsByDomainRequest" name="getDetailsByDomainRequest"/>
 
          <wsdl:output message="impl:getDetailsByDomainResponse" name="getDetailsByDomainResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupDomainFwdService" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID orderID">
+
+         <wsdl:input message="impl:setupDomainFwdServiceRequest" name="setupDomainFwdServiceRequest"/>
+
+         <wsdl:output message="impl:setupDomainFwdServiceResponse" name="setupDomainFwdServiceResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="manageDomainForwardService" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID domainName urlMasking subdomainForwarding forward noframes headerTags">
+
+         <wsdl:input message="impl:manageDomainForwardServiceRequest" name="manageDomainForwardServiceRequest"/>
+
+         <wsdl:output message="impl:manageDomainForwardServiceResponse" name="manageDomainForwardServiceResponse"/>
 
       </wsdl:operation>
 
@@ -417,6 +485,42 @@
          </wsdl:input>
 
          <wsdl:output name="getDetailsByDomainResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domainfwd.DomainFwd" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setupDomainFwdService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setupDomainFwdServiceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domainfwd.DomainFwd" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setupDomainFwdServiceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domainfwd.DomainFwd" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="manageDomainForwardService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="manageDomainForwardServiceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domainfwd.DomainFwd" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="manageDomainForwardServiceResponse">
 
             <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.order.domainfwd.DomainFwd" use="encoded"/>
 

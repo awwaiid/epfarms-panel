@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.util.Country" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.util.Country" xmlns:intf="com.logicboxes.util.Country" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types/>
+
+   <wsdl:message name="getCountryCodeForIPResponse">
+
+      <wsdl:part name="getCountryCodeForIPReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStateListForCountryRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="countryCode" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStateListForCountryResponse">
+
+      <wsdl:part name="getStateListForCountryReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getListRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCountryCodeForIPRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="ipAddress" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getListResponse">
+
+      <wsdl:part name="getListReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Country">
+
+      <wsdl:operation name="getCountryCodeForIP" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID ipAddress">
+
+         <wsdl:input message="impl:getCountryCodeForIPRequest" name="getCountryCodeForIPRequest"/>
+
+         <wsdl:output message="impl:getCountryCodeForIPResponse" name="getCountryCodeForIPResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStateListForCountry" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID countryCode">
+
+         <wsdl:input message="impl:getStateListForCountryRequest" name="getStateListForCountryRequest"/>
+
+         <wsdl:output message="impl:getStateListForCountryResponse" name="getStateListForCountryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getList" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID">
+
+         <wsdl:input message="impl:getListRequest" name="getListRequest"/>
+
+         <wsdl:output message="impl:getListResponse" name="getListResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="CountryServiceSoapBinding" type="impl:Country">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getCountryCodeForIP">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCountryCodeForIPRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.util.Country" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCountryCodeForIPResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.util.Country" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStateListForCountry">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getStateListForCountryRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.util.Country" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getStateListForCountryResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.util.Country" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.util.Country" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.util.Country" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="CountryService">
+
+      <wsdl:port binding="impl:CountryServiceSoapBinding" name="CountryService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

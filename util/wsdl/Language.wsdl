@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.util.Language" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.util.Language" xmlns:intf="com.logicboxes.util.Language" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types/>
+
+   <wsdl:message name="getAllLanguageListResponse">
+
+      <wsdl:part name="getAllLanguageListReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllLanguageListRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Language">
+
+      <wsdl:operation name="getAllLanguageList" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID">
+
+         <wsdl:input message="impl:getAllLanguageListRequest" name="getAllLanguageListRequest"/>
+
+         <wsdl:output message="impl:getAllLanguageListResponse" name="getAllLanguageListResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="LanguageServiceSoapBinding" type="impl:Language">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getAllLanguageList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllLanguageListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.util.Language" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllLanguageListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.util.Language" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="LanguageService">
+
+      <wsdl:port binding="impl:LanguageServiceSoapBinding" name="LanguageService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

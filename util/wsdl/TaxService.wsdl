@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="com.logicboxes.foundation.sfnb.tax.TaxService" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="com.logicboxes.foundation.sfnb.tax.TaxService" xmlns:intf="com.logicboxes.foundation.sfnb.tax.TaxService" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <wsdl:types/>
+
+   <wsdl:message name="getTaxRuleListResponse">
+
+      <wsdl:part name="getTaxRuleListReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getApplicableTaxesResponse">
+
+      <wsdl:part name="getApplicableTaxesReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getTaxRuleListRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getApplicableTaxesRequest">
+
+      <wsdl:part name="SERVICE_USERNAME" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PASSWORD" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_ROLE" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_LANGPREF" type="xsd:string"/>
+
+      <wsdl:part name="SERVICE_PARENTID" type="xsd:int"/>
+
+      <wsdl:part name="details" type="xsd:string"/>
+
+      <wsdl:part name="customerID" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="TaxService">
+
+      <wsdl:operation name="getApplicableTaxes" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID details customerID">
+
+         <wsdl:input message="impl:getApplicableTaxesRequest" name="getApplicableTaxesRequest"/>
+
+         <wsdl:output message="impl:getApplicableTaxesResponse" name="getApplicableTaxesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTaxRuleList" parameterOrder="SERVICE_USERNAME SERVICE_PASSWORD SERVICE_ROLE SERVICE_LANGPREF SERVICE_PARENTID">
+
+         <wsdl:input message="impl:getTaxRuleListRequest" name="getTaxRuleListRequest"/>
+
+         <wsdl:output message="impl:getTaxRuleListResponse" name="getTaxRuleListResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="TaxServiceServiceSoapBinding" type="impl:TaxService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getApplicableTaxes">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getApplicableTaxesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.tax.TaxService" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getApplicableTaxesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.tax.TaxService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTaxRuleList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getTaxRuleListRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.tax.TaxService" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getTaxRuleListResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="com.logicboxes.foundation.sfnb.tax.TaxService" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="TaxServiceService">
+
+      <wsdl:port binding="impl:TaxServiceServiceSoapBinding" name="TaxServiceService">
+
+         <wsdlsoap:address location="http://demo.myorderbox.com/anacreon/servlet/APIv3-XML"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
