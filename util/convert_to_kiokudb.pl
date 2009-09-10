@@ -63,13 +63,15 @@ foreach my $db_txn (@$transactions) {
     user => $user,
     # service
   );
-  $db->db->store($transaction);
+  #$db->db->store($transaction);
   $user->add_transaction($transaction);
 }
 });
 
 #print "Saving database...\n";
 #$db->save;
+#
+    $db->db->store($db->content);
 use Data::Dumper;
 print "Root set contains: " . Dumper($db->content);
 
