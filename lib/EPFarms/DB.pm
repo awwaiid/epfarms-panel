@@ -25,6 +25,7 @@ class EPFarms::DB {
 
   sub BUILD {
     my $self = shift;
+    $ENV{HOME} ||= '/home/admin';
     my $dsn = $::dsn || "dbi:SQLite:$ENV{HOME}/tmp/epfarms-data/data.db";
     $self->db(
       KiokuDB->connect(
@@ -55,6 +56,7 @@ class EPFarms::DB {
     my ($self, %search) = @_;
 
     my $query = Search::GIN::Query::Manual->new(
+      method => 'all',
       values => {
         %search
       },
