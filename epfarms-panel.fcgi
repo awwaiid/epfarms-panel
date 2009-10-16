@@ -4,11 +4,10 @@
 
 use strict;
 use lib 'lib';
-use everywhere 'MooseX::Declare; use 5.010',
-  matching => '^EPFarms';
 
 use Continuity;
 use Continuity::Adapt::FCGI;
+use EPFarms;
 use EPFarms::Panel;
 
 use vars qw( $run_mode $server $dsn );

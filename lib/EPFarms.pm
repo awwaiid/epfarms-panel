@@ -1,3 +1,12 @@
+
+# This preamble stuff is mostly to make it easy to use EPFarms code.
+
+use strict;
+# Everybody loves MooseX::Declare, right?!
+use everywhere 'MooseX::Declare; use 5.010',
+  matching => '^EPFarms';
+use EPFarms::DB;
+
 package EPFarms;
 
 use metaclass 'MooseX::MetaDescription::Meta::Class' => (

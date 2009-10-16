@@ -72,5 +72,3 @@ class EPFarms::DB {
   }
 }
 
-1;
-
