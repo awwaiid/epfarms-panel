@@ -132,11 +132,12 @@ if ($res_error || $DEBUG_ERROR) {
     my ($user) = $db->search(username => $username);
     my $transaction = EPFarms::Transaction->new(
       amount => $amount,
-      description => 'Payment from paypal',
+      description => 'Test Payment from paypal',
       reference_number => $txn_id,
       user => $user,
     );
     $user->add_transaction($transaction);
+    $db->db->store($user);
 
   }
 
