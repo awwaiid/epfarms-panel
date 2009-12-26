@@ -145,7 +145,7 @@ sub domain_detail {
     $out .= "</pre>";
     $out .= "DomainDB: <pre>";
     $out .= Dumper($domaindb->{$domain->{'entity.description'}});
-    $out .- "</pre>";
+    $out .= "</pre>";
     $out .= $self->add_link('Renew Domain' => sub { $self->renew_domain($domain) });
 
     $self->display($out);
