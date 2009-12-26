@@ -12,7 +12,7 @@ has 'id' => (
   default => sub { Data::UUID->new->create_str }
 );
 has 'output' => (is => 'rw',   isa => 'Str', default => '');
-has 'input' => (is => 'rw', defualt => sub {{}});
+has 'input' => (is => 'rw', default => sub {{}});
 
 sub process {
   my ($self, $input) = @_;
