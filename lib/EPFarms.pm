@@ -4,7 +4,8 @@
 use strict;
 # Everybody loves MooseX::Declare, right?!
 use everywhere 'MooseX::Declare; use 5.010',
-  matching => '^EPFarms';
+  matching => '^EPFarms',
+  use_here => 1;
 use EPFarms::DB;
 
 package EPFarms;
