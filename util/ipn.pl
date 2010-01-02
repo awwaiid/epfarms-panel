@@ -1,6 +1,6 @@
-#!/usr/bin/perl
+#!/home/admin/local/bin/perl
 
-use lib 'lib';
+use lib '../panel/lib';
 use Data::Dumper;
 use EPFarms;
 use EPFarms::Transaction;
