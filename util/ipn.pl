@@ -7,6 +7,8 @@ use EPFarms::Transaction;
 use EPFarms::User;
 use strict;
 
+open my $out, ">>", "out.txt";
+print $out "Starting Paypal payment recording\n";
 my $query;
 my %variable;
 
@@ -88,6 +90,8 @@ else {
 
 if ($res_error || $DEBUG_ERROR) {
   # TODO - Log error
+  print $out "Error: $res_content\n" if $res_error;
+  print $out Dumper(\%variable) . "\n\n";
 } elsif ($res_content eq 'VERIFIED' || $DEBUG_VERIFIED) {
   # check the payment_status=Completed
   # check that txn_id has not been previously processed
@@ -95,7 +99,6 @@ if ($res_error || $DEBUG_ERROR) {
   # process payment
   # print to screen the following if the IPN POST was VERIFIED
 
-  open my $out, ">>", "out.txt";
   print $out "VERIFIED:\n";
   print $out Dumper(\%variable) . "\n\n";
 
@@ -145,16 +148,15 @@ if ($res_error || $DEBUG_ERROR) {
   # log for manual investigation
   # print to screen the following if the IPN POST was INVALID
 
-  open my $out, ">>", "out.txt";
   print $out "INVALID\n";
   print $out Dumper(\%variable) . "\n\n";
 
 } else {
-  open my $out, ">>", "out.txt";
   print $out "ERROR\n";
   print $out Dumper(\%variable) . "\n\n";
 }
 
+print $out "Done.\n\n";
 print "Content-type: text/html\n\n";
 print "OK";
 
