@@ -3,29 +3,10 @@
 use strict;
 use lib '../lib';
 use SOAP::Lite;# +trace => qw( debug );
+use ResellerClub;
 use ResellerClub::DomOrderService;
 use ResellerClub::OrderService;
 use Data::Dumper;
-
-use vars qw( $username $password );
-do "/home/awwaiid/.epfarms-panel/resellerclub.conf";
-
-sub result_to_hash {
-  my $result = shift;
-  print "Results before: $result\n";
-  # Lets just totally cheat and use a regex to turn this into a hash
-  $result =~ s/^<\?xml[^>]*>//;
-  $result =~ s/<Hashtable[^>]*>/{\n/g;
-  $result =~ s/<\/Hashtable>/}\n/g;
-  $result =~ s/<row name="([^"]*)">/'$1' => /g;
-  $result =~ s/<\/row>/,\n/g;
-  $result =~ s/ => (.*?),\n/ => '$1',\n/g;
-
-  my $data = eval $result;
-  # print "Input: $result, output: " . Dumper($data);
-  # print "Error: $@\n" if $@;
-  return $data;
-}
 
 sub get_all_orders {
   # my $dom_order = ResellerClub::DomOrderService->new;
@@ -42,8 +23,6 @@ sub get_all_orders {
     my $out = ResellerClub::DomOrderService::list(
       $username, # userName
       $password, # password
-      #'awwaiid@thelackthereof.org', # #userName
-      #'awwaiid42', # #password
       'reseller', # role
       'en', # langpref
       1, # parentid
@@ -66,7 +45,7 @@ sub get_all_orders {
       '', # orderBy
     );
 
-    my $data = result_to_hash($out);
+    my $data = ResellerClub::result_to_hash($out);
     $reccount += $data->{recsonpage};
     delete $data->{recsonpage};
     $totalrecs = $data->{recsindb};
