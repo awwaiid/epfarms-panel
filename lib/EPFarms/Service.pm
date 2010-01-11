@@ -12,7 +12,7 @@ has service_name => (
   default => 'Generic'
 );
 
-enum TimePeriod => qw( once month year );
+enum TimePeriod => qw( once month year ondemand );
 
 has bill_period => (
   is => 'rw',
