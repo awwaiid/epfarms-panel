@@ -19,6 +19,13 @@ class EPFarms::Transaction extends EPFarms {
       DateTime::Format::DateManip->parse_datetime($_)
     };
 
+  sub index {
+    my ($self) = @_;
+    return {
+      reference_number => $self->reference_number,
+    };
+  }
+
 }
 
 1;
