@@ -2,11 +2,7 @@
 
 use 5.010;
 use strict;
-# use lib '/home/awwaiid/tmp/rs/PERL_CoreKIT_v3_16/cgi-bin';
-# use lib '/home/awwaiid/tmp/rs/PERL_DomainsKIT_v3_16/cgi-bin';
-# use lib 'lib';
 use lib '../lib';
-#use lib '../lib/ResellerClub/core';
 use EPFarms;
 #use SOAP::Lite +trace => qw( debug );
 use SOAP::Lite;
@@ -16,9 +12,16 @@ use ResellerClub::DomOrderService;
 use ResellerClub::OrderService;
 use DateTime;
 use Data::Dumper;
+use EPFarms::Service::DomainRegistration;
+use EPFarms::Transaction;
 
 use vars qw( $username $password );
 do "/home/awwaiid/.epfarms-panel/resellerclub.conf";
+
+our $domaindb;
+do "/home/awwaiid/tmp/epfarms/domaindb.pl";
+
+# Kill existing registration/transfer/renewal transactions
 
 sub get_domain_order_id {
   my $domain_name = shift;
@@ -47,14 +50,13 @@ sub get_order_actions {
   $service->readable(1);
 
   do {
-    #my $out = ResellerClub::OrderService::listArchivedActions(
     my $out = $service->listArchivedActions(
       @ResellerClub::std_params,
       [], # int[] eaqId,
       [$entityId], # int[] entityId,
       [], # int[] entitytypeid,
       [], # java.lang.String[] actionStatus,
-      ['AddNewDomain','RenewDomain'], # java.lang.String[] actionType,
+      ['AddNewDomain','RenewDomain','AddTransferDomain'], # java.lang.String[] actionType,
       10, # numOfRecordPerPage
       $curpage++, # pageNum
       '', # orderBy
@@ -67,7 +69,7 @@ sub get_order_actions {
     delete $data->{recsindb};
 
     push @$recs, values %$data;
-    print "Recs: " . (scalar @$recs) . "\n";
+    # print "Recs: " . (scalar @$recs) . "\n";
   } while($reccount < $totalrecs);
   return $recs;
 }
@@ -82,166 +84,159 @@ sub get_all_orders {
   my $recs = [];
 
   my $curpage = 1;
-  my $fromDate = DateTime->new( year => 2000 )->epoch;
-  my $toDate   = DateTime->now->epoch;
-  print STDERR "From: $fromDate\nTo: $toDate\n";
+  # my $fromDate = DateTime->new( year => 2000 )->epoch;
+  # my $toDate   = DateTime->now->epoch;
+  # print STDERR "From: $fromDate\nTo: $toDate\n";
+  
+  my $service = ResellerClub::DomOrderService->new;
+  $service->readable(1);
 
   do {
 
-    my $out = ResellerClub::FundService::listCustomerTransactions(
-      $username, # userName
-      $password, # password
-      #'awwaiid@thelackthereof.org', # #userName
-      #'awwaiid42', # #password
-      'reseller', # role
-      'en', # langpref
-      1, # parentid
+    my $out = $service->list(
+      @ResellerClub::std_params,
+      '', # int[] orderId,
+      '', # int[] resellerId,
       '', # int[] customerId,
-      '', # java.lang.String[] customerUserName,
-      '', # java.lang.String[] type,
-      '', # java.lang.String key,
-      '', # int[] typeId,
-      '', # int[] transId,
-      '', # java.lang.String balanceType,
+      '', # boolean showChildOrders,
+      '', # java.lang.String[] classKey,
+      '', # java.lang.String[] currentStatus,
       '', # java.lang.String description,
-      '', # java.lang.String amountStartRange,
-      '', # java.lang.String amountEndRange,
-      $fromDate, # java.lang.String fromDate,
-      $toDate, # java.lang.String toDate,
-      100, # int numOfRecordPerPage,
-      $curpage++, # int pageNum,
-      '', # java.lang.String[] orderBy
+      '', # java.lang.String[] ns,
+      '', # java.lang.String contactName,
+      '', # java.lang.String contactCompanyName,
+      '', # java.lang.String creationDTRangStart,
+      '', # java.lang.String creationDTRangEnd,
+      '', # java.lang.String endTimeRangStart,
+      '', # java.lang.String endTimeRangEnd,
+      100, # numOfRecordPerPage
+      $curpage++, # pageNum
+      '', # orderBy
     );
 
-    # Lets just totally cheat and use a regex to turn this into a hash
-    $out =~ s/^<\?xml[^>]*>//;
-    $out =~ s/<Hashtable[^>]*>/{/g;
-    $out =~ s/<\/Hashtable>/}\n/g;
-    $out =~ s/<row name="([^"]*)">/'$1' => /g;
-    $out =~ s/<\/row>/,\n/g;
-    $out =~ s/ => ([^,{]+),/ => '$1',/g;
-
-    my $data = eval $out;
+    my $data = ResellerClub::result_to_hash($out);
     $reccount += $data->{recsonpage};
     delete $data->{recsonpage};
     $totalrecs = $data->{recsindb};
     delete $data->{recsindb};
 
-    push @$recs, values %$data;
 
+    push @$recs, values %$data;
 
   } while($reccount < $totalrecs);
 
   return $recs;
 }
 
-# use lib::Order;
-# my $order = Order->new();
-# $order->wsdlURL('file:///home/awwaiid/projects/perl/EPFarms-Panel/lib/ResellerClub/core/lib/wsdl/Order.wsdl');
-# $order->StartServices();
-# $order->listArchivedActions(
-      # @ResellerClub::std_params,
-      # '', # int[] eaqId,
-      # [778561], # int[] entityId,
-      # '', # int[] entitytypeid,
-      # '', # java.lang.String[] actionStatus,
-      # ['AddNewDomain','RenewDomain'], # java.lang.String[] actionType,
-      # 10, # numOfRecordPerPage
-      # 1, # pageNum
-      # '', # orderBy
-    # );
-# my $result = $order->result;
-# print "Result: " . Dumper($result);
-# my $val = $order->printComplexType( $result );
-# print "Val: " . Dumper($val);
-# exit;
+my $all_dom_orders = get_all_orders();
+#print Dumper($all_dom_orders);
+
+my $db = EPFarms::DB->new;
+
+my $price_jump_date = DateTime->new( year => 2009, month => 1, day => 1 );
+
+my $scope = $db->db->new_scope;
+
+foreach my $domain (@$all_dom_orders) {
+
+  $db->db->txn_do(sub {
+
+  # print "domain dump: " . Dumper($domain) . "\n";
+  print "Domain broken " . Dumper($domain) unless $domain->{'orders.creationtime'} && $domain->{'orders.endtime'};
+  next unless $domain->{'orders.creationtime'} && $domain->{'orders.endtime'};
+  my $start = DateTime->from_epoch( epoch => $domain->{'orders.creationtime'} );
+  my $end   = DateTime->from_epoch( epoch => $domain->{'orders.endtime'} );
+  print "Dom: $domain->{'entity.description'}\t$start\t$end\n";
+  my $domain_name = $domain->{'entity.description'};
+
+  # Try to look up owner from domaindb.pl
+  my $owner;
+  if($domaindb->{$domain_name}) {
+    my $owner_username = $domaindb->{$domain_name}->{owner};
+    print "Owner: $owner_username\n";
+    ($owner) = $db->search( username => $owner_username );
+
+    if(!$owner) {
+      print "OWNER OBJECT NOT FOUND\n";
+    } else {
+      # print "Owner txns: " . (join ',',map { $_->reference_number } $owner->transactions->members) . "\n";
+    }
+  } else {
+    print "OWNER NOT FOUND!\n";
+  }
+
+  my @domain_regs = $db->search(domain_name => $domain_name);
+  my $domain_obj;
+  if(! @domain_regs) {
+    print "Service not found, creating a new one...\n";
+    $domain_obj = EPFarms::Service::DomainRegistration->new(
+      domain_name => $domain->{'entity.description'},
+    );
+    $db->db->store($domain_obj);
+  } else {
+   # print " ... found\n";
+   $domain_obj = $domain_regs[0];
+  }
 
 
+  # OK, so now we have our domain!
 
-my $order_id = get_domain_order_id('thelackthereof.org');
-print "Order ID: $order_id\n";
-print "\n\n\n\n\n";
-#my $order_id = 778561;
-my $actions = get_order_actions($order_id);
-print "Actions: " . Dumper($actions);
+  my $order_id = $domain->{'orders.orderid'};
+  my $actions = get_order_actions($order_id);
+  foreach my $action (@$actions) {
+    #print "Action:" . Dumper($action);
+    # print "Owner txnsY: " . (join ',',map { $_->reference_number } $owner->transactions->members) . "\n" if $owner;
+    my $txn_id = $action->{eaqid};
+    my $start_time = DateTime->from_epoch( epoch => $action->{actionadded} );
+    # print $action->{actiontype} . "\t$start_time\t$txn_id\n";
+    my @txns = $db->search( reference_number => $txn_id );
+    # my @txns = $db->filter_all( sub {
+      # ref $_ eq 'EPFarms::Transaction'
+      # && $_->reference_number eq $txn_id } );
+    my $txn;
+    if(!@txns) {
+      # print "Dom: $domain->{'entity.description'}\t$start\t$end\n";
+      print "Transaction not found. Creating a new one...\n";
+      $txn = EPFarms::Transaction->new(
+        timestamp => $start_time,
+        description => $action->{actiontypedesc},
+        amount => $start_time < $price_jump_date ? -7.5 : -8.5,
+        reference_number => $txn_id,
+        service => $domain_obj,
+      );
+      $db->db->store($txn);
+    } else {
+      #print " ... txn found\n";
+      $txn = shift @txns;
+    }
 
-exit;
+    # See if the owner already has this transaction
+    if($owner) {
+      my @txns = $owner->transactions->members;
+      # print "Owner txnsZ: " . (join ',',map { $_->reference_number } $owner->transactions->members) . "\n";
+      if(grep { $_->reference_number eq $txn->reference_number } @txns) {
+        # print "TXN found, all done!\n";
+      } else {
+        # print "Dom: $domain->{'entity.description'}\t$start\t$end\n";
+        print "Adding txn for user!\n";
+        $owner->add_transaction($txn);
+        $db->db->store($owner);
+        # $db->db->store($owner->transactions);
+        # $db->db->store($txn);
+        print "Added " . $txn->reference_number . ", now have:\n";
+        print "Owner txns: " . (join ',',map { $_->reference_number } $owner->transactions->members) . "\n";
+      }
+    }
+    # print "Owner txnsX: " . (join ',',map { $_->reference_number } $owner->transactions->members) . "\n" if $owner;
 
-my $recs = get_all_orders;
-print Dumper($recs);
+  }
 
-print "Record count: " . (scalar @$recs) . "\n";
-exit;
 
-my $domains = {};
+  # $order_id = get_domain_order_id('epfarms.net');
+  # print "epfarms.net order id $order_id\n";
 
-foreach my $row (@$recs) {
-  $domains->{$row->{'entity.description'}}->{$row->{'entity.currentstatus'}}++;
+  });
+
 }
 
-print "Active:\n";
-my $active_count = 0;
-foreach my $d (sort keys %$domains) {
-  print "$d\t$domains->{$d}->{Active}\n" if $domains->{$d}->{Active};
-  $active_count++ if $domains->{$d}->{Active};
-}
-
-print "Deleted:\n";
-my $deleted_count = 0;
-foreach my $d (sort keys %$domains) {
-  print "$d\t$domains->{$d}->{Deleted}\n" if $domains->{$d}->{Deleted};
-  $deleted_count++ if $domains->{$d}->{Deleted};
-}
-
-print "Active count: $active_count\n";
-print "Deleted count: $deleted_count\n";
-
-__END__
-POST /anacreon/servlet/APIv3-XML
-HTTP/1.0
-User-Agent: NuSOAP/0.6.6
-Host: demo.myorderbox.com:80
-Content-Type: text/xml; charset=UTF-8
-SOAPAction: ""
-Content-Length: 1593 
-
-<?xml version="1.0" encoding="UTF-8"?>
-<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:si="http://soapinterop.org/xsd" xmlns:impl="com.logicboxes.foundation.sfnb.order.Order">
-<SOAP-ENV:Body>
-<impl:listArchivedActions>
-<SERVICE_USERNAME xsi:type="xsd:string">
-epfarms@epfarms.org</SERVICE_USERNAME>
-<SERVICE_PASSWORD xsi:type="xsd:string">
-Ykuj6WGv</SERVICE_PASSWORD>
-<SERVICE_ROLE xsi:type="xsd:string">
-reseller</SERVICE_ROLE>
-<SERVICE_LANGPREF xsi:type="xsd:string">
-en</SERVICE_LANGPREF>
-<SERVICE_PARENTID xsi:type="xsd:int">
-1</SERVICE_PARENTID>
-<eaqId xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="xsd:int[0]">
-</eaqId>
-<entityId xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="xsd:int[1]">
-<item xsi:type="xsd:int">
-778561</item>
-</entityId>
-<entitytypeid xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="xsd:int[0]">
-</entitytypeid>
-<actionStatus xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="xsd:string[0]">
-</actionStatus>
-<actionType xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="xsd:string[2]">
-<item xsi:type="xsd:string">
-AddNewDomain</item>
-<item xsi:type="xsd:string">
-RenewDomain</item>
-</actionType>
-<numOfRecordPerPage xsi:type="xsd:int">
-3</numOfRecordPerPage>
-<pageNum xsi:type="xsd:int">
-1</pageNum>
-<orderBy xsi:type="SOAP-ENC:Array" SOAP-ENC:arrayType="xsd:string[0]">
-</orderBy>
-</impl:listArchivedActions>
-</SOAP-ENV:Body>
-</SOAP-ENV:Envelope>
 
