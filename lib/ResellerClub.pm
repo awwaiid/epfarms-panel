@@ -16,7 +16,7 @@ our @std_params = (
 
 sub result_to_hash {
   my $result = shift;
-  print "Results before: $result\n";
+  # print "Results before: $result\n";
   # Lets just totally cheat and use a regex to turn this into a hash
   $result =~ s/^<\?xml[^>]*>//;
   $result =~ s/<Hashtable[^>]*>/{\n/g;
