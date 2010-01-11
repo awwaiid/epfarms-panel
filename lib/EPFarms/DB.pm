@@ -44,8 +44,11 @@ class EPFarms::DB {
 
   method extract($object, $extractor, @args) {
     if($object->can('index')) {
-      return $object->index(@args);
+      my $keys = $object->index(@args);
+      $keys->{class} ||= ref $object;
+      return $keys;
     }
+    return;
   }
 
   method add_user($user) {
@@ -63,6 +66,15 @@ class EPFarms::DB {
     );
     my @results = $self->db->search($query)->all;
     return @results if @results;
+    return ();
+  }
+
+  sub filter_all {
+    my ($self, $f) = @_;
+    #my $all = $self->db->all_objects->all;
+    my $all = $self->db->all_objects;
+    my @all = $all->all();
+    return grep { $f->($_) } @all;
   }
 
   sub save {
